@@ -6,15 +6,30 @@
 //  Copyright © 2018 Aaron Lopez. All rights reserved.
 //
 
+#import "BranchExtension.h"
 #import "BranchExtensionListener.h"
+#import <Branch/Branch.h>
+
 
 @implementation BranchExtensionListener
 
 - (void) hear: (nonnull ADBExtensionEvent*) event {
-    NSString* configuration = [self.extension.api
-                               getSharedEventState:@"com.adobe.module.configuration" event:nil error:nil];
-    if(configuration) {
-        NSLog(@"The configuration when event \"%@\" was sent was:\n%@", [event eventName], configuration);
+    NSDictionary* configuration = [self.extension.api getSharedEventState:@"com.adobe.module.configuration" event:event error:nil];
+    
+    if ([[event eventName]  isEqual: @"BRANCH_INIT"]) {
+        if (configuration[@"branchKey"]) {
+            NSDictionary *launchOptions = @{};
+            Branch *branchInstance = [Branch getInstance:configuration[@"branchKey"]];
+            
+            [branchInstance setDebug];
+            [branchInstance initSessionWithLaunchOptions:launchOptions
+                                                 isReferrable:YES
+                                   andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
+                                       if (error) {
+                                           NSLog(@"%@", error); // TODO: Figure out whether we actually want to log here
+                                       }
+                                   }];
+        }
     }
 }
 

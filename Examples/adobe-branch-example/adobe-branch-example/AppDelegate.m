@@ -30,14 +30,13 @@
 
     NSError* error = nil;
     
-    [ADBMobileMarketing analyticsTrackAction:@"my v5 action" data:@{@"key1":@"value1"}];
+    // [ADBMobileMarketing analyticsTrackAction:@"my v5 action" data:@{@"key1":@"value1"}];
 
     if ([ADBMobileMarketing registerExtension:[BranchExtension class] withName:@"com.branch.extension" withVersion:@"1" error:&error]) {
-        NSLog(@"Branch SDK Registered"); // TODO: Remove this
+        NSLog(@"Branch SDK Registered");
     } else {
         NSLog(@"%@", error);
     }
-    [BranchExtension in]
     return YES;
 }
 

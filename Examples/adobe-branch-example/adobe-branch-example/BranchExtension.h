@@ -10,7 +10,8 @@
 #import "ADBExtensionEvent.h"
 #import "ADBExtensionApi.h"
 
+extern NSString * const branchEventTypeInit;
+
 @interface BranchExtension : ADBExtension {}
-- (void) configureSession;
 - (void) onUnregister;
 @end
