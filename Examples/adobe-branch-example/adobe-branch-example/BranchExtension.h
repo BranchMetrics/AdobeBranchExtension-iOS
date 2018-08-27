@@ -11,5 +11,6 @@
 #import "ADBExtensionApi.h"
 
 @interface BranchExtension : ADBExtension {}
+- (void) configureSession;
 - (void) onUnregister;
 @end

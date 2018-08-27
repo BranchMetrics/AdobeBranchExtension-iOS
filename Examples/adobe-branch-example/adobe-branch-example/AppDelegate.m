@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "ADBMobileMarketing.h"
 #import "BranchExtension.h"
+#import <Branch/Branch.h>
 
 @interface AppDelegate ()
 
@@ -21,44 +22,97 @@
     // Override point for customization after application launch.
     [ADBMobileMarketing setLogLevel:ADBMobileLogLevelDebug];
 
-    [ADBMobileMarketing configureWithAppId:@"launch-ENe8e233db5c6a43628d097ba8125aeb26-development"];
+    // option 1 - access hosted Adobe config
+    // [ADBMobileMarketing configureWithAppId:@"launch-ENe8e233db5c6a43628d097ba8125aeb26-development"];
+
+    // option 2 - set config at runtime
+    [self setupTestConfig];
 
     NSError* error = nil;
+    
+    [ADBMobileMarketing analyticsTrackAction:@"my v5 action" data:@{@"key1":@"value1"}];
 
     if ([ADBMobileMarketing registerExtension:[BranchExtension class] withName:@"com.branch.extension" withVersion:@"1" error:&error]) {
         NSLog(@"Branch SDK Registered"); // TODO: Remove this
     } else {
         NSLog(@"%@", error);
     }
-
+    [BranchExtension in]
     return YES;
 }
 
-
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    [[Branch getInstance] application:app openURL:url options:options];
+    return YES;
 }
 
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler {
+    [[Branch getInstance] continueUserActivity:userActivity];
+    return YES;
 }
 
-
-- (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-}
-
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+- (void) setupTestConfig {
+    NSMutableDictionary *config = [NSMutableDictionary dictionary];
+    
+    // ============================================================
+    // global
+    // ============================================================
+    config[@"global.privacy"] = @"optedin";
+    config[@"global.ssl"] = @true;
+    
+    // ============================================================
+    // Branch
+    // ============================================================
+    config[@"branchKey"] = @"key_live_nbB0KZ4UGOKaHEWCjQI2ThncEAeRJmhy";
+    
+    // ============================================================
+    // acquisition
+    // ============================================================
+    config[@"acquisition.appid"] = @"";
+    config[@"acquisition.server"] = @"";
+    config[@"acquisition.timeout"] = @0;
+    
+    // ============================================================
+    // analytics
+    // ============================================================
+    config[@"analytics.aamForwardingEnabled"] = @false;
+    config[@"analytics.batchLimit"] = @0;
+    config[@"analytics.offlineEnabled"] = @true;
+    config[@"analytics.rsids"] = @"";
+    config[@"analytics.server"] = @"";
+    config[@"analytics.referrerTimeout"] = @0;
+    
+    // ============================================================
+    // audience manager
+    // ============================================================
+    config[@"audience.server"] = @"";
+    config[@"audience.timeout"] = @0;
+    
+    // ============================================================
+    // identity
+    // ============================================================
+    config[@"experienceCloud.server"] = @"";
+    config[@"experienceCloud.org"] = @"";
+    config[@"identity.adidEnabled"] = @false;
+    
+    // ============================================================
+    // target
+    // ============================================================
+    config[@"target.clientCode"] = @"";
+    config[@"target.timeout"] = @0;
+    
+    // ============================================================
+    // lifecycle
+    // ============================================================
+    config[@"lifecycle.sessionTimeout"] = @0;
+    config[@"lifecycle.backdateSessionInfo"] = @false;
+    
+    // ============================================================
+    // rules engine
+    // ============================================================
+    config[@"rules.url"] = @[@"https://assets.adobedtm.com/staging/launch-ENe8e233db5c6a43628d097ba8125aeb26-development-rules.zip"];
+    
+    [ADBMobileMarketing updateConfiguration:config];
 }
 
 

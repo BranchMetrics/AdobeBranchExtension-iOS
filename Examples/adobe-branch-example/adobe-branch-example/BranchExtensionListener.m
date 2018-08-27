@@ -10,4 +10,12 @@
 
 @implementation BranchExtensionListener
 
+- (void) hear: (nonnull ADBExtensionEvent*) event {
+    NSString* configuration = [self.extension.api
+                               getSharedEventState:@"com.adobe.module.configuration" event:nil error:nil];
+    if(configuration) {
+        NSLog(@"The configuration when event \"%@\" was sent was:\n%@", [event eventName], configuration);
+    }
+}
+
 @end

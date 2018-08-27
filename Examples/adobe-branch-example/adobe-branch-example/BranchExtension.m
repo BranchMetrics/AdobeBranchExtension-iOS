@@ -6,6 +6,7 @@
 //
 
 #import "BranchExtension.h"
+#import "BranchExtensionListener.h"
 #import <Branch/Branch.h>
 
 @interface BranchExtension() {}
@@ -30,17 +31,32 @@ NSString *const branchEventSource = @"com.branch.eventSource.custom";
         
         NSError* error = nil;
         NSDictionary *launchOptions = @{};
+        if ([self.api registerListener: [BranchExtensionListener class]
+                             eventType:@"com.adobe.eventType.hub" eventSource:@"com.adobe.eventSource.sharedState" error:&error]) {
+            NSLog(@"BranchExtensionListener was registered");
+        }
+        else {
+            NSLog(@"Error registering MyExtensionListener: %@ %d", [error domain], (int)[error code]);
+        }
+
+        NSString* configuration = [self.api
+                                   getSharedEventState:@"com.adobe.module.configuration" event:nil error:&error];
+        
+        ADBExtensionEvent* initEvent = [ADBExtensionEvent extensionEventWithName:@"branch_extension_install"
+                                                                            type:branchEventType
+                                                                          source:branchEventSource
+                                                                            data:@{@'key':@'value'}
+                                                                           error:&error];
+        
+        NSDictionary* configSharedState = [self.api getSharedEventState:@"com.adobe.module.configuration" event:initEvent error:nil];
+        
         NSString *branchkey = @"key_live_nbB0KZ4UGOKaHEWCjQI2ThncEAeRJmhy"; // TODO: Fill this in with settings from the Adobe Extension UI
         self.branchInstance = [Branch getInstance:branchkey];
         [self.branchInstance setDebug]; // TODO: Remove this line when done. Check if we want to give them the option to enable through shim
         [self.branchInstance initSessionWithLaunchOptions:launchOptions
                                              isReferrable:YES
                                andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
-                                   ADBExtensionEvent* initEvent = [ADBExtensionEvent extensionEventWithName:@"branch_extension_install"
-                                                                                                       type:branchEventType
-                                                                                                     source:branchEventSource
-                                                                                                       data:params
-                                                                                                      error:&error];
+                                   
                                    if (error) {
                                        NSLog(@"%@", error); // TODO: Figure out whether we actually want to log here
                                        return;

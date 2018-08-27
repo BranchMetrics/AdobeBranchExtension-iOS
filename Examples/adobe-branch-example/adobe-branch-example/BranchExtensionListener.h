@@ -6,7 +6,9 @@
 //  Copyright © 2018 Aaron Lopez. All rights reserved.
 //
 
+#import "ADBExtension.h"
 #import "ADBExtensionListener.h"
+#import "ADBExtensionApi.h"
 
 @interface BranchExtensionListener : ADBExtensionListener
 
