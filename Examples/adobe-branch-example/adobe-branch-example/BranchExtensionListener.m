@@ -25,10 +25,22 @@
             [branchInstance initSessionWithLaunchOptions:launchOptions
                                                  isReferrable:YES
                                    andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
+                                       NSString *pictureId = [params objectForKey:@"pictureId"];
+                                       UIViewController *nextVC;
+                                       UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                                        if (error) {
                                            NSLog(@"%@", error); // TODO: Figure out whether we actually want to log here
+                                       } else if (pictureId) {
+                                           nextVC = [storyboard instantiateViewControllerWithIdentifier:@"PicVC"];
+                                           [nextVC setNextPictureId:pictureId];
+                                       } else {
+                                           nextVC = [storyboard instantiateViewControllerWithIdentifier:@"MainVC"];
                                        }
                                    }];
+//            ExampleDeepLinkingController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"DeepLinkingController"];
+//
+//            [branchInstance registerDeepLinkController:controller forKey:@"product_picture" withPresentation:BNCViewControllerOptionShow];
+//            [branchInstance initSessionWithLaunchOptions:launchOptions automaticallyDisplayDeepLinkController:YES];
         }
     }
 }
