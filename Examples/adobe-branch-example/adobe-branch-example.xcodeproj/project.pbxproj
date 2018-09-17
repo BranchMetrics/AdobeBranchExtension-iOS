@@ -24,6 +24,7 @@
 		ACAE8131212264550049505B /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE8130212264550049505B /* WebKit.framework */; };
 		ACAE81332122645B0049505B /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE81322122645B0049505B /* UserNotifications.framework */; };
 		ACAE8135212264610049505B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE8134212264610049505B /* SystemConfiguration.framework */; };
+		ACF671C321505AE100CDC900 /* PictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACF671C221505AE100CDC900 /* PictureViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,8 @@
 		ACAE8130212264550049505B /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		ACAE81322122645B0049505B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		ACAE8134212264610049505B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		ACF671C121505AE100CDC900 /* PictureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PictureViewController.h; sourceTree = "<group>"; };
+		ACF671C221505AE100CDC900 /* PictureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PictureViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +112,8 @@
 				AC379AE22133956F004E61D1 /* BranchExtensionListener.m */,
 				ACAE8107212263F30049505B /* AppDelegate.h */,
 				ACAE8108212263F30049505B /* AppDelegate.m */,
+				ACF671C121505AE100CDC900 /* PictureViewController.h */,
+				ACF671C221505AE100CDC900 /* PictureViewController.m */,
 				ACAE810A212263F30049505B /* ViewController.h */,
 				ACAE810B212263F40049505B /* ViewController.m */,
 				ACAE810D212263F40049505B /* Main.storyboard */,
@@ -264,6 +269,7 @@
 				AC4E0C7C2123A52000C51ADD /* ADBMobileMarketing.h in Sources */,
 				AC379AE32133956F004E61D1 /* BranchExtensionListener.m in Sources */,
 				ACAE810C212263F40049505B /* ViewController.m in Sources */,
+				ACF671C321505AE100CDC900 /* PictureViewController.m in Sources */,
 				ACAE8117212263F40049505B /* main.m in Sources */,
 				ACAE8109212263F30049505B /* AppDelegate.m in Sources */,
 				AC4E0C752123A21F00C51ADD /* BranchExtension.m in Sources */,

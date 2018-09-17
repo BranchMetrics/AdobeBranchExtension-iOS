@@ -7,9 +7,8 @@
 //
 
 #import "PictureViewController.h"
-#import "Branch.h"
 
-@interface PictureViewController : UIViewController <BranchDeepLinkingController>
+@interface PictureViewController ()
 
 @end
 
@@ -34,11 +33,5 @@
     // Pass the selected object to the new view controller.
 }
 */
-
-@synthesize deepLinkingCompletionDelegate;
-
-- (void)configureControlWithData:(NSDictionary *)data {
-    
-}
 
 @end

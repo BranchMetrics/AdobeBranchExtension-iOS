@@ -27,7 +27,6 @@
                                    andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
                                        NSString *pictureId = [params objectForKey:@"pictureId"];
                                        UIViewController *nextVC;
-                                       UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                                        if (error) {
                                            NSLog(@"%@", error); // TODO: Figure out whether we actually want to log here
                                        } else if (pictureId) {
