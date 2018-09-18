@@ -9,7 +9,7 @@
 #import "BranchExtension.h"
 #import "BranchExtensionListener.h"
 #import <Branch/Branch.h>
-
+#import "AppDelegate.h"
 
 @implementation BranchExtensionListener
 
@@ -25,21 +25,21 @@
             [branchInstance initSessionWithLaunchOptions:launchOptions
                                                  isReferrable:YES
                                    andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
+                                       UINavigationController *navC = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
                                        NSString *pictureId = [params objectForKey:@"pictureId"];
                                        UIViewController *nextVC;
+                                       UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                                        if (error) {
                                            NSLog(@"%@", error); // TODO: Figure out whether we actually want to log here
                                        } else if (pictureId) {
-                                           nextVC = [storyboard instantiateViewControllerWithIdentifier:@"PicVC"];
-                                           [nextVC setNextPictureId:pictureId];
-                                       } else {
-                                           nextVC = [storyboard instantiateViewControllerWithIdentifier:@"MainVC"];
+                                           nextVC = [storyboard instantiateViewControllerWithIdentifier:@"PictureViewController"];
+                                           //[nextVC sendBranchDeepLinkData:params];
+                                           [navC setViewControllers:@[nextVC] animated:YES];
                                        }
+//                                       else {
+//                                           nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
+//                                       }
                                    }];
-//            ExampleDeepLinkingController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]] instantiateViewControllerWithIdentifier:@"DeepLinkingController"];
-//
-//            [branchInstance registerDeepLinkController:controller forKey:@"product_picture" withPresentation:BNCViewControllerOptionShow];
-//            [branchInstance initSessionWithLaunchOptions:launchOptions automaticallyDisplayDeepLinkController:YES];
         }
     }
 }

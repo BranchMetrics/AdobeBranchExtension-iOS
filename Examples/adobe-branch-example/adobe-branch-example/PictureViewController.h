@@ -6,8 +6,8 @@
 //  Copyright © 2018 Aaron Lopez. All rights reserved.
 //
 
-#import "ViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface PictureViewController : ViewController
+@interface PictureViewController : UIViewController
 
 @end
