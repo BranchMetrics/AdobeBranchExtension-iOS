@@ -28,7 +28,7 @@
     // [ADBMobileMarketing configureWithAppId:@"launch-EN250ff13ac5814cb1a8750820b1f89b0a"];
 
     // option 2 - set config at runtime
-    //[self setupTestConfig];
+    [self setupTestConfig];
 
     NSError* error = nil;
     

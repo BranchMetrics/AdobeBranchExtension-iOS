@@ -9,7 +9,7 @@
 #import "BranchExtension.h"
 #import "BranchExtensionListener.h"
 #import "BranchConfig.h"
-#import <Branch.h>
+#import <Branch/Branch.h>
 #import "AppDelegate.h"
 
 @implementation BranchExtensionListener
