@@ -8,6 +8,7 @@
 
 #import "BranchExtension.h"
 #import "BranchExtensionListener.h"
+#import "BranchConfig.h"
 #import <Branch/Branch.h>
 #import "AppDelegate.h"
 
@@ -16,10 +17,14 @@
 - (void) hear: (nonnull ADBExtensionEvent*) event {
     NSDictionary* configuration = [self.extension.api getSharedEventState:@"com.adobe.module.configuration" event:event error:nil];
     
+    NSDictionary* configurationMod = [self.extension.api getSharedEventState:@"com.branch.extension" event:event error:nil];
+    
     if ([[event eventName]  isEqual: @"BRANCH_INIT"]) {
-        if (configuration[@"branchKey"]) {
+        if (configuration[BRANCH_KEY_CONFIG]) {
             NSDictionary *launchOptions = @{};
             Branch *branchInstance = [Branch getInstance:configuration[@"branchKey"]];
+            
+            // TODO: Call collectLaunchInfo to get launch options
             
             [branchInstance setDebug];
             [branchInstance initSessionWithLaunchOptions:launchOptions
@@ -41,6 +46,16 @@
 //                                       }
                                    }];
         }
+        
+//        ADBExtensionEvent* initEvent = [ADBExtensionEvent extensionEventWithName:@"BRANCH_INIT"
+//                                                                            type:branchEventTypeInit
+//                                                                          source:branchEventSourceStandard
+//                                                                            data:nil
+//                                                                           error:&error];
+//
+//        if (![self.api dispatchEvent:initEvent error:&error]) {
+//            NSLog(@"Error dispatching event %@:%ld", [error domain], [error code]);
+//        }
     }
 }
 

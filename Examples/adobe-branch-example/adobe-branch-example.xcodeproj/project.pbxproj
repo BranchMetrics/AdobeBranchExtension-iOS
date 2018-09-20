@@ -24,6 +24,7 @@
 		ACAE81332122645B0049505B /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE81322122645B0049505B /* UserNotifications.framework */; };
 		ACAE8135212264610049505B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE8134212264610049505B /* SystemConfiguration.framework */; };
 		ACF671CC2150B2B300CDC900 /* PictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACF671CB2150B2B300CDC900 /* PictureViewController.m */; };
+		ACF671CF21530D1A00CDC900 /* BranchConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = ACF671CE21530D1A00CDC900 /* BranchConfig.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -62,6 +63,8 @@
 		ACF671CA2150B2B300CDC900 /* PictureViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PictureViewController.h; sourceTree = "<group>"; };
 		ACF671CB2150B2B300CDC900 /* PictureViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PictureViewController.m; sourceTree = "<group>"; };
 		ACF671CD2150B42800CDC900 /* adobe-branch-example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "adobe-branch-example.entitlements"; sourceTree = "<group>"; };
+		ACF671CE21530D1A00CDC900 /* BranchConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchConfig.m; sourceTree = "<group>"; };
+		ACF671D021530D3A00CDC900 /* BranchConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchConfig.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,8 @@
 				AC4E0C742123A21E00C51ADD /* BranchExtension.m */,
 				AC379AE12133956F004E61D1 /* BranchExtensionListener.h */,
 				AC379AE22133956F004E61D1 /* BranchExtensionListener.m */,
+				ACF671D021530D3A00CDC900 /* BranchConfig.h */,
+				ACF671CE21530D1A00CDC900 /* BranchConfig.m */,
 				ACAE8107212263F30049505B /* AppDelegate.h */,
 				ACAE8108212263F30049505B /* AppDelegate.m */,
 				ACAE810A212263F30049505B /* ViewController.h */,
@@ -274,6 +279,7 @@
 				ACAE810C212263F40049505B /* ViewController.m in Sources */,
 				ACF671CC2150B2B300CDC900 /* PictureViewController.m in Sources */,
 				ACAE8117212263F40049505B /* main.m in Sources */,
+				ACF671CF21530D1A00CDC900 /* BranchConfig.m in Sources */,
 				ACAE8109212263F30049505B /* AppDelegate.m in Sources */,
 				AC4E0C752123A21F00C51ADD /* BranchExtension.m in Sources */,
 			);

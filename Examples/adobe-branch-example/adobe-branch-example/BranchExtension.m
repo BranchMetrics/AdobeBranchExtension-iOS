@@ -7,6 +7,7 @@
 
 #import "BranchExtension.h"
 #import "BranchExtensionListener.h"
+#import "BranchConfig.h"
 #import <Branch/Branch.h>
 
 @interface BranchExtension() {}
@@ -15,6 +16,7 @@
 
 NSString *const branchEventTypeInit = @"com.branch.eventType.init";
 NSString *const branchEventTypeCustom = @"com.branch.eventType.custom";
+NSString *const branchEventSourceStandard = @"com.branch.eventSource.standard";
 NSString *const branchEventSourceCustom = @"com.branch.eventSource.custom";
 
 @implementation BranchExtension
@@ -30,8 +32,8 @@ NSString *const branchEventSourceCustom = @"com.branch.eventSource.custom";
     if (self= [super init]) {
         NSError* error = nil;
         if ([self.api registerListener: [BranchExtensionListener class]
-                             eventType:branchEventTypeInit
-                           eventSource:branchEventSourceCustom
+                             eventType:BRANCH_EVENT_TYPE_INIT
+                           eventSource:BRANCH_EVENT_SOURCE_STANDARD
                                  error:&error]) {
             NSLog(@"BranchExtensionListener was registered");
         }
@@ -39,11 +41,20 @@ NSString *const branchEventSourceCustom = @"com.branch.eventSource.custom";
             NSLog(@"Error registering BranchExtensionListener: %@ %d", [error domain], (int)[error code]);
         }
         
+        NSDictionary* eventData = @{
+                    @"~state.com.branch.extension/deepLinkKey": @"pictureId",
+                    @"com.branch.extension/deepLinkKey": @"pictureId"
+        };
+        
         ADBExtensionEvent* initEvent = [ADBExtensionEvent extensionEventWithName:@"BRANCH_INIT"
-                                                                            type:branchEventTypeInit
-                                                                          source:branchEventSourceCustom
-                                                                            data:nil
+                                                                            type:BRANCH_EVENT_TYPE_INIT
+                                                                          source:BRANCH_EVENT_SOURCE_STANDARD
+                                                                            data:eventData
                                                                            error:&error];
+        
+        if (![self.api setSharedEventState:eventData event:initEvent error:&error]) {
+            NSLog(@"Error setting shared state %@:%ld", [error domain], [error code]);
+        }
         
         if (![self.api dispatchEvent:initEvent error:&error]) {
             NSLog(@"Error dispatching event %@:%ld", [error domain], [error code]);

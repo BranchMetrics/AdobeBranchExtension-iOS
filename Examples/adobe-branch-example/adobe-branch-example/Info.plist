@@ -52,5 +52,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>ADBMobileAppID</key>
+	<string>launch-EN250ff13ac5814cb1a8750820b1f89b0a</string>
 </dict>
 </plist>

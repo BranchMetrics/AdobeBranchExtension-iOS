@@ -23,20 +23,24 @@
     [ADBMobileMarketing setLogLevel:ADBMobileLogLevelDebug];
 
     // option 1 - access hosted Adobe config
-    // [ADBMobileMarketing configureWithAppId:@"launch-ENe8e233db5c6a43628d097ba8125aeb26-development"];
+    //[ADBMobileMarketing configureWithAppId:@"launch-ENe8e233db5c6a43628d097ba8125aeb26-development"];
+    // [ADBMobileMarketing configureWithAppId:@"launch-EN250ff13ac5814cb1a8750820b1f89b0a"];
 
     // option 2 - set config at runtime
-    [self setupTestConfig];
+    //[self setupTestConfig];
 
     NSError* error = nil;
     
     // [ADBMobileMarketing analyticsTrackAction:@"my v5 action" data:@{@"key1":@"value1"}];
 
-    if ([ADBMobileMarketing registerExtension:[BranchExtension class] withName:@"com.branch.extension" withVersion:@"1" error:&error]) {
+    if ([ADBMobileMarketing registerExtension:[BranchExtension class] withName:@"com.branch.extension" withVersion:@"1.0.0" error:&error]) {
         NSLog(@"Branch SDK Registered");
     } else {
         NSLog(@"%@", error);
     }
+    
+    [ADBMobileMarketing downloadRules];
+    
     return YES;
 }
 
@@ -109,7 +113,7 @@
     // ============================================================
     // rules engine
     // ============================================================
-    config[@"rules.url"] = @[@"https://assets.adobedtm.com/staging/launch-ENe8e233db5c6a43628d097ba8125aeb26-development-rules.zip"];
+    config[@"rules.url"] = @[@"https://assets.adobedtm.com/staging/launch-EN250ff13ac5814cb1a8750820b1f89b0a-development-rules.zip"];
     
     [ADBMobileMarketing updateConfiguration:config];
 }
