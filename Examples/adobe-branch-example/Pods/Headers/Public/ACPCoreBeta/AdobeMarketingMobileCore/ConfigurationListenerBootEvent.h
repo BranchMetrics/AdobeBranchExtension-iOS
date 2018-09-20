@@ -1,0 +1,1 @@
+../../../../ACPCoreBeta/AdobeMarketingMobileCore.framework/Headers/ConfigurationListenerBootEvent.h

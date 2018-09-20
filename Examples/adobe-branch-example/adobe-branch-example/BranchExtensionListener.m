@@ -9,12 +9,12 @@
 #import "BranchExtension.h"
 #import "BranchExtensionListener.h"
 #import "BranchConfig.h"
-#import <Branch/Branch.h>
+#import <Branch.h>
 #import "AppDelegate.h"
 
 @implementation BranchExtensionListener
 
-- (void) hear: (nonnull ADBExtensionEvent*) event {
+- (void) hear: (nonnull ACPExtensionEvent*) event {
     NSDictionary* configuration = [self.extension.api getSharedEventState:@"com.adobe.module.configuration" event:event error:nil];
     
     NSDictionary* configurationMod = [self.extension.api getSharedEventState:@"com.branch.extension" event:event error:nil];

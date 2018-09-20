@@ -29,7 +29,7 @@ ___
   + [Register for Branch key](#register-your-app)
   + [Add your Branch key](#add-your-branch-key-to-your-project)
   + [Register a URI scheme](#register-a-uri-scheme)
-  + [Support Universal Links](#support-universal-linking)
+  + [Support Universal Links](#support-universal-linking-ios-9-and-above)
 
 3. Branch general methods
   + [Get a Branch singleton](#get-a-singleton-branch-instance)
@@ -604,7 +604,7 @@ The `BranchEvent` class can be simple to use. For example:
 ###### Objective-C
 
 ```objc
-[BranchEvent.standardEvent(BranchStandardEventAddToCart) logEvent];
+[[BranchEvent standardEvent:BranchStandardEventAddToCart] logEvent];
 ```
 
 ###### Swift
@@ -618,7 +618,7 @@ For best results use the Branch standard event names defined in `BranchEvent.h`.
 ###### Objective-C
 
 ```objc
-[BranchEvent.customEventWithName(@"User_Scanned_Item") logEvent];
+[[BranchEvent customEventWithName:@"User_Scanned_Item"] logEvent];
 ```
 
 ###### Swift
@@ -744,7 +744,7 @@ statistics, such as total installs, referrals, and app link statistics.
 Call this method to enable checking for Apple Search Ads before Branch initialization.  This method
 must be called before you initialize your Branch session.
 
-Note that this will add about 1 second from call to initSession to callback due to Apple's latency.
+Note that this can add up to 10 seconds from call to initSession to callback due to Apple's latency.
 
 ###### Objective-C
 ```objc

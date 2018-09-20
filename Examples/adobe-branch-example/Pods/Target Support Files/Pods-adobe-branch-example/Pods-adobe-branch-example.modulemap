@@ -1,0 +1,6 @@
+framework module Pods_adobe_branch_example {
+  umbrella header "Pods-adobe-branch-example-umbrella.h"
+
+  export *
+  module * { export * }
+}

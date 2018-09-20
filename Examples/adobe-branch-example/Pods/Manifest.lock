@@ -1,18 +1,24 @@
 PODS:
-  - Branch (0.25.3):
-    - Branch/Core (= 0.25.3)
-  - Branch/Core (0.25.3)
+  - ACPCoreBeta (1.0.1beta):
+    - ACPCoreBeta/iOS (= 1.0.1beta)
+  - ACPCoreBeta/iOS (1.0.1beta)
+  - Branch (0.25.5):
+    - Branch/Core (= 0.25.5)
+  - Branch/Core (0.25.5)
 
 DEPENDENCIES:
+  - ACPCoreBeta (= 1.0.1beta)
   - Branch
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - ACPCoreBeta
     - Branch
 
 SPEC CHECKSUMS:
-  Branch: 9917f91a5381bc88ed8e4f080a18213267cf44e6
+  ACPCoreBeta: cac1a0b6b2c9e62ee4815bfd165582f46e422378
+  Branch: 848e8e908182a97678d9f5a854d10e59a40af2aa
 
-PODFILE CHECKSUM: 311ec582943df58b2f12a95be733134b7de45b89
+PODFILE CHECKSUM: 6f35c77597fff850502834649ae83e89f4964be8
 
 COCOAPODS: 1.5.3

@@ -1,6 +1,10 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
+## ACPCoreBeta
+
+Adobe Systems, Incorporated.  All Rights Reserved.
+
 ## Branch
 
 The MIT License (MIT)

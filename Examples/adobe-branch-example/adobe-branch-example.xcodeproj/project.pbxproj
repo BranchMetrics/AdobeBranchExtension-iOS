@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F72C205FAA27C7B323E7B61 /* libPods-adobe-branch-example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A206D14B27E58FEB6503E43E /* libPods-adobe-branch-example.a */; };
+		2162178E4AAC0B3A34AAEDDB /* libPods-adobe-branch-example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D01998719276E940F76A9652 /* libPods-adobe-branch-example.a */; };
 		AC379AE32133956F004E61D1 /* BranchExtensionListener.m in Sources */ = {isa = PBXBuildFile; fileRef = AC379AE22133956F004E61D1 /* BranchExtensionListener.m */; };
 		AC4E0C752123A21F00C51ADD /* BranchExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E0C742123A21E00C51ADD /* BranchExtension.m */; };
 		AC4E0C782123A27900C51ADD /* AdobeMobileLibrary_iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AC4E0C772123A27900C51ADD /* AdobeMobileLibrary_iOS.a */; };
@@ -25,12 +25,17 @@
 		ACAE8135212264610049505B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE8134212264610049505B /* SystemConfiguration.framework */; };
 		ACF671CC2150B2B300CDC900 /* PictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACF671CB2150B2B300CDC900 /* PictureViewController.m */; };
 		ACF671CF21530D1A00CDC900 /* BranchConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = ACF671CE21530D1A00CDC900 /* BranchConfig.m */; };
+		ACF671DA21534E4F00CDC900 /* AdobeMarketingMobileCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACF671D521534E4F00CDC900 /* AdobeMarketingMobileCore.framework */; };
+		ACF671DB21534E4F00CDC900 /* ACPIdentity_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACF671D621534E4F00CDC900 /* ACPIdentity_iOS.framework */; };
+		ACF671DC21534E4F00CDC900 /* ACPCore_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACF671D721534E4F00CDC900 /* ACPCore_iOS.framework */; };
+		ACF671DD21534E4F00CDC900 /* ACPSignal_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACF671D821534E4F00CDC900 /* ACPSignal_iOS.framework */; };
+		ACF671DE21534E4F00CDC900 /* ACPLifecycle_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACF671D921534E4F00CDC900 /* ACPLifecycle_iOS.framework */; };
+		ACF672032153753D00CDC900 /* Branch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACF672022153753D00CDC900 /* Branch.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		042330B0F51E1B334B04C380 /* Pods-adobe-branch-example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.release.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.release.xcconfig"; sourceTree = "<group>"; };
-		2C6C88DD0568901B3DC36FC4 /* Pods-adobe-branch-example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.debug.xcconfig"; sourceTree = "<group>"; };
-		A206D14B27E58FEB6503E43E /* libPods-adobe-branch-example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adobe-branch-example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		11EABBF2C45A91DE15B09146 /* Pods-adobe-branch-example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.release.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.release.xcconfig"; sourceTree = "<group>"; };
+		36D915163D31BAAB10B3FBF3 /* Pods-adobe-branch-example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.debug.xcconfig"; sourceTree = "<group>"; };
 		AC379AE12133956F004E61D1 /* BranchExtensionListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchExtensionListener.h; sourceTree = "<group>"; };
 		AC379AE22133956F004E61D1 /* BranchExtensionListener.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchExtensionListener.m; sourceTree = "<group>"; };
 		AC4E0C742123A21E00C51ADD /* BranchExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchExtension.m; sourceTree = "<group>"; };
@@ -65,6 +70,13 @@
 		ACF671CD2150B42800CDC900 /* adobe-branch-example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "adobe-branch-example.entitlements"; sourceTree = "<group>"; };
 		ACF671CE21530D1A00CDC900 /* BranchConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchConfig.m; sourceTree = "<group>"; };
 		ACF671D021530D3A00CDC900 /* BranchConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchConfig.h; sourceTree = "<group>"; };
+		ACF671D521534E4F00CDC900 /* AdobeMarketingMobileCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdobeMarketingMobileCore.framework; path = Pods/ACPCoreBeta/AdobeMarketingMobileCore.framework; sourceTree = "<group>"; };
+		ACF671D621534E4F00CDC900 /* ACPIdentity_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPIdentity_iOS.framework; path = Pods/ACPCoreBeta/ACPIdentity_iOS.framework; sourceTree = "<group>"; };
+		ACF671D721534E4F00CDC900 /* ACPCore_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPCore_iOS.framework; path = Pods/ACPCoreBeta/ACPCore_iOS.framework; sourceTree = "<group>"; };
+		ACF671D821534E4F00CDC900 /* ACPSignal_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPSignal_iOS.framework; path = Pods/ACPCoreBeta/ACPSignal_iOS.framework; sourceTree = "<group>"; };
+		ACF671D921534E4F00CDC900 /* ACPLifecycle_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPLifecycle_iOS.framework; path = Pods/ACPCoreBeta/ACPLifecycle_iOS.framework; sourceTree = "<group>"; };
+		ACF672022153753D00CDC900 /* Branch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Branch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D01998719276E940F76A9652 /* libPods-adobe-branch-example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adobe-branch-example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +84,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACF672032153753D00CDC900 /* Branch.framework in Frameworks */,
+				ACF671DA21534E4F00CDC900 /* AdobeMarketingMobileCore.framework in Frameworks */,
+				ACF671DB21534E4F00CDC900 /* ACPIdentity_iOS.framework in Frameworks */,
+				ACF671DC21534E4F00CDC900 /* ACPCore_iOS.framework in Frameworks */,
+				ACF671DD21534E4F00CDC900 /* ACPSignal_iOS.framework in Frameworks */,
+				ACF671DE21534E4F00CDC900 /* ACPLifecycle_iOS.framework in Frameworks */,
 				ACAE8135212264610049505B /* SystemConfiguration.framework in Frameworks */,
 				AC4E0C782123A27900C51ADD /* AdobeMobileLibrary_iOS.a in Frameworks */,
 				ACAE81332122645B0049505B /* UserNotifications.framework in Frameworks */,
@@ -79,13 +97,22 @@
 				ACAE812F2122644F0049505B /* libz.tbd in Frameworks */,
 				ACAE812D212264480049505B /* libstdc++.tbd in Frameworks */,
 				ACAE812B2122643A0049505B /* libsqlite3.tbd in Frameworks */,
-				1F72C205FAA27C7B323E7B61 /* libPods-adobe-branch-example.a in Frameworks */,
+				2162178E4AAC0B3A34AAEDDB /* libPods-adobe-branch-example.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1BA92D999F4AF034B8AEF911 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				36D915163D31BAAB10B3FBF3 /* Pods-adobe-branch-example.debug.xcconfig */,
+				11EABBF2C45A91DE15B09146 /* Pods-adobe-branch-example.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		ACAE80FB212263F30049505B = {
 			isa = PBXGroup;
 			children = (
@@ -93,7 +120,7 @@
 				ACAE8106212263F30049505B /* adobe-branch-example */,
 				ACAE8105212263F30049505B /* Products */,
 				ACAE81292122643A0049505B /* Frameworks */,
-				D452689E4C96644BA9258923 /* Pods */,
+				1BA92D999F4AF034B8AEF911 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -158,24 +185,21 @@
 		ACAE81292122643A0049505B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				ACF672022153753D00CDC900 /* Branch.framework */,
+				ACF671D721534E4F00CDC900 /* ACPCore_iOS.framework */,
+				ACF671D621534E4F00CDC900 /* ACPIdentity_iOS.framework */,
+				ACF671D921534E4F00CDC900 /* ACPLifecycle_iOS.framework */,
+				ACF671D821534E4F00CDC900 /* ACPSignal_iOS.framework */,
+				ACF671D521534E4F00CDC900 /* AdobeMarketingMobileCore.framework */,
 				ACAE8134212264610049505B /* SystemConfiguration.framework */,
 				ACAE81322122645B0049505B /* UserNotifications.framework */,
 				ACAE8130212264550049505B /* WebKit.framework */,
 				ACAE812E2122644E0049505B /* libz.tbd */,
 				ACAE812C212264480049505B /* libstdc++.tbd */,
 				ACAE812A2122643A0049505B /* libsqlite3.tbd */,
-				A206D14B27E58FEB6503E43E /* libPods-adobe-branch-example.a */,
+				D01998719276E940F76A9652 /* libPods-adobe-branch-example.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D452689E4C96644BA9258923 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				2C6C88DD0568901B3DC36FC4 /* Pods-adobe-branch-example.debug.xcconfig */,
-				042330B0F51E1B334B04C380 /* Pods-adobe-branch-example.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,10 +209,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ACAE811A212263F40049505B /* Build configuration list for PBXNativeTarget "adobe-branch-example" */;
 			buildPhases = (
-				2E79C02AB0C64DFDEE61BAAC /* [CP] Check Pods Manifest.lock */,
+				8CF6933BFAD3333F9DEB21DB /* [CP] Check Pods Manifest.lock */,
 				ACAE8100212263F30049505B /* Sources */,
 				ACAE8101212263F30049505B /* Frameworks */,
 				ACAE8102212263F30049505B /* Resources */,
+				BB9282DE5298ECDAF964D221 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -249,7 +274,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		2E79C02AB0C64DFDEE61BAAC /* [CP] Check Pods Manifest.lock */ = {
+		8CF6933BFAD3333F9DEB21DB /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -265,6 +290,32 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BB9282DE5298ECDAF964D221 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example-frameworks.sh",
+				"${PODS_ROOT}/ACPCoreBeta/ACPCore_iOS.framework",
+				"${PODS_ROOT}/ACPCoreBeta/AdobeMarketingMobileCore.framework",
+				"${PODS_ROOT}/ACPCoreBeta/ACPIdentity_iOS.framework",
+				"${PODS_ROOT}/ACPCoreBeta/ACPLifecycle_iOS.framework",
+				"${PODS_ROOT}/ACPCoreBeta/ACPSignal_iOS.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ACPCore_iOS.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AdobeMarketingMobileCore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ACPIdentity_iOS.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ACPLifecycle_iOS.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ACPSignal_iOS.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -411,12 +462,16 @@
 		};
 		ACAE811B212263F40049505B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2C6C88DD0568901B3DC36FC4 /* Pods-adobe-branch-example.debug.xcconfig */;
+			baseConfigurationReference = 36D915163D31BAAB10B3FBF3 /* Pods-adobe-branch-example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "adobe-branch-example/adobe-branch-example.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R63EM248DP;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/ACPCoreBeta",
+				);
 				INFOPLIST_FILE = "adobe-branch-example/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -431,12 +486,16 @@
 		};
 		ACAE811C212263F40049505B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 042330B0F51E1B334B04C380 /* Pods-adobe-branch-example.release.xcconfig */;
+			baseConfigurationReference = 11EABBF2C45A91DE15B09146 /* Pods-adobe-branch-example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "adobe-branch-example/adobe-branch-example.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R63EM248DP;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/ACPCoreBeta",
+				);
 				INFOPLIST_FILE = "adobe-branch-example/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (

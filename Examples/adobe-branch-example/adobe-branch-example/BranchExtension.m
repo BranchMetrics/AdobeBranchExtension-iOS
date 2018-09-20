@@ -46,7 +46,7 @@ NSString *const branchEventSourceCustom = @"com.branch.eventSource.custom";
                     @"com.branch.extension/deepLinkKey": @"pictureId"
         };
         
-        ADBExtensionEvent* initEvent = [ADBExtensionEvent extensionEventWithName:@"BRANCH_INIT"
+        ACPExtensionEvent* initEvent = [ACPExtensionEvent extensionEventWithName:@"BRANCH_INIT"
                                                                             type:BRANCH_EVENT_TYPE_INIT
                                                                           source:BRANCH_EVENT_SOURCE_STANDARD
                                                                             data:eventData
@@ -56,7 +56,8 @@ NSString *const branchEventSourceCustom = @"com.branch.eventSource.custom";
             NSLog(@"Error setting shared state %@:%ld", [error domain], [error code]);
         }
         
-        if (![self.api dispatchEvent:initEvent error:&error]) {
+        // ![self.api dispatchEvent:initEvent error:&error]
+        if ([ACPCore dispatchEvent:initEvent error:&error]) {
             NSLog(@"Error dispatching event %@:%ld", [error domain], [error code]);
         }
     }

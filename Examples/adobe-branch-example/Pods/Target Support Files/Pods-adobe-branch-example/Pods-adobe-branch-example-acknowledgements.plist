@@ -14,6 +14,16 @@
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Adobe Systems, Incorporated.  All Rights Reserved.</string>
+			<key>License</key>
+			<string>Commercial</string>
+			<key>Title</key>
+			<string>ACPCoreBeta</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>The MIT License (MIT)
 
 Copyright (c) 2015 Branch Metrics, Inc.

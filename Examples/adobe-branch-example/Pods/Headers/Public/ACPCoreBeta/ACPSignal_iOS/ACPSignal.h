@@ -1,0 +1,1 @@
+../../../../ACPCoreBeta/ACPSignal_iOS.framework/Headers/ACPSignal.h

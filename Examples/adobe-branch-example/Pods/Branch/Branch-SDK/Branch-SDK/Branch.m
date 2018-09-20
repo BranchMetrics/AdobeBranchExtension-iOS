@@ -129,8 +129,6 @@ typedef NS_ENUM(NSInteger, BNCInitStatus) {
 @property (strong, nonatomic) BNCServerInterface *serverInterface;
 @property (strong, nonatomic) BNCServerRequestQueue *requestQueue;
 @property (strong, nonatomic) dispatch_semaphore_t processing_sema;
-@property (copy,   nonatomic) callbackWithParams sessionInitWithParamsCallback;
-@property (copy,   nonatomic) callbackWithBranchUniversalObject sessionInitWithBranchUniversalObjectCallback;
 @property (assign, atomic)    NSInteger networkCount;
 @property (assign, nonatomic) NSInteger asyncRequestCount;
 @property (assign, nonatomic) BNCInitStatus initializationStatus;
@@ -144,7 +142,7 @@ typedef NS_ENUM(NSInteger, BNCInitStatus) {
 @property (assign, nonatomic) BOOL useCookieBasedMatching;
 @property (strong, nonatomic) NSDictionary *deepLinkDebugParams;
 @property (assign, nonatomic) BOOL accountForFacebookSDK;
-@property (assign, nonatomic) id FBSDKAppLinkUtility;
+@property (strong, nonatomic) id FBSDKAppLinkUtility;
 @property (assign, nonatomic) BOOL delayForAppleAds;
 @property (assign, nonatomic) BOOL searchAdsDebugMode;
 @property (strong, nonatomic) NSMutableArray *whiteListedSchemeList;
@@ -1571,7 +1569,7 @@ static BOOL bnc_enableFingerprintIDInCrashlyticsReports = YES;
 
     if (!universalObject) {
         NSError* error = [NSError branchErrorWithCode:BNCInitError localizedMessage:@"Branch Universal Object is nil"];
-        completion(universalObject,nil,error);
+        if (completion) completion(universalObject,nil,error);
         return;
     } else {
         [spotlightService indexWithBranchUniversalObject:universalObject
@@ -1579,7 +1577,7 @@ static BOOL bnc_enableFingerprintIDInCrashlyticsReports = YES;
                                                 callback:^(BranchUniversalObject * _Nullable universalObject,
                                                            NSString * _Nullable url,
                                                            NSError * _Nullable error) {
-                                              completion(universalObject,url,error);
+                                              if (completion) completion(universalObject,url,error);
                                           }];
     }
 }
@@ -1597,8 +1595,7 @@ static BOOL bnc_enableFingerprintIDInCrashlyticsReports = YES;
     [spotlight indexPrivatelyWithBranchUniversalObjects:universalObjects
                                              completion:^(NSArray<BranchUniversalObject *> * _Nullable universalObjects,
                                                           NSError * _Nullable error) {
-                                                 if (completion)
-                                                     completion(universalObjects,error);
+                                                 if (completion) completion(universalObjects,error);
                                              }];
 }
 
@@ -1613,8 +1610,7 @@ static BOOL bnc_enableFingerprintIDInCrashlyticsReports = YES;
                                                          andAlias:nil];
     [spotlight removeSearchableItemsWithIdentifier:dynamicUrl
                                           callback:^(NSError * _Nullable error) {
-                                              if (completion)
-                                                  completion(error);
+                                              if (completion) completion(error);
                                           }];
 }
 
@@ -1630,7 +1626,7 @@ static BOOL bnc_enableFingerprintIDInCrashlyticsReports = YES;
                                                               andTags:nil
                                                            andFeature:BNCSpotlightFeature
                                                              andStage:nil andAlias:nil];
-        [identifiers addObject:dynamicUrl];
+        if (dynamicUrl) [identifiers addObject:dynamicUrl];
     }
 
     [spotlight removeSearchableItemsWithIdentifiers:identifiers
@@ -1971,10 +1967,12 @@ static BOOL bnc_enableFingerprintIDInCrashlyticsReports = YES;
 }
 
 static inline void BNCPerformBlockOnMainThreadSync(dispatch_block_t block) {
-    if ([NSThread isMainThread]) {
-        block();
-    } else {
-        dispatch_sync(dispatch_get_main_queue(), block);
+    if (block) {
+        if ([NSThread isMainThread]) {
+            block();
+        } else {
+            dispatch_sync(dispatch_get_main_queue(), block);
+        }
     }
 }
 

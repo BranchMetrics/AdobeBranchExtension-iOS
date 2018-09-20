@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import "ADBMobileMarketing.h"
-#import "BranchExtension.h"
 #import <Branch/Branch.h>
+#import "BranchExtension.h"
+#import <ACPCore_iOS/ACPCore.h>
 
 @interface AppDelegate ()
 
@@ -20,7 +20,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    [ADBMobileMarketing setLogLevel:ADBMobileLogLevelDebug];
+    //[ADBMobileMarketing setLogLevel:ADBMobileLogLevelDebug];
+    [ACPCore setLogLevel:ACPMobileLogLevelDebug];
 
     // option 1 - access hosted Adobe config
     //[ADBMobileMarketing configureWithAppId:@"launch-ENe8e233db5c6a43628d097ba8125aeb26-development"];
@@ -32,14 +33,14 @@
     NSError* error = nil;
     
     // [ADBMobileMarketing analyticsTrackAction:@"my v5 action" data:@{@"key1":@"value1"}];
-
-    if ([ADBMobileMarketing registerExtension:[BranchExtension class] withName:@"com.branch.extension" withVersion:@"1.0.0" error:&error]) {
+    // [ACPCore registerExtension:[BranchExtension class] withName:@"com.branch.extension" withVersion:@"1.0.0" error:&error]
+    if ([ACPCore registerExtension:[BranchExtension class] error:&error]) {
         NSLog(@"Branch SDK Registered");
     } else {
         NSLog(@"%@", error);
     }
     
-    [ADBMobileMarketing downloadRules];
+    //[ADBMobileMarketing downloadRules];
     
     return YES;
 }
@@ -115,7 +116,8 @@
     // ============================================================
     config[@"rules.url"] = @[@"https://assets.adobedtm.com/staging/launch-EN250ff13ac5814cb1a8750820b1f89b0a-development-rules.zip"];
     
-    [ADBMobileMarketing updateConfiguration:config];
+    //[ADBMobileMarketing updateConfiguration:config];
+    [ACPCore updateConfiguration:config];
 }
 
 
