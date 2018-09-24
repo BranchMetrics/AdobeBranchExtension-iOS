@@ -10,6 +10,7 @@
 #import <Branch/Branch.h>
 #import "BranchExtension.h"
 #import <ACPCore_iOS/ACPCore.h>
+#import <ACPLifecycle_iOS/ACPLifecycle_iOS.h>
 
 @interface AppDelegate ()
 
@@ -36,6 +37,12 @@
     // [ACPCore registerExtension:[BranchExtension class] withName:@"com.branch.extension" withVersion:@"1.0.0" error:&error]
     if ([ACPCore registerExtension:[BranchExtension class] error:&error]) {
         NSLog(@"Branch SDK Registered");
+    } else {
+        NSLog(@"%@", error);
+    }
+    
+    if ([ACPCore registerExtension:[ACPLifecycle class] error:&error]) {
+        NSLog(@"Lifecycle SDK Registered");
     } else {
         NSLog(@"%@", error);
     }
