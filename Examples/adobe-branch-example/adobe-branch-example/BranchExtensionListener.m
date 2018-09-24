@@ -19,7 +19,7 @@
     
     NSDictionary* configurationMod = [self.extension.api getSharedEventState:@"com.branch.extension" event:event error:nil];
     
-    if ([[event eventName]  isEqual: @"BRANCH_INIT"]) {
+    if ([[event eventName]  isEqual: @"branch-init"]) {
         if (configuration[BRANCH_KEY_CONFIG]) {
             NSDictionary *launchOptions = @{};
             Branch *branchInstance = [Branch getInstance:configuration[@"branchKey"]];

@@ -21,11 +21,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     //[ADBMobileMarketing setLogLevel:ADBMobileLogLevelDebug];
-    [ACPCore setLogLevel:ACPMobileLogLevelDebug];
+    [ACPCore setLogLevel:ACPMobileLogLevelVerbose];
 
     // option 1 - access hosted Adobe config
     //[ADBMobileMarketing configureWithAppId:@"launch-ENe8e233db5c6a43628d097ba8125aeb26-development"];
-    // [ADBMobileMarketing configureWithAppId:@"launch-EN250ff13ac5814cb1a8750820b1f89b0a"];
+    //[ACPCore configureWithAppId:@"launch-EN250ff13ac5814cb1a8750820b1f89b0a-development"];
 
     // option 2 - set config at runtime
     [self setupTestConfig];
@@ -115,7 +115,11 @@
     // ============================================================
     // rules engine
     // ============================================================
-    config[@"rules.url"] = @[@"https://assets.adobedtm.com/staging/launch-EN250ff13ac5814cb1a8750820b1f89b0a-development-rules.zip"];
+    config[@"rules.url"] = @[@"https://assets.adobedtm.com/staging/launch-ENee36be989a3f4931970f56547f202af1-development-rules.zip"];
+    
+    config[@"com.branch.extension/deepLinkKey"] = @"pictureId";
+    
+    config[@"deepLinkKey"] = @"pictureId";
     
     //[ADBMobileMarketing updateConfiguration:config];
     [ACPCore updateConfiguration:config];

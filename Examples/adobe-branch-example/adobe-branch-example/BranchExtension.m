@@ -43,10 +43,13 @@ NSString *const branchEventSourceCustom = @"com.branch.eventSource.custom";
         
         NSDictionary* eventData = @{
                     @"~state.com.branch.extension/deepLinkKey": @"pictureId",
-                    @"com.branch.extension/deepLinkKey": @"pictureId"
+                    @"com.branch.extension/deepLinkKey": @"pictureId",
+                    @"~type": @"com.branch.eventType.init",
+                    @"~source": @"com.branch.eventSource.standard",
+                    @"deepLinkKey": @"pictureId"
         };
         
-        ACPExtensionEvent* initEvent = [ACPExtensionEvent extensionEventWithName:@"BRANCH_INIT"
+        ACPExtensionEvent* initEvent = [ACPExtensionEvent extensionEventWithName:@"branch-init"
                                                                             type:BRANCH_EVENT_TYPE_INIT
                                                                           source:BRANCH_EVENT_SOURCE_STANDARD
                                                                             data:eventData
