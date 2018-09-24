@@ -41,6 +41,7 @@
     }
     
     //[ADBMobileMarketing downloadRules];
+    [ACPCore downloadRules];
     
     return YES;
 }
