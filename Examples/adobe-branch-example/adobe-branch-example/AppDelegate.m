@@ -33,6 +33,11 @@
 
     NSError* error = nil;
     
+    [ACPCore downloadRules];
+    
+    [ACPLifecycle registerExtension];
+    
+    [ACPCore lifecycleStart:nil];
     // [ADBMobileMarketing analyticsTrackAction:@"my v5 action" data:@{@"key1":@"value1"}];
     // [ACPCore registerExtension:[BranchExtension class] withName:@"com.branch.extension" withVersion:@"1.0.0" error:&error]
     if ([ACPCore registerExtension:[BranchExtension class] error:&error]) {
@@ -40,15 +45,6 @@
     } else {
         NSLog(@"%@", error);
     }
-    
-    if ([ACPCore registerExtension:[ACPLifecycle class] error:&error]) {
-        NSLog(@"Lifecycle SDK Registered");
-    } else {
-        NSLog(@"%@", error);
-    }
-    
-    //[ADBMobileMarketing downloadRules];
-    [ACPCore downloadRules];
     
     return YES;
 }
@@ -122,7 +118,7 @@
     // ============================================================
     // rules engine
     // ============================================================
-    config[@"rules.url"] = @[@"https://assets.adobedtm.com/staging/launch-ENee36be989a3f4931970f56547f202af1-development-rules.zip"];
+    config[@"rules.url"] = @"https://assets.adobedtm.com/staging/launch-EN9ec4c2c17eab4160bea9480945cdeb4d-development-rules.zip";
     
     config[@"com.branch.extension/deepLinkKey"] = @"pictureId";
     

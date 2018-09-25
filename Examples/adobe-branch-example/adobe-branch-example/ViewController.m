@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import <ACPCore_iOS/ACPCore_iOS.h>
 
 @interface ViewController ()
 
@@ -18,6 +19,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     //[ADBMobileMarketing analyticsTrackAction:@"HI" data:nil];
+    
+    [ACPCore trackAction:@"action name" data:@{@"key":@"value"}];
 }
 
 
