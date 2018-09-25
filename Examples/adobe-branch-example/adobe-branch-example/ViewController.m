@@ -33,10 +33,10 @@
     // TODO'
     self.searchBar.delegate = self;
     
-//    staticArray = [productDictionary allKeys];
-//    nameArray = [productDictionary allKeys];
-    staticArray = @[@"Hi", @"hello", @"hola", @"apple"];
-    nameArray = @[@"Hi", @"hello", @"hola", @"apple"];
+    //    staticArray = [productDictionary allKeys];
+    //    nameArray = [productDictionary allKeys];
+    staticArray = @[@"Glasses", @"Stickers"];
+    nameArray = @[@"Glasses", @"Stickers"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -56,6 +56,8 @@
     static NSString *cellId = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     cell.textLabel.text = staticArray[indexPath.row];
+    cell.imageView.image = [UIImage imageNamed:[nameArray[indexPath.row] lowercaseString]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", (int)indexPath.row + 1];
     return cell;
 }
 
