@@ -7,6 +7,10 @@
 //
 
 #import "ProductViewController.h"
+#import "BranchConfig.h"
+#import <ACPCore_iOS/ACPCore.h>
+#import <ACPCore_iOS/ACPExtensionEvent.h>
+
 
 @interface ProductViewController ()
 
@@ -28,6 +32,19 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)shareButton:(id)sender {
+    NSError* error = nil;
+    ACPExtensionEvent* shareSheetEvent = [ACPExtensionEvent extensionEventWithName:@"branch-share-sheet"
+                                                                        type:BRANCH_EVENT_TYPE_SHARE_SHEET
+                                                                      source:BRANCH_EVENT_SOURCE_STANDARD
+                                                                        data:nil
+                                                                       error:&error];
+    
+    if ([ACPCore dispatchEvent:shareSheetEvent error:&error]) {
+        NSLog(@"Error dispatching event %@:%ld", [error domain], [error code]);
+    }
 }
 
 /*

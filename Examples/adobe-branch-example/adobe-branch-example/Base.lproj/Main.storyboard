@@ -97,6 +97,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="23"/>
                                 <state key="normal" title="Share"/>
+                                <connections>
+                                    <action selector="shareButton:" destination="wiH-p8-ls5" eventType="touchUpInside" id="6Yn-s3-wNz"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -105,7 +108,7 @@
                     <connections>
                         <outlet property="productImage" destination="Lmu-6U-vWb" id="QS0-zb-S6Y"/>
                         <outlet property="productTitle" destination="dkZ-db-8KV" id="7Wv-ld-3Uu"/>
-                        <outlet property="shareButton" destination="WZU-t8-mko" id="ijB-pS-0sh"/>
+                        <outlet property="shareButton" destination="WZU-t8-mko" id="0G5-mJ-L9a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AYd-vd-ENi" userLabel="First Responder" sceneMemberID="firstResponder"/>

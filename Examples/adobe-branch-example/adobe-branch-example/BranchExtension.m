@@ -41,12 +41,19 @@ NSString *const branchEventSourceCustom = @"com.branch.eventSource.custom";
             NSLog(@"Error registering BranchExtensionListener: %@ %d", [error domain], (int)[error code]);
         }
         
+        if ([self.api registerListener: [BranchExtensionListener class]
+                             eventType:BRANCH_EVENT_TYPE_SHARE_SHEET
+                           eventSource:BRANCH_EVENT_SOURCE_STANDARD
+                                 error:&error]) {
+            NSLog(@"BranchExtensionListener shareSheet was registered");
+        }
+        else {
+            NSLog(@"Error registering BranchExtensionListener: %@ %d", [error domain], (int)[error code]);
+        }
+        
+        
         NSDictionary* eventData = @{
-                    @"~state.com.branch.extension/deepLinkKey": @"pictureId",
-                    @"com.branch.extension/deepLinkKey": @"pictureId",
-                    @"~type": @"com.branch.eventType.init",
-                    @"~source": @"com.branch.eventSource.standard",
-                    @"deepLinkKey": @"pictureId"
+                                    @"initEventKey": @"initEventVal"
         };
         
         ACPExtensionEvent* initEvent = [ACPExtensionEvent extensionEventWithName:@"branch-init"
