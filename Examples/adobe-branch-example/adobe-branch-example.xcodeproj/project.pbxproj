@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC21DF732159FFD900CD5DAC /* Products.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC21DF722159FFD900CD5DAC /* Products.plist */; };
 		AC379AE32133956F004E61D1 /* BranchExtensionListener.m in Sources */ = {isa = PBXBuildFile; fileRef = AC379AE22133956F004E61D1 /* BranchExtensionListener.m */; };
 		AC4E0C752123A21F00C51ADD /* BranchExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E0C742123A21E00C51ADD /* BranchExtension.m */; };
 		ACAE8109212263F30049505B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ACAE8108212263F30049505B /* AppDelegate.m */; };
@@ -32,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		2E21CAD8A1C925AAF24986BC /* libPods-adobe-branch-example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adobe-branch-example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC21DF722159FFD900CD5DAC /* Products.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Products.plist; sourceTree = "<group>"; };
 		AC379AE12133956F004E61D1 /* BranchExtensionListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchExtensionListener.h; sourceTree = "<group>"; };
 		AC379AE22133956F004E61D1 /* BranchExtensionListener.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchExtensionListener.m; sourceTree = "<group>"; };
 		AC4E0C742123A21E00C51ADD /* BranchExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchExtension.m; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				ACAE8110212263F40049505B /* Assets.xcassets */,
 				ACAE8115212263F40049505B /* Info.plist */,
 				ACAE8116212263F40049505B /* main.m */,
+				AC21DF722159FFD900CD5DAC /* Products.plist */,
 			);
 			path = "adobe-branch-example";
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 			files = (
 				ACAE8111212263F40049505B /* Assets.xcassets in Resources */,
 				ACAE810F212263F40049505B /* Main.storyboard in Resources */,
+				AC21DF732159FFD900CD5DAC /* Products.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
