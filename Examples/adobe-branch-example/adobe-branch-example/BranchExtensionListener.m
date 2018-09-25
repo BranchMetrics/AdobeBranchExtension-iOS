@@ -11,6 +11,7 @@
 #import "BranchConfig.h"
 #import <Branch/Branch.h>
 #import "AppDelegate.h"
+#import "ProductViewController.h"
 
 @implementation BranchExtensionListener
 
@@ -31,15 +32,17 @@
                                                  isReferrable:YES
                                    andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
                                        UINavigationController *navC = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
-                                       NSString *pictureId = [params objectForKey:@"pictureId"];
-                                       UIViewController *nextVC;
+                                       NSString *productName = [params objectForKey:@"productName"];
+                                       //UIViewController *nextVC;
+                                       ProductViewController *nextVC;
                                        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                                        if (error) {
                                            NSLog(@"%@", error); // TODO: Figure out whether we actually want to log here
-                                       } else if (pictureId) {
-                                           nextVC = [storyboard instantiateViewControllerWithIdentifier:@"PictureViewController"];
-                                           //[nextVC sendBranchDeepLinkData:params];
-                                           [navC setViewControllers:@[nextVC] animated:YES];
+                                       } else if (productName) {
+                                           nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
+                                           nextVC.productData = [NSDictionary dictionaryWithDictionary:params];
+                                           //[navC setViewControllers:@[nextVC] animated:YES];
+                                           [navC pushViewController:nextVC animated:YES];
                                        }
 //                                       else {
 //                                           nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];

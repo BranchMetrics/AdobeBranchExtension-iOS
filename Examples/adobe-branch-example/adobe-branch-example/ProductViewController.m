@@ -1,22 +1,28 @@
 //
-//  PictureViewController.m
+//  ProductViewController.m
 //  adobe-branch-example
 //
-//  Created by Aaron Lopez on 9/17/18.
+//  Created by Aaron Lopez on 9/25/18.
 //  Copyright © 2018 Aaron Lopez. All rights reserved.
 //
 
-#import "PictureViewController.h"
+#import "ProductViewController.h"
 
-@interface PictureViewController ()
+@interface ProductViewController ()
 
+@property (weak, nonatomic) IBOutlet UIImageView *productImage;
+@property (weak, nonatomic) IBOutlet UILabel *productTitle;
+@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @end
 
-@implementation PictureViewController
+@implementation ProductViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    if (self.productData != nil) {
+        self.productTitle.text = self.productData[@"productName"];
+        self.productImage.image = [UIImage imageNamed:[self.productData[@"productName"] lowercaseString]];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

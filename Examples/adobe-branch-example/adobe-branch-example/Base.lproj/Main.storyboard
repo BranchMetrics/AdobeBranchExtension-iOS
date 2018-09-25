@@ -73,25 +73,40 @@
             </objects>
             <point key="canvasLocation" x="1608.8" y="35.532233883058474"/>
         </scene>
-        <!--Picture View Controller-->
+        <!--Product View Controller-->
         <scene sceneID="fu1-rc-dp0">
             <objects>
-                <viewController storyboardIdentifier="PictureViewController" id="wiH-p8-ls5" customClass="PictureViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProductViewController" id="wiH-p8-ls5" customClass="ProductViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="tc5-QK-0w5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Deep Link Page" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dkZ-db-8KV">
-                                <rect key="frame" x="114" y="323" width="147" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="My Deep Link Page" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dkZ-db-8KV">
+                                <rect key="frame" x="0.0" y="131" width="375" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lmu-6U-vWb">
+                                <rect key="frame" x="64" y="210" width="246" height="246"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WZU-t8-mko">
+                                <rect key="frame" x="150" y="507" width="75" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                <state key="normal" title="Share"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="yLL-Ho-JuP"/>
                     </view>
+                    <connections>
+                        <outlet property="productImage" destination="Lmu-6U-vWb" id="QS0-zb-S6Y"/>
+                        <outlet property="productTitle" destination="dkZ-db-8KV" id="7Wv-ld-3Uu"/>
+                        <outlet property="shareButton" destination="WZU-t8-mko" id="ijB-pS-0sh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AYd-vd-ENi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "ProductViewController.h"
 #import <ACPCore_iOS/ACPCore_iOS.h>
 
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate>
@@ -35,8 +36,8 @@
     
     //    staticArray = [productDictionary allKeys];
     //    nameArray = [productDictionary allKeys];
-    staticArray = @[@"Glasses", @"Stickers"];
-    nameArray = @[@"Glasses", @"Stickers"];
+    staticArray = @[@"glasses", @"stickers"];
+    nameArray = @[@"glasses", @"stickers"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -63,6 +64,14 @@
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return nameArray.count;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    ProductViewController *nextVC;
+    nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
+    nextVC.productData = @{@"productName": staticArray[indexPath.row]};
+    [self.navigationController pushViewController:nextVC animated:YES];
+    //    [navC pushViewController:nextVC animated:YES];
 }
 
 @end
