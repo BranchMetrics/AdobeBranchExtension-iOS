@@ -36,6 +36,9 @@ NSString *const branchEventSourceCustom = @"com.branch.eventSource.custom";
                            eventSource:BRANCH_EVENT_SOURCE_STANDARD
                                  error:&error]) {
             NSLog(@"BranchExtensionListener was registered");
+            
+//            [BNCLogLevelFromString(BNCLogLevelAll)];
+//            [BNCLogSetDisplayLevel(BNCLogLevelAll)];
         }
         else {
             NSLog(@"Error registering BranchExtensionListener: %@ %d", [error domain], (int)[error code]);
@@ -50,7 +53,6 @@ NSString *const branchEventSourceCustom = @"com.branch.eventSource.custom";
         else {
             NSLog(@"Error registering BranchExtensionListener: %@ %d", [error domain], (int)[error code]);
         }
-        
         
         NSDictionary* eventData = @{
                                     @"initEventKey": @"initEventVal"
