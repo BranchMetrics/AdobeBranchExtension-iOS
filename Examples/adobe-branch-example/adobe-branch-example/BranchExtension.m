@@ -5,10 +5,12 @@
 //  Copyright © 2018 Branch. All rights reserved.
 //
 
+#import <Branch/Branch.h>
 #import "BranchExtension.h"
 #import "BranchExtensionListener.h"
+#import "BranchExtensionRuleListener.h"
 #import "BranchConfig.h"
-#import <Branch/Branch.h>
+
 
 @interface BranchExtension() {}
 @property (strong, nullable) Branch *branchInstance;
@@ -44,14 +46,21 @@ NSString *const branchEventSourceCustom = @"com.branch.eventSource.custom";
             NSLog(@"Error registering BranchExtensionListener: %@ %d", [error domain], (int)[error code]);
         }
         
-        if ([self.api registerListener: [BranchExtensionListener class]
-                             eventType:BRANCH_EVENT_TYPE_SHARE_SHEET
-                           eventSource:BRANCH_EVENT_SOURCE_STANDARD
-                                 error:&error]) {
-            NSLog(@"BranchExtensionListener shareSheet was registered");
-        }
-        else {
-            NSLog(@"Error registering BranchExtensionListener: %@ %d", [error domain], (int)[error code]);
+//        if ([self.api registerListener: [BranchExtensionListener class]
+//                             eventType:BRANCH_EVENT_TYPE_SHARE_SHEET
+//                           eventSource:BRANCH_EVENT_SOURCE_STANDARD
+//                                 error:&error]) {
+//            NSLog(@"BranchExtensionListener shareSheet was registered");
+//        }
+//        else {
+//            NSLog(@"Error registering BranchExtensionListener: %@ %d", [error domain], (int)[error code]);
+//        }
+        
+        
+        if ([self.api registerWildcardListener:[BranchExtensionRuleListener class] error:&error]) {
+            NSLog(@"BranchExtensionRuleListener was registered");
+        } else if (error) {
+            NSLog(@"An error occurred while registering BranchExtensionRuleListener: %@ %d", [error domain], (int)[error code]);
         }
         
         NSDictionary* eventData = @{
