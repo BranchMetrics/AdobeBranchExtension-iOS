@@ -8,8 +8,10 @@
 
 #import <ACPCore_iOS/ACPCore.h>
 #import <ACPCore_iOS/ACPExtension.h>
+#import <ACPCore_iOS/ACPExtensionApi.h>
 #import <ACPCore_iOS/ACPExtensionEvent.h>
 #import <ACPCore_iOS/ACPExtensionListener.h>
+
 
 @interface BranchExtensionListener : ACPExtensionListener
 

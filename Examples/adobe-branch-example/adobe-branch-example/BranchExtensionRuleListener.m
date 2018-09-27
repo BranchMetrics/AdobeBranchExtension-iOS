@@ -33,7 +33,26 @@
         NSDictionary *eventData = [event eventData];
         NSDictionary *consequenceResult = [eventData objectForKey:@"triggeredconsequence"];
         NSString *consequenceType = [consequenceResult objectForKey:@"type"];
-        if ([consequenceType isEqualToString:@"show-share-sheet"]) {
+        if ([consequenceType isEqualToString:@"deep-link-route"]) {
+            // TODO: Implement deep linking here
+//            UINavigationController *navC = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+//            NSString *productName = [params objectForKey:@"productName"];
+//            //UIViewController *nextVC;
+//            ProductViewController *nextVC;
+//            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//            if (error) {
+//                NSLog(@"%@", error); // TODO: Figure out whether we actually want to log here
+//            } else if (productName) {
+//                nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
+//                nextVC.productData = [NSDictionary dictionaryWithDictionary:params];
+//                //[navC setViewControllers:@[nextVC] animated:YES];
+//                [navC pushViewController:nextVC animated:YES];
+//            }
+            //                                       else {
+            //                                           nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
+            //                                       }
+        } else if ([consequenceType isEqualToString:@"show-share-sheet"]) {
+            // TODO: Add ability to use detail data only here
             BranchUniversalObject *buo = [[BranchUniversalObject alloc] initWithCanonicalIdentifier:@"content/12345"];
             buo.title = @"My Content Title";
             buo.contentDescription = @"My Content Description";
@@ -64,7 +83,6 @@
                     NSLog(@"finished presenting");
                 }];
         }
-        
     }
 }
 

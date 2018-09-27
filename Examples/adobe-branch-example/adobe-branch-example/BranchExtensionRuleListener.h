@@ -14,4 +14,6 @@
 
 @interface BranchExtensionRuleListener : ACPExtensionListener
 
+- (void) showShareSheet: (nonnull NSDictionary*) data;
+
 @end

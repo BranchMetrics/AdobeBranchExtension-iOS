@@ -11,6 +11,7 @@
 extern NSString * const BRANCH_KEY_CONFIG;
 extern NSString * const BRANCH_EVENT_TYPE;
 extern NSString * const BRANCH_EVENT_TYPE_INIT;
+extern NSString * const BRANCH_EVENT_TYPE_DEEP_LINK;
 extern NSString * const BRANCH_EVENT_TYPE_SHARE_SHEET;
 extern NSString * const BRANCH_EVENT_TYPE_CONSTANT;
 extern NSString * const BRANCH_EVENT_SOURCE_STANDARD;
