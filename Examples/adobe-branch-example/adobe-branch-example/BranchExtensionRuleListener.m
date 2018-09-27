@@ -48,7 +48,7 @@
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             if (productName) {
                 nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
-                nextVC.productData = [NSDictionary dictionaryWithDictionary:params];
+                //nextVC.productData = [NSDictionary dictionaryWithDictionary:params];
                 [navC pushViewController:nextVC animated:YES];
             }
         } else if ([consequenceType isEqualToString:@"show-share-sheet"]) {
