@@ -9,6 +9,7 @@
 #import "BranchExtensionRuleListener.h"
 #import "BranchConfig.h"
 #import <Branch/Branch.h>
+#import "AppDelegate.h"
 #import "ProductViewController.h"
 
 @implementation BranchExtensionRuleListener
@@ -50,21 +51,6 @@
                 nextVC.productData = [NSDictionary dictionaryWithDictionary:params];
                 [navC pushViewController:nextVC animated:YES];
             }
-            
-//            if (error) {
-//                NSLog(@"%@", error); // TODO: Figure out whether we actually want to log here
-//            } else if (productName) {
-//                nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
-//                nextVC.productData = [NSDictionary dictionaryWithDictionary:params];
-//                //[navC setViewControllers:@[nextVC] animated:YES];
-//                [navC pushViewController:nextVC animated:YES];
-//            }
-//            if (productName) {
-//
-//            }
-            //                                       else {
-            //                                           nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
-            //                                       }
         } else if ([consequenceType isEqualToString:@"show-share-sheet"]) {
             // TODO: Add ability to use detail data only here
             BranchUniversalObject *buo = [[BranchUniversalObject alloc] initWithCanonicalIdentifier:@"content/12345"];
