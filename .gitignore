@@ -1,0 +1,25 @@
+# Mac
+.DS_Store
+.LSOverride
+
+# Xcode
+[Bb]uild
+*.xcuserstate
+*.xcuserdatad
+# *.xcscmblueprint # We should probably check this in.
+*.o
+
+# Pods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/Build
+carthage-files/*.zip
+carthage-files/Carthage
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output

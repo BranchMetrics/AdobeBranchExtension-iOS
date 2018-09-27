@@ -1,1 +1,0 @@
-../../../../ACPCoreBeta/AdobeMarketingMobileCore.framework/Headers/ConfigurationData.h

@@ -247,7 +247,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example-frameworks.sh",
 				"${PODS_ROOT}/ACPCoreBeta/ACPCore_iOS.framework",
 				"${PODS_ROOT}/ACPCoreBeta/AdobeMarketingMobileCore.framework",
 				"${PODS_ROOT}/ACPCoreBeta/ACPIdentity_iOS.framework",
@@ -264,7 +264,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		80D4725CEFFA1CA56A0BB493 /* [CP] Check Pods Manifest.lock */ = {

@@ -9,6 +9,7 @@
 #import "BranchExtensionRuleListener.h"
 #import "BranchConfig.h"
 #import <Branch/Branch.h>
+#import <Branch/BNCThreads.h>
 #import "AppDelegate.h"
 #import "ProductViewController.h"
 #import "AppDelegate.h"
@@ -28,6 +29,27 @@
 //    };
 //}
 
+- (void) showConsequenceDeepLinkRoute:(NSDictionary*)consequenceDetail {
+    // TODO: Implement deep linking here
+    NSString *deepLinkController = [consequenceDetail objectForKey:@"deepLinkController"];
+    UINavigationController *navigationController =
+        (id) [UIApplication sharedApplication].delegate.window.rootViewController;
+
+    //            NSString *productName = [params objectForKey:@"productName"];
+    NSString *productName = @"glasses";
+    NSDictionary *params = @{@"productName":@"glasses"};
+    //            //UIViewController *nextVC;
+    ProductViewController *nextVC;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    if (productName) {
+        nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
+        nextVC.productData = [NSDictionary dictionaryWithDictionary:params];
+        [navigationController pushViewController:nextVC animated:YES];
+        //[navC setViewControllers:@[nextVC] animated:YES];
+        //[navC pushViewController:nextVC animated:NO];
+    }
+}
+
 - (void) hear: (nonnull ACPExtensionEvent*) event {
     NSString *eventType = [event eventType];
     NSString *eventSource = [event eventSource];
@@ -38,23 +60,9 @@
     // TODO: Add more secure check for Branch events in case someone tries to spoof Branch rules
     if ([eventType isEqualToString:@"com.adobe.eventType.rulesEngine"]) {
         if ([consequenceType isEqualToString:@"deep-link-route"]) {
-            // TODO: Implement deep linking here
-            NSString *deepLinkController = [consequenceDetail objectForKey:@"deepLinkController"];
-            UINavigationController *navC = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
-//            NSString *productName = [params objectForKey:@"productName"];
-            NSString *productName = @"glasses";
-            NSDictionary *params = @{@"productName":@"glasses"};
-//            //UIViewController *nextVC;
-            ProductViewController *nextVC;
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            if (productName) {
-                nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
-                nextVC.productData = [NSDictionary dictionaryWithDictionary:params];
-                UIViewController *vc = [UIViewController bnc_currentViewController];
-                [vc presentViewController:nextVC animated:YES completion:nil];
-                //[navC setViewControllers:@[nextVC] animated:YES];
-                //[navC pushViewController:nextVC animated:NO];
-            }
+            BNCPerformBlockOnMainThreadAsync(^{
+                [self showConsequenceDeepLinkRoute:consequenceDetail];
+            });
         } else if ([consequenceType isEqualToString:@"show-share-sheet"]) {
             // TODO: Add ability to use detail data only here
             BranchUniversalObject *buo = [[BranchUniversalObject alloc] initWithCanonicalIdentifier:@"content/12345"];
