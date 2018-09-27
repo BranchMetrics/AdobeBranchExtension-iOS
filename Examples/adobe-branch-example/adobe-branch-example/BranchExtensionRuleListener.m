@@ -11,6 +11,7 @@
 #import <Branch/Branch.h>
 #import "AppDelegate.h"
 #import "ProductViewController.h"
+#import "AppDelegate.h"
 
 @implementation BranchExtensionRuleListener
 
@@ -48,8 +49,16 @@
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
             if (productName) {
                 nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
+<<<<<<< HEAD
                 nextVC.productData = params;
                 [navC pushViewController:nextVC animated:YES];
+=======
+                nextVC.productData = [NSDictionary dictionaryWithDictionary:params];
+                UIViewController *vc = [UIViewController bnc_currentViewController];
+                [vc presentViewController:nextVC animated:YES completion:nil];
+                //[navC setViewControllers:@[nextVC] animated:YES];
+                //[navC pushViewController:nextVC animated:NO];
+>>>>>>> 34536d1
             }
         } else if ([consequenceType isEqualToString:@"show-share-sheet"]) {
             // TODO: Add ability to use detail data only here
