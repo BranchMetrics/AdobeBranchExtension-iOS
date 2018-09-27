@@ -10,6 +10,7 @@
 #import "BranchConfig.h"
 #import <Branch/Branch.h>
 #import "ProductViewController.h"
+#import "AppDelegate.h"
 
 @implementation BranchExtensionRuleListener
 
@@ -48,7 +49,10 @@
             if (productName) {
                 nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
                 nextVC.productData = [NSDictionary dictionaryWithDictionary:params];
-                [navC pushViewController:nextVC animated:YES];
+                UIViewController *vc = [UIViewController bnc_currentViewController];
+                [vc presentViewController:nextVC animated:YES completion:nil];
+                //[navC setViewControllers:@[nextVC] animated:YES];
+                //[navC pushViewController:nextVC animated:NO];
             }
             
 //            if (error) {
