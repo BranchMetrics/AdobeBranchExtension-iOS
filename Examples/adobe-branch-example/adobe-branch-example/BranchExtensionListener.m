@@ -30,20 +30,22 @@
             [branchInstance initSessionWithLaunchOptions:launchOptions
                                                  isReferrable:YES
                                    andRegisterDeepLinkHandler:^(NSDictionary *params, NSError *error) {
-                                       NSDictionary* eventData = @{
-                                                                   @"pictureName": @"glasses"
-                                                                   };
-                                       
-                                       ACPExtensionEvent* initEvent = [ACPExtensionEvent extensionEventWithName:@"branch-deep-link-received"
-                                                                                                           type:BRANCH_EVENT_TYPE_DEEP_LINK
-                                                                                                         source:BRANCH_EVENT_SOURCE_STANDARD
-                                                                                                           data:eventData
-                                                                                                          error:&error];
-                                       
-                                       // TODO: See if we can add Branch deep link data to sharedShared state
-                                       
-                                       if ([ACPCore dispatchEvent:initEvent error:&error]) {
-                                           NSLog(@"Error dispatching event %@:%ld", [error domain], [error code]);
+                                       if ([[params objectForKey:@"+clicked_branch_link"] boolValue]) {
+                                           NSDictionary* eventData = @{
+                                                                       @"pictureName": @"glasses"
+                                                                       };
+                                           
+                                           ACPExtensionEvent* initEvent = [ACPExtensionEvent extensionEventWithName:@"branch-deep-link-received"
+                                                                                                               type:BRANCH_EVENT_TYPE_DEEP_LINK
+                                                                                                             source:BRANCH_EVENT_SOURCE_STANDARD
+                                                                                                               data:eventData
+                                                                                                              error:&error];
+                                           
+                                           // TODO: See if we can add Branch deep link data to sharedShared state
+                                           
+                                           if ([ACPCore dispatchEvent:initEvent error:&error]) {
+                                               NSLog(@"Error dispatching event %@:%ld", [error domain], [error code]);
+                                           }
                                        }
                                    }];
 

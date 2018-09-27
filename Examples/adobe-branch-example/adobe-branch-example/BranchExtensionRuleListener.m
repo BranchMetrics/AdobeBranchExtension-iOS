@@ -9,6 +9,7 @@
 #import "BranchExtensionRuleListener.h"
 #import "BranchConfig.h"
 #import <Branch/Branch.h>
+#import "ProductViewController.h"
 
 @implementation BranchExtensionRuleListener
 
@@ -28,18 +29,28 @@
 - (void) hear: (nonnull ACPExtensionEvent*) event {
     NSString *eventType = [event eventType];
     NSString *eventSource = [event eventSource];
+    NSDictionary *eventData = [event eventData];
+    NSDictionary *consequenceResult = [eventData objectForKey:@"triggeredconsequence"];
+    NSString *consequenceType = [consequenceResult objectForKey:@"type"];
+    NSDictionary *consequenceDetail = [consequenceResult objectForKey:@"detail"];
     // TODO: Add more secure check for Branch events in case someone tries to spoof Branch rules
     if ([eventType isEqualToString:@"com.adobe.eventType.rulesEngine"]) {
-        NSDictionary *eventData = [event eventData];
-        NSDictionary *consequenceResult = [eventData objectForKey:@"triggeredconsequence"];
-        NSString *consequenceType = [consequenceResult objectForKey:@"type"];
         if ([consequenceType isEqualToString:@"deep-link-route"]) {
             // TODO: Implement deep linking here
-//            UINavigationController *navC = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+            NSString *deepLinkController = [consequenceDetail objectForKey:@"deepLinkController"];
+            UINavigationController *navC = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
 //            NSString *productName = [params objectForKey:@"productName"];
+            NSString *productName = @"glasses";
+            NSDictionary *params = @{@"productName":@"glasses"};
 //            //UIViewController *nextVC;
-//            ProductViewController *nextVC;
-//            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            ProductViewController *nextVC;
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            if (productName) {
+                nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
+                nextVC.productData = [NSDictionary dictionaryWithDictionary:params];
+                [navC pushViewController:nextVC animated:YES];
+            }
+            
 //            if (error) {
 //                NSLog(@"%@", error); // TODO: Figure out whether we actually want to log here
 //            } else if (productName) {
@@ -47,6 +58,9 @@
 //                nextVC.productData = [NSDictionary dictionaryWithDictionary:params];
 //                //[navC setViewControllers:@[nextVC] animated:YES];
 //                [navC pushViewController:nextVC animated:YES];
+//            }
+//            if (productName) {
+//
 //            }
             //                                       else {
             //                                           nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ViewController"];
