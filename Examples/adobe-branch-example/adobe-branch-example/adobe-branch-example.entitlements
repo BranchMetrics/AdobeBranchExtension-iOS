@@ -5,6 +5,8 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:adobe-branch.app.link</string>
+		<string>applinks:adobe-branch-alternate.app.link</string>
+		<string>applinks:adobe-branch.test-app.link</string>
 	</array>
 </dict>
 </plist>

@@ -6,13 +6,12 @@
 //  Copyright © 2018 Aaron Lopez. All rights reserved.
 //
 
-#import <ACPCore_iOS/ACPCore.h>
-#import <ACPCore_iOS/ACPExtension.h>
-#import <ACPCore_iOS/ACPExtensionApi.h>
-#import <ACPCore_iOS/ACPExtensionEvent.h>
-#import <ACPCore_iOS/ACPExtensionListener.h>
+#import <Foundation/Foundation.h>
+#import <ACPCore_iOS/ACPCore_iOS.h>
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface BranchExtensionListener : ACPExtensionListener
-
 @end
+
+NS_ASSUME_NONNULL_END

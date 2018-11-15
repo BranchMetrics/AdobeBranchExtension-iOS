@@ -13,6 +13,7 @@
 #import "AppDelegate.h"
 #import "ProductViewController.h"
 #import "AppDelegate.h"
+#import "Product.h"
 
 @implementation BranchExtensionRuleListener
 
@@ -29,11 +30,15 @@
 //    };
 //}
 
-- (void) showConsequenceDeepLinkRoute:(NSDictionary*)consequenceDetail {
+- (void) showConsequenceDeepLinkRoute:(NSDictionary*)detail {
     // TODO: Implement deep linking here
-    NSString *deepLinkController = [consequenceDetail objectForKey:@"deepLinkController"];
+    NSLog(@"Deep link routed: %@.", detail);
+/*
+//  NSString *deepLinkController = [consequenceDetail objectForKey:@"deepLinkController"];
+
     UINavigationController *navigationController =
         (id) [UIApplication sharedApplication].delegate.window.rootViewController;
+
 
     //            NSString *productName = [params objectForKey:@"productName"];
     NSString *productName = @"glasses";
@@ -43,64 +48,78 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     if (productName) {
         nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
-        nextVC.productData = [NSDictionary dictionaryWithDictionary:params];
+        nextVC.product = Product.new;
+        nextVC.product.name =
         [navigationController pushViewController:nextVC animated:YES];
         //[navC setViewControllers:@[nextVC] animated:YES];
         //[navC pushViewController:nextVC animated:NO];
     }
+*/
 }
 
-- (void) hear: (nonnull ACPExtensionEvent*) event {
+- (void) hear:(ACPExtensionEvent*)event {
     NSString *eventType = [event eventType];
-    NSString *eventSource = [event eventSource];
-    NSDictionary *eventData = [event eventData];
-    NSDictionary *consequenceResult = [eventData objectForKey:@"triggeredconsequence"];
-    NSString *consequenceType = [consequenceResult objectForKey:@"type"];
-    NSDictionary *consequenceDetail = [consequenceResult objectForKey:@"detail"];
-    // TODO: Add more secure check for Branch events in case someone tries to spoof Branch rules
-    if ([eventType isEqualToString:@"com.adobe.eventType.rulesEngine"]) {
-        if ([consequenceType isEqualToString:@"deep-link-route"]) {
-            BNCPerformBlockOnMainThreadAsync(^{
-                [self showConsequenceDeepLinkRoute:consequenceDetail];
-            });
-        } else if ([consequenceType isEqualToString:@"show-share-sheet"]) {
-            // TODO: Add ability to use detail data only here
-            BranchUniversalObject *buo = [[BranchUniversalObject alloc] initWithCanonicalIdentifier:@"content/12345"];
-            buo.title = @"My Content Title";
-            buo.contentDescription = @"My Content Description";
-            buo.imageUrl = @"https://lorempixel.com/400/400";
-            buo.publiclyIndex = YES;
-            buo.locallyIndex = YES;
-            buo.contentMetadata.customMetadata[@"key1"] = @"value1";
-    
-            BranchLinkProperties *lp = [[BranchLinkProperties alloc] init];
-            lp.feature = @"facebook";
-            lp.channel = @"sharing";
-            lp.campaign = @"content 123 launch";
-            lp.stage = @"new user";
-            lp.tags = @[@"one", @"two", @"three"];
-    
-            [lp addControlParam:@"$desktop_url" withValue: @"http://example.com/desktop"];
-            [lp addControlParam:@"$ios_url" withValue: @"http://example.com/ios"];
-            [lp addControlParam:@"$ipad_url" withValue: @"http://example.com/ios"];
-            [lp addControlParam:@"$android_url" withValue: @"http://example.com/android"];
-            [lp addControlParam:@"$match_duration" withValue: @"2000"];
-    
-            [lp addControlParam:@"custom_data" withValue: @"yes"];
-            [lp addControlParam:@"look_at" withValue: @"this"];
-            [lp addControlParam:@"nav_to" withValue: @"over here"];
-            [lp addControlParam:@"random" withValue: [[NSUUID UUID] UUIDString]];
-    
-            [buo showShareSheetWithLinkProperties:lp andShareText:@"Super amazing thing I want to share!" fromViewController:nil completion:^(NSString* activityType, BOOL completed) {
-                    NSLog(@"finished presenting");
-                }];
-        }
+    if (![eventType isEqualToString:@"com.adobe.eventType.rulesEngine"])
+        return;
+
+//  NSString *eventSource = [event eventSource];
+
+    NSDictionary*consequence = event.eventData[@"triggeredconsequence"];
+    NSString*type = consequence[@"type"];
+    NSDictionary*detail = consequence[@"detail"];
+
+    // TODO: Add more secure check for Branch events in case someone tries to spoof Branch rules ??
+
+    if ([type isEqualToString:@"deep-link-route"]) {
+        BNCPerformBlockOnMainThreadAsync(^{
+            [self showConsequenceDeepLinkRoute:detail];
+        });
+    } else
+    if ([type isEqualToString:@"show-share-sheet"]) {
+        BNCPerformBlockOnMainThreadAsync(^ {
+            [self showShareSheet:detail];
+        });
     }
 }
 
-// TODO: Implement and call in case above
-- (void) showShareSheet: (nonnull NSDictionary*) data {
-    
+- (void) showShareSheet:(NSDictionary*)data {
+    /*
+    *Adobe Fields*
+
+    campaign = share;
+    contentDescription = MyContent;
+    contentImage = "https://cdn.branch.io/branch-assets/1538165719615-og_image.jpeg";
+    contentTitle = BranchGlasses;
+    shareText = MyDemoShareText;
+    tags = tag;
+    */
+
+    BranchUniversalObject *buo = BranchUniversalObject.new;
+    buo.title = data[@"contentTitle"];
+    buo.canonicalIdentifier = data[@"canonicalIdentifier"];
+    if (buo.title.length == 0 && buo.canonicalIdentifier.length == 0) {
+        BNCLogError(@"Canonical ID or title must be set for Branch Universal Objects");
+        return;
+    }
+    buo.contentDescription = data[@"contentDescription"];
+    buo.imageUrl = data[@"contentImage"];
+    buo.locallyIndex = YES;
+
+    BranchLinkProperties *lp = [[BranchLinkProperties alloc] init];
+    lp.campaign = data[@"campaign"];
+    NSArray*tags = data[@"tags"];
+    if ([tags isKindOfClass:NSString.class]) {
+        tags = @[ tags ];
+    }
+    if ([tags isKindOfClass:NSArray.class]) {
+        lp.tags = tags;
+    }
+
+    BranchShareLink*shareLink =
+        [[BranchShareLink alloc] initWithUniversalObject:buo linkProperties:lp];
+    shareLink.title = buo.title ?: @"";
+    shareLink.shareText = data[@"shareText"] ?: @"";
+    [shareLink presentActivityViewControllerFromViewController:nil anchor:nil];
 }
 
 @end

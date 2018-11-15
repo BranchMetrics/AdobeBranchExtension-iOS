@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ProductListViewController.h
 //  adobe-branch-example
 //
 //  Created by Aaron Lopez on 8/13/18.
@@ -8,7 +8,5 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface ProductListViewController : UIViewController
 @end
-

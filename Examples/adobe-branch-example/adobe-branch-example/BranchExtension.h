@@ -6,16 +6,13 @@
 //
 
 #import <Foundation/Foundation.h>
-//#import "ADBExtension.h"
-//#import "ADBExtensionEvent.h"
-//#import "ADBExtensionApi.h"
-#import <ACPCore_iOS/ACPCore.h>
-#import <ACPCore_iOS/ACPExtension.h>
-#import <ACPCore_iOS/ACPExtensionEvent.h>
-#import <ACPCore_iOS/ACPExtensionApi.h>
+#import <ACPCore_iOS/ACPCore_iOS.h>
 
-extern NSString * const branchEventTypeInit;
+NS_ASSUME_NONNULL_BEGIN
 
-@interface BranchExtension : ACPExtension {}
-- (void) onUnregister;
+FOUNDATION_EXPORT NSString*const BranchEventTypeInit;
+
+@interface BranchExtension : ACPExtension
 @end
+
+NS_ASSUME_NONNULL_END

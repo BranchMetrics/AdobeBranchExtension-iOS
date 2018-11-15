@@ -5,14 +5,13 @@
 //  Copyright © 2018 Branch. All rights reserved.
 //
 
-#import <Branch/Branch.h>
 #import "BranchExtension.h"
 #import "BranchExtensionListener.h"
 #import "BranchExtensionRuleListener.h"
 #import "BranchConfig.h"
+#import <Branch/Branch.h>
 
-
-@interface BranchExtension() {}
+@interface BranchExtension()
 @property (strong, nullable) Branch *branchInstance;
 @end
 
@@ -22,6 +21,7 @@ NSString *const branchEventSourceStandard = @"com.branch.eventSource.standard";
 NSString *const branchEventSourceCustom = @"com.branch.eventSource.custom";
 
 @implementation BranchExtension
+
 - (nullable NSString*) name {
     return @"com.branch.extension";
 }
@@ -31,62 +31,49 @@ NSString *const branchEventSourceCustom = @"com.branch.eventSource.custom";
 }
 
 - (instancetype) init {
-    if (self= [super init]) {
-        NSError* error = nil;
-        if ([self.api registerListener: [BranchExtensionListener class]
-                             eventType:BRANCH_EVENT_TYPE_INIT
-                           eventSource:BRANCH_EVENT_SOURCE_STANDARD
-                                 error:&error]) {
-            NSLog(@"BranchExtensionListener was registered");
-            
-//            [BNCLogLevelFromString(BNCLogLevelAll)];
-//            [BNCLogSetDisplayLevel(BNCLogLevelAll)];
-        }
-        else {
-            NSLog(@"Error registering BranchExtensionListener: %@ %d", [error domain], (int)[error code]);
-        }
-        
-//        if ([self.api registerListener: [BranchExtensionListener class]
-//                             eventType:BRANCH_EVENT_TYPE_SHARE_SHEET
-//                           eventSource:BRANCH_EVENT_SOURCE_STANDARD
-//                                 error:&error]) {
-//            NSLog(@"BranchExtensionListener shareSheet was registered");
-//        }
-//        else {
-//            NSLog(@"Error registering BranchExtensionListener: %@ %d", [error domain], (int)[error code]);
-//        }
-        
-        
-        if ([self.api registerWildcardListener:[BranchExtensionRuleListener class] error:&error]) {
-            NSLog(@"BranchExtensionRuleListener was registered");
-        } else if (error) {
-            NSLog(@"An error occurred while registering BranchExtensionRuleListener: %@ %d", [error domain], (int)[error code]);
-        }
-        
-        NSDictionary* eventData = @{
-                                    @"initEventKey": @"initEventVal"
-        };
-        
-        ACPExtensionEvent* initEvent = [ACPExtensionEvent extensionEventWithName:@"branch-init"
-                                                                            type:BRANCH_EVENT_TYPE_INIT
-                                                                          source:BRANCH_EVENT_SOURCE_STANDARD
-                                                                            data:eventData
-                                                                           error:&error];
-        
-        if (![self.api setSharedEventState:eventData event:initEvent error:&error]) {
-            NSLog(@"Error setting shared state %@:%ld", [error domain], [error code]);
-        }
-        
-        // ![self.api dispatchEvent:initEvent error:&error]
-        if ([ACPCore dispatchEvent:initEvent error:&error]) {
-            NSLog(@"Error dispatching event %@:%ld", [error domain], [error code]);
-        }
-    }
-    return self;
-}
+    self = [super init];
+    if (!self) return self;
 
-- (void) onUnregister {
-    [super onUnregister];
+    // Turn logging on for now.
+    BNCLogSetDisplayLevel(BNCLogLevelAll);
+
+    NSError* error = nil;
+    if ([self.api registerListener:[BranchExtensionListener class]
+                         eventType:BRANCH_EVENT_TYPE_INIT
+                       eventSource:BRANCH_EVENT_SOURCE_STANDARD
+                             error:&error]) {
+        BNCLog(@"BranchExtensionListener was registered.");
+    } else {
+        BNCLogError(@"Error registering BranchExtensionListener: %@.", error);
+    }
+
+    if ([self.api registerWildcardListener:[BranchExtensionRuleListener class] error:&error]) {
+        BNCLog(@"BranchExtensionRuleListener was registered.");
+    } else {
+        BNCLogError(@"Can't register BranchExtensionRuleListener: %@.", error);
+    }
+
+    NSDictionary* eventData = @{
+        @"initEventKey": @"initEventVal"
+    };
+
+    ACPExtensionEvent* initEvent =
+        [ACPExtensionEvent extensionEventWithName:@"branch-init"
+            type:BRANCH_EVENT_TYPE_INIT
+            source:BRANCH_EVENT_SOURCE_STANDARD
+            data:eventData
+            error:&error];
+
+    if (![self.api setSharedEventState:eventData event:initEvent error:&error]) {
+        BNCLogError(@"Can't set shared state: %@.", error);
+    }
+
+    // ![self.api dispatchEvent:initEvent error:&error]
+    if (![ACPCore dispatchEvent:initEvent error:&error]) {
+        BNCLogError(@"Can't dispatch event %@.", error);
+    }
+
+    return self;
 }
 
 @end

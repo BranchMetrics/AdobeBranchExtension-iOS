@@ -6,14 +6,13 @@
 //  Copyright © 2018 Aaron Lopez. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
 #import <ACPCore_iOS/ACPCore_iOS.h>
-#import <ACPCore_iOS/ACPExtension.h>
-#import <ACPCore_iOS/ACPExtensionEvent.h>
-#import <ACPCore_iOS/ACPExtensionListener.h>
 
+NS_ASSUME_NONNULL_BEGIN
 
 @interface BranchExtensionRuleListener : ACPExtensionListener
-
-- (void) showShareSheet: (nonnull NSDictionary*) data;
-
+- (void) showShareSheet:(nonnull NSDictionary*)data;
 @end
+
+NS_ASSUME_NONNULL_END

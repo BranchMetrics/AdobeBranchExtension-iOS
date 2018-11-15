@@ -7,5 +7,5 @@ target 'adobe-branch-example' do
 
   # Pods for adobe-branch-example
   pod 'Branch'
-  pod 'ACPCoreBeta', '1.0.1beta'
+  pod 'ACPCoreBeta', '>= 1.0.1beta'
 end

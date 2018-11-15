@@ -13,13 +13,13 @@
 #import <ACPLifecycle_iOS/ACPLifecycle_iOS.h>
 
 @interface AppDelegate ()
-
 @end
 
 @implementation AppDelegate
 
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    NSError* error = nil;
+
     // Override point for customization after application launch.
     //[ADBMobileMarketing setLogLevel:ADBMobileLogLevelDebug];
     [ACPCore setLogLevel:ACPMobileLogLevelVerbose];
@@ -30,11 +30,7 @@
 
     // option 2 - set config at runtime
     [self setupTestConfig];
-
-    NSError* error = nil;
-    
     [ACPCore downloadRules];
-    
     [ACPLifecycle registerExtension];
     
     [ACPCore lifecycleStart:nil];
@@ -49,14 +45,16 @@
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+- (BOOL)application:(UIApplication *)app
+        openURL:(NSURL *)url
+        options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     [[Branch getInstance] application:app openURL:url options:options];
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application
-continueUserActivity:(NSUserActivity *)userActivity
-  restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler {
+        continueUserActivity:(NSUserActivity *)userActivity
+        restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler {
     [[Branch getInstance] continueUserActivity:userActivity];
     return YES;
 }
@@ -122,14 +120,11 @@ continueUserActivity:(NSUserActivity *)userActivity
     // ============================================================
     // config[@"rules.url"] = @"https://assets.adobedtm.com/staging/launch-EN9ec4c2c17eab4160bea9480945cdeb4d-development-rules.zip";
     config[@"rules.url"] = @"https://assets.adobedtm.com/staging/launch-EN23ef0b4732004b088acea70c57a44fe2-development-rules.zip";
-    
     config[@"com.branch.extension/deepLinkKey"] = @"pictureId";
-    
     config[@"deepLinkKey"] = @"pictureId";
     
     //[ADBMobileMarketing updateConfiguration:config];
     [ACPCore updateConfiguration:config];
 }
-
 
 @end
