@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name             = "Adobe-Marketing-Branch"
+  s.name             = "Adobe-Branch"
   s.version          = "0.1.0"
   s.summary          = "Branch Integration for Analytics for iOS."
 

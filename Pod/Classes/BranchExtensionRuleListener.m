@@ -10,10 +10,6 @@
 #import "BranchConfig.h"
 #import <Branch/Branch.h>
 #import <Branch/BNCThreads.h>
-#import "AppDelegate.h"
-#import "ProductViewController.h"
-#import "AppDelegate.h"
-#import "Product.h"
 
 @implementation BranchExtensionRuleListener
 

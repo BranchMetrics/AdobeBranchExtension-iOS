@@ -10,9 +10,6 @@
 		4DE097FD219CEABE008AC401 /* Products.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DE097FC219CEABE008AC401 /* Products.json */; };
 		4DE09800219CEE71008AC401 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DE097FF219CEE71008AC401 /* Product.m */; };
 		AC21DF78215AA0EB00CD5DAC /* ProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC21DF77215AA0EB00CD5DAC /* ProductViewController.m */; };
-		AC21DF7B215C550700CD5DAC /* BranchExtensionRuleListener.m in Sources */ = {isa = PBXBuildFile; fileRef = AC21DF7A215C550700CD5DAC /* BranchExtensionRuleListener.m */; };
-		AC379AE32133956F004E61D1 /* BranchExtensionListener.m in Sources */ = {isa = PBXBuildFile; fileRef = AC379AE22133956F004E61D1 /* BranchExtensionListener.m */; };
-		AC4E0C752123A21F00C51ADD /* BranchExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = AC4E0C742123A21E00C51ADD /* BranchExtension.m */; };
 		ACAE8109212263F30049505B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ACAE8108212263F30049505B /* AppDelegate.m */; };
 		ACAE810C212263F40049505B /* ProductListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACAE810B212263F40049505B /* ProductListViewController.m */; };
 		ACAE810F212263F40049505B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACAE810D212263F40049505B /* Main.storyboard */; };
@@ -24,7 +21,6 @@
 		ACAE8131212264550049505B /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE8130212264550049505B /* WebKit.framework */; };
 		ACAE81332122645B0049505B /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE81322122645B0049505B /* UserNotifications.framework */; };
 		ACAE8135212264610049505B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE8134212264610049505B /* SystemConfiguration.framework */; };
-		ACF671CF21530D1A00CDC900 /* BranchConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = ACF671CE21530D1A00CDC900 /* BranchConfig.m */; };
 		ACF671DA21534E4F00CDC900 /* AdobeMarketingMobileCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACF671D521534E4F00CDC900 /* AdobeMarketingMobileCore.framework */; };
 		ACF671DB21534E4F00CDC900 /* ACPIdentity_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACF671D621534E4F00CDC900 /* ACPIdentity_iOS.framework */; };
 		ACF671DC21534E4F00CDC900 /* ACPCore_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACF671D721534E4F00CDC900 /* ACPCore_iOS.framework */; };
@@ -40,12 +36,6 @@
 		4DE097FF219CEE71008AC401 /* Product.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
 		AC21DF76215AA0EB00CD5DAC /* ProductViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProductViewController.h; sourceTree = "<group>"; };
 		AC21DF77215AA0EB00CD5DAC /* ProductViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProductViewController.m; sourceTree = "<group>"; };
-		AC21DF79215C550700CD5DAC /* BranchExtensionRuleListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchExtensionRuleListener.h; sourceTree = "<group>"; };
-		AC21DF7A215C550700CD5DAC /* BranchExtensionRuleListener.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchExtensionRuleListener.m; sourceTree = "<group>"; };
-		AC379AE12133956F004E61D1 /* BranchExtensionListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchExtensionListener.h; sourceTree = "<group>"; };
-		AC379AE22133956F004E61D1 /* BranchExtensionListener.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchExtensionListener.m; sourceTree = "<group>"; };
-		AC4E0C742123A21E00C51ADD /* BranchExtension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchExtension.m; sourceTree = "<group>"; };
-		AC4E0C762123A22500C51ADD /* BranchExtension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchExtension.h; sourceTree = "<group>"; };
 		ACAE8104212263F30049505B /* adobe-branch-example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "adobe-branch-example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACAE8107212263F30049505B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		ACAE8108212263F30049505B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -62,14 +52,11 @@
 		ACAE81322122645B0049505B /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		ACAE8134212264610049505B /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		ACF671CD2150B42800CDC900 /* adobe-branch-example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "adobe-branch-example.entitlements"; sourceTree = "<group>"; };
-		ACF671CE21530D1A00CDC900 /* BranchConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BranchConfig.m; sourceTree = "<group>"; };
-		ACF671D021530D3A00CDC900 /* BranchConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BranchConfig.h; sourceTree = "<group>"; };
 		ACF671D521534E4F00CDC900 /* AdobeMarketingMobileCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdobeMarketingMobileCore.framework; path = Pods/ACPCoreBeta/AdobeMarketingMobileCore.framework; sourceTree = "<group>"; };
 		ACF671D621534E4F00CDC900 /* ACPIdentity_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPIdentity_iOS.framework; path = Pods/ACPCoreBeta/ACPIdentity_iOS.framework; sourceTree = "<group>"; };
 		ACF671D721534E4F00CDC900 /* ACPCore_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPCore_iOS.framework; path = Pods/ACPCoreBeta/ACPCore_iOS.framework; sourceTree = "<group>"; };
 		ACF671D821534E4F00CDC900 /* ACPSignal_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPSignal_iOS.framework; path = Pods/ACPCoreBeta/ACPSignal_iOS.framework; sourceTree = "<group>"; };
 		ACF671D921534E4F00CDC900 /* ACPLifecycle_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPLifecycle_iOS.framework; path = Pods/ACPCoreBeta/ACPLifecycle_iOS.framework; sourceTree = "<group>"; };
-		ACF672022153753D00CDC900 /* Branch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Branch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8688AE753553EE80251EE11 /* Pods-adobe-branch-example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.release.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.release.xcconfig"; sourceTree = "<group>"; };
 		FD81B1B19DDC0E314016948F /* Pods-adobe-branch-example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,14 +118,6 @@
 				ACAE8107212263F30049505B /* AppDelegate.h */,
 				ACAE8108212263F30049505B /* AppDelegate.m */,
 				ACAE8110212263F40049505B /* Assets.xcassets */,
-				ACF671D021530D3A00CDC900 /* BranchConfig.h */,
-				ACF671CE21530D1A00CDC900 /* BranchConfig.m */,
-				AC4E0C762123A22500C51ADD /* BranchExtension.h */,
-				AC4E0C742123A21E00C51ADD /* BranchExtension.m */,
-				AC379AE12133956F004E61D1 /* BranchExtensionListener.h */,
-				AC379AE22133956F004E61D1 /* BranchExtensionListener.m */,
-				AC21DF79215C550700CD5DAC /* BranchExtensionRuleListener.h */,
-				AC21DF7A215C550700CD5DAC /* BranchExtensionRuleListener.m */,
 				ACAE8115212263F40049505B /* Info.plist */,
 				ACAE8116212263F40049505B /* main.m */,
 				ACAE810D212263F40049505B /* Main.storyboard */,
@@ -156,7 +135,6 @@
 		ACAE81292122643A0049505B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				ACF672022153753D00CDC900 /* Branch.framework */,
 				ACF671D721534E4F00CDC900 /* ACPCore_iOS.framework */,
 				ACF671D621534E4F00CDC900 /* ACPIdentity_iOS.framework */,
 				ACF671D921534E4F00CDC900 /* ACPLifecycle_iOS.framework */,
@@ -297,14 +275,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AC379AE32133956F004E61D1 /* BranchExtensionListener.m in Sources */,
-				AC21DF7B215C550700CD5DAC /* BranchExtensionRuleListener.m in Sources */,
 				ACAE810C212263F40049505B /* ProductListViewController.m in Sources */,
 				4DE09800219CEE71008AC401 /* Product.m in Sources */,
 				ACAE8117212263F40049505B /* main.m in Sources */,
-				ACF671CF21530D1A00CDC900 /* BranchConfig.m in Sources */,
 				ACAE8109212263F30049505B /* AppDelegate.m in Sources */,
-				AC4E0C752123A21F00C51ADD /* BranchExtension.m in Sources */,
 				AC21DF78215AA0EB00CD5DAC /* ProductViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
