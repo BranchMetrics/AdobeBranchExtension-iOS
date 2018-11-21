@@ -7,10 +7,10 @@
 //
 
 #import "AppDelegate.h"
-#import <Branch/Branch.h>
-#import "BranchExtension.h"
+#import <AdobeBranchExtension/AdobeBranchExtension.h>
 #import <ACPCore_iOS/ACPCore.h>
 #import <ACPLifecycle_iOS/ACPLifecycle_iOS.h>
+#import "ProductViewController.h"
 
 @interface AppDelegate ()
 @end
@@ -24,38 +24,44 @@
     //[ADBMobileMarketing setLogLevel:ADBMobileLogLevelDebug];
     [ACPCore setLogLevel:ACPMobileLogLevelVerbose];
 
-    // option 1 - access hosted Adobe config
-    //[ADBMobileMarketing configureWithAppId:@"launch-ENe8e233db5c6a43628d097ba8125aeb26-development"];
-    //[ACPCore configureWithAppId:@"launch-EN250ff13ac5814cb1a8750820b1f89b0a-development"];
-
-    // option 2 - set config at runtime
-    [self setupTestConfig];
+    if ((NO)) {
+        // option 1 - access hosted Adobe config
+        //[ADBMobileMarketing configureWithAppId:@"launch-ENe8e233db5c6a43628d097ba8125aeb26-development"];
+        [ACPCore configureWithAppId:@"launch-EN250ff13ac5814cb1a8750820b1f89b0a-development"];
+    } else {
+        // option 2 - set config at runtime
+        [self setupTestConfig];
+    }
     [ACPCore downloadRules];
     [ACPLifecycle registerExtension];
     
     [ACPCore lifecycleStart:nil];
     // [ADBMobileMarketing analyticsTrackAction:@"my v5 action" data:@{@"key1":@"value1"}];
-    // [ACPCore registerExtension:[BranchExtension class] withName:@"com.branch.extension" withVersion:@"1.0.0" error:&error]
-    if ([ACPCore registerExtension:[BranchExtension class] error:&error]) {
+    // [ACPCore registerExtension:[AdobeBranchExtension class] withName:@"com.branch.extension" withVersion:@"1.0.0" error:&error]
+    if ([ACPCore registerExtension:[AdobeBranchExtension class] error:&error]) {
         NSLog(@"Branch SDK Registered");
     } else {
         NSLog(@"%@", error);
     }
-    
+
+    [AdobeBranchExtension setDeepLinkCallback:^(NSDictionary * _Nullable parameters, NSError * _Nullable error) {
+        [self showDeepLinkedViewControllerWithParameters:parameters error:error];
+    }];
+
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)app
+- (BOOL)application:(UIApplication *)application
         openURL:(NSURL *)url
         options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-    [[Branch getInstance] application:app openURL:url options:options];
+    [AdobeBranchExtension application:application openURL:url options:options];
     return YES;
 }
 
 - (BOOL)application:(UIApplication *)application
         continueUserActivity:(NSUserActivity *)userActivity
         restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler {
-    [[Branch getInstance] continueUserActivity:userActivity];
+    [AdobeBranchExtension application:application continueUserActivity:userActivity];
     return YES;
 }
 
@@ -125,6 +131,14 @@
     
     //[ADBMobileMarketing updateConfiguration:config];
     [ACPCore updateConfiguration:config];
+}
+
+- (void) showDeepLinkedViewControllerWithParameters:(NSDictionary*)parameters error:(NSError*)error {
+    if ([parameters[@"+clicked_branch_link"] boolValue]) {
+        ProductViewController*pvc = [[ProductViewController alloc] init];
+        pvc.product = [[Product alloc] initWithDictionary:parameters];
+        [self.window.rootViewController presentViewController:pvc animated:YES completion:nil];
+    }
 }
 
 @end

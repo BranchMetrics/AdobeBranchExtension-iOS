@@ -3,5 +3,5 @@ platform :ios, '10.0'
 
 target 'adobe-branch-example' do
   pod 'ACPCoreBeta',  '>= 1.0.1beta'
-  pod 'Adobe-Branch', :path => '../../'
+  pod 'AdobeBranchExtension', :path => '../../'
 end

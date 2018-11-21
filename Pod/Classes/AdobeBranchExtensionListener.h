@@ -1,7 +1,8 @@
 //
-//  BranchExtension.h
+//  BranchExtensionListener.h
+//  adobe-branch-example
 //
-//  Created by Aaron Lopez on 8/14/18.
+//  Created by Aaron Lopez on 8/26/18.
 //  Copyright © 2018 Aaron Lopez. All rights reserved.
 //
 
@@ -10,9 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-FOUNDATION_EXPORT NSString*const BranchEventTypeInit;
-
-@interface BranchExtension : ACPExtension
+@interface AdobeBranchExtensionListener : ACPExtensionListener
 @end
 
 NS_ASSUME_NONNULL_END

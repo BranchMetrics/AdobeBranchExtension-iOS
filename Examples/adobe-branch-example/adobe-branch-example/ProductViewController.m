@@ -9,8 +9,7 @@
 #import "ProductViewController.h"
 #import "Product.h"
 #import <ACPCore_iOS/ACPCore_iOS.h>
-#import "BranchConfig.h"
-
+#import <AdobeBranchExtension/AdobeBranchExtension.h>
 
 @interface ProductViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *productImage;
@@ -24,6 +23,11 @@
     [super viewDidLoad];
     self.productImage.image = [UIImage imageNamed:self.product.imageName];
     self.productTitle.text = self.product.name;
+    [ACPCore trackAction:@"VIEW" data:@{
+        @"name":        self.product.name,
+        @"revenue":     @"200.0",
+        @"currency":    @"USD"
+    }];
 }
 
 - (IBAction)shareButton:(id)sender {

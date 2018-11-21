@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-@class Product;
+#import "Product.h"
 
 @interface ProductViewController : UIViewController
 @property (strong, nonatomic) Product*product;
