@@ -1,13 +1,13 @@
 [{
-    "name":         "Glasses",
+    "name":         "Branch Glasses",
     "image":        "glasses",
     "url":          "https://branch.io/branch/Glasses.html",
     "image_url":    "https://branch.io/branch/Glasses.jpg",
     "summary":      "Look stylish, Branch style, in these Branch sun glasses."
 },{
-    "name":         "Stickers",
+    "name":         "Branch Stickers",
     "image":        "stickers",
     "url":          "https://branch.io/branch/Sticker.html",
     "image_url":    "https://branch.io/branch/Sticker.jpg",
-    "summary":      "What favorite object of yours wouldn't look even better with these great Branch stickers?"
+    "summary":      "What object wouldn't look even better with these great Branch stickers?"
 }]

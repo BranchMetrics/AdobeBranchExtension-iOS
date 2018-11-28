@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate.h"
-#import <AdobeBranchExtension/AdobeBranchExtension.h>
 #import <ACPCore_iOS/ACPCore.h>
 #import <ACPLifecycle_iOS/ACPLifecycle_iOS.h>
+#import <AdobeBranchExtension/AdobeBranchExtension.h>
 #import "ProductViewController.h"
 
 @interface AppDelegate ()
@@ -39,14 +39,14 @@
     // [ADBMobileMarketing analyticsTrackAction:@"my v5 action" data:@{@"key1":@"value1"}];
     // [ACPCore registerExtension:[AdobeBranchExtension class] withName:@"com.branch.extension" withVersion:@"1.0.0" error:&error]
     if ([ACPCore registerExtension:[AdobeBranchExtension class] error:&error]) {
-        NSLog(@"Branch SDK Registered");
+        NSLog(@"AdobeBranchExtension Registered");
     } else {
         NSLog(@"%@", error);
     }
 
-    [AdobeBranchExtension setDeepLinkCallback:^(NSDictionary * _Nullable parameters, NSError * _Nullable error) {
-        [self showDeepLinkedViewControllerWithParameters:parameters error:error];
-    }];
+//    [AdobeBranchExtension setDeepLinkCallback:^(NSDictionary * _Nullable parameters, NSError * _Nullable error) {
+//        [self showDeepLinkedViewControllerWithParameters:parameters error:error];
+//    }];
 
     return YES;
 }
@@ -133,12 +133,14 @@
     [ACPCore updateConfiguration:config];
 }
 
+/*
 - (void) showDeepLinkedViewControllerWithParameters:(NSDictionary*)parameters error:(NSError*)error {
     if ([parameters[@"+clicked_branch_link"] boolValue]) {
         ProductViewController*pvc = [[ProductViewController alloc] init];
         pvc.product = [[Product alloc] initWithDictionary:parameters];
-        [self.window.rootViewController presentViewController:pvc animated:YES completion:nil];
+        [((UINavigationController*)self.window.rootViewController) pushViewController:pvc animated:YES];
     }
 }
+*/
 
 @end

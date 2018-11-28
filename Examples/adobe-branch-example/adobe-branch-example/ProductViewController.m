@@ -22,6 +22,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.productImage.image = [UIImage imageNamed:self.product.imageName];
+    self.productImage.layer.borderColor = UIColor.lightGrayColor.CGColor;
+    self.productImage.layer.borderWidth = 2.0f;
+    self.productImage.layer.cornerRadius = 5.0f;
+    self.productImage.layer.masksToBounds = YES;
     self.productTitle.text = self.product.name;
     [ACPCore trackAction:@"VIEW" data:@{
         @"name":        self.product.name,
@@ -37,13 +41,12 @@
             type:BRANCH_EVENT_TYPE_SHARE_SHEET
             source:BRANCH_EVENT_SOURCE_STANDARD
             data:@{
-                @"title": self.product.name,
-                @"summary": self.product.summary,
-                @"image_url": self.product.imageURL,
-                @"url": self.product.URL,
+                ABEBranchLinkTitleKey:          self.product.name,
+                ABEBranchLinkSummaryKey:        self.product.summary,
+                ABEBranchLinkImageURLKey:       self.product.imageURL,
+                ABEBranchLinkCanonicalURLKey:   self.product.URL,
             }
             error:&error];
-    
     if ([ACPCore dispatchEvent:shareSheetEvent error:&error]) {
         NSLog(@"Can't dispatch event: %@.", error);
     }

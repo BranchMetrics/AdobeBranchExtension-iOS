@@ -21,6 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationItem.titleView =
+        [[UIImageView alloc]
+            initWithImage:[UIImage imageNamed:@"Header"]];
+    self.navigationItem.titleView.contentMode = UIViewContentModeScaleAspectFit;
     self.products = [Product loadProducts];
     self.events = @[
         @"Add to Cart",
@@ -75,12 +79,14 @@
         [self.navigationController pushViewController:nextVC animated:YES];
     } else
     if (indexPath.section == 1) {
-        [ACPCore trackAction:[self.events[indexPath.row] uppercaseString] data:@{
-            @"name":        @"Test Event",
+        NSString*eventName = [self.events[indexPath.row] uppercaseString];
+        eventName = [eventName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+        [ACPCore trackAction:eventName data:@{
+            @"name":        @"Branch Sunglasses",
             @"revenue":     @"200.00",
             @"currency":    @"USD",
             @"timestamp":   [NSDate date].description,
-            @"category":    @"Arts & Entertainment",
+            @"category":    @"Apparel & Accessories",
             @"sku":         @"sku-bee-doo",
         }];
     }

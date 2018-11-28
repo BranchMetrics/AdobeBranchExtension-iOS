@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D16DBA421AF037F00E362A2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D16DBA321AF037F00E362A2 /* Launch Screen.storyboard */; };
 		4DE097FD219CEABE008AC401 /* Products.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DE097FC219CEABE008AC401 /* Products.json */; };
 		4DE09800219CEE71008AC401 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DE097FF219CEE71008AC401 /* Product.m */; };
 		AC21DF78215AA0EB00CD5DAC /* ProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC21DF77215AA0EB00CD5DAC /* ProductViewController.m */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		2E21CAD8A1C925AAF24986BC /* libPods-adobe-branch-example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adobe-branch-example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D16DBA321AF037F00E362A2 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		4DE097FC219CEABE008AC401 /* Products.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Products.json; sourceTree = "<group>"; };
 		4DE097FE219CEE71008AC401 /* Product.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
 		4DE097FF219CEE71008AC401 /* Product.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				ACAE8108212263F30049505B /* AppDelegate.m */,
 				ACAE8110212263F40049505B /* Assets.xcassets */,
 				ACAE8115212263F40049505B /* Info.plist */,
+				4D16DBA321AF037F00E362A2 /* Launch Screen.storyboard */,
 				ACAE8116212263F40049505B /* main.m */,
 				ACAE810D212263F40049505B /* Main.storyboard */,
 				4DE097FE219CEE71008AC401 /* Product.h */,
@@ -217,6 +220,7 @@
 			files = (
 				ACAE8111212263F40049505B /* Assets.xcassets in Resources */,
 				4DE097FD219CEABE008AC401 /* Products.json in Resources */,
+				4D16DBA421AF037F00E362A2 /* Launch Screen.storyboard in Resources */,
 				ACAE810F212263F40049505B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

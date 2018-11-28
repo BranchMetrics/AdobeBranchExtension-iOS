@@ -1,6 +1,6 @@
 //
 //  BranchExtensionListener.h
-//  adobe-branch-example
+//  AdobeBranchExtension
 //
 //  Created by Aaron Lopez on 8/26/18.
 //  Copyright © 2018 Aaron Lopez. All rights reserved.
