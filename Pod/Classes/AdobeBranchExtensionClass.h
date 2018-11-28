@@ -3,7 +3,7 @@
 //  AdobeBranchExtension
 //
 //  Created by Aaron Lopez on 8/14/18.
-//  Copyright © 2018 Aaron Lopez. All rights reserved.
+//  Copyright © 2018 Branch Metrics. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -12,41 +12,43 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-///@brief Branch extension event names
-FOUNDATION_EXPORT NSString*const BRANCH_EVENT_NAME_INIT;
+/**
+ @brief Branch extension event names
+*/
+
+/// Initialize the Adobe Branch extension.
+FOUNDATION_EXPORT NSString*const ABEBranchEventNameInitialize;
+
+/// Branch opened a deep link with the link parameters in `eventData` with the ABEBranchLink keys.
+FOUNDATION_EXPORT NSString*const ABEBranchEventNameDeepLinkOpened;
 FOUNDATION_EXPORT NSString*const BRANCH_EVENT_NAME_DEEP_LINK;
 
-///@brief Branch extension event types
-FOUNDATION_EXPORT NSString*const BRANCH_EVENT_TYPE;
-FOUNDATION_EXPORT NSString*const BRANCH_EVENT_TYPE_DEEP_LINK;
-FOUNDATION_EXPORT NSString*const BRANCH_EVENT_TYPE_SHARE_SHEET;
+/// Show a share sheet with the link parameters as specified by the keys in the ABEBranchLink keys.
+FOUNDATION_EXPORT NSString*const ABEBranchEventNameShowShareSheet;
 
-///@brief Branch extension event names
-FOUNDATION_EXPORT NSString*const BRANCH_EVENT_NAME_INIT;
+/// Branch extension event type
+FOUNDATION_EXPORT NSString*const ABEBranchEventType;
 
-///@brief Branch extension event sources
-FOUNDATION_EXPORT NSString* const BRANCH_EVENT_SOURCE_STANDARD;
+/// Branch extension event source
+FOUNDATION_EXPORT NSString*const ABEBranchEventSource;
 
-///@brief Branch extension dictionary keys
-FOUNDATION_EXPORT NSString* const BRANCH_KEY_CONFIG;
+/// Branch deep link keys
+FOUNDATION_EXPORT NSString*const ABEBranchLinkTitleKey;
+FOUNDATION_EXPORT NSString*const ABEBranchLinkSummaryKey;
+FOUNDATION_EXPORT NSString*const ABEBranchLinkImageURLKey;
+FOUNDATION_EXPORT NSString*const ABEBranchLinkCanonicalURLKey;
+FOUNDATION_EXPORT NSString*const ABEBranchLinkUserInfoKey;      //!< Accepts a dictionary of key/values.
+FOUNDATION_EXPORT NSString*const ABEBranchLinkCampaignKey;
+FOUNDATION_EXPORT NSString*const ABEBranchLinkTagsKey;
+FOUNDATION_EXPORT NSString*const ABEBranchLinkShareTextKey;
+FOUNDATION_EXPORT NSString*const ABEBranchLinkIsFirstSessionKey;
 
-FOUNDATION_EXPORT NSString* const ABEBranchLinkTitleKey;
-FOUNDATION_EXPORT NSString* const ABEBranchLinkSummaryKey;
-FOUNDATION_EXPORT NSString* const ABEBranchLinkImageURLKey;
-FOUNDATION_EXPORT NSString* const ABEBranchLinkCanonicalURLKey;
-FOUNDATION_EXPORT NSString* const ABEBranchLinkUserInfoKey;
-FOUNDATION_EXPORT NSString* const ABEBranchLinkCampaignKey;
-FOUNDATION_EXPORT NSString* const ABEBranchLinkTagsKey;
-FOUNDATION_EXPORT NSString* const ABEBranchLinkShareTextKey;
+FOUNDATION_EXPORT NSString*const ABEBranchDeepLinkNotification;
 
 /**
  This is the class defines the root Adobe / Branch integration for deep linking and events.
  */
 @interface AdobeBranchExtension : ACPExtension
-/**
- @param deeplinkCallback    This is the deep link handler call back for your app. 
- */
-+ (void) setDeepLinkCallback:(void (^_Nullable)(NSDictionary*_Nullable parameters, NSError*_Nullable error))deeplinkCallback;
 
 + (BOOL) application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity;
 

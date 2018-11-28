@@ -3,7 +3,7 @@
 //  adobe-branch-example
 //
 //  Created by Aaron Lopez on 8/13/18.
-//  Copyright © 2018 Aaron Lopez. All rights reserved.
+//  Copyright © 2018 Branch Metrics. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -43,11 +43,7 @@
     } else {
         NSLog(@"%@", error);
     }
-
-//    [AdobeBranchExtension setDeepLinkCallback:^(NSDictionary * _Nullable parameters, NSError * _Nullable error) {
-//        [self showDeepLinkedViewControllerWithParameters:parameters error:error];
-//    }];
-
+    
     return YES;
 }
 
@@ -132,15 +128,5 @@
     //[ADBMobileMarketing updateConfiguration:config];
     [ACPCore updateConfiguration:config];
 }
-
-/*
-- (void) showDeepLinkedViewControllerWithParameters:(NSDictionary*)parameters error:(NSError*)error {
-    if ([parameters[@"+clicked_branch_link"] boolValue]) {
-        ProductViewController*pvc = [[ProductViewController alloc] init];
-        pvc.product = [[Product alloc] initWithDictionary:parameters];
-        [((UINavigationController*)self.window.rootViewController) pushViewController:pvc animated:YES];
-    }
-}
-*/
 
 @end

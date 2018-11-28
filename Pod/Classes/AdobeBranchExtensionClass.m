@@ -8,36 +8,29 @@
 
 #import "AdobeBranchExtension.h"
 #import <Branch/Branch.h>
-#import <Branch/BNCThreads.h>
 
 #pragma mark Constants
 
-NSString *const branchEventTypeInit             = @"com.branch.eventType.init";
-NSString *const branchEventTypeCustom           = @"com.branch.eventType.custom";
-NSString *const branchEventSourceStandard       = @"com.branch.eventSource.standard";
-NSString *const branchEventSourceCustom         = @"com.branch.eventSource.custom";
+NSString*const ABEBranchEventNameInitialize     = @"branch-init";
+NSString*const ABEBranchEventNameShowShareSheet = @"branch-share-sheet";
+NSString*const ABEBranchEventNameDeepLinkOpened = @"branch-deep-link-opened";
 
-NSString*const BRANCH_KEY_CONFIG                = @"branchKey";
+NSString*const ABEBranchEventType               = @"com.branch.eventType";
+NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
 
-NSString*const BRANCH_EVENT_NAME_INIT           = @"branch-init";
-NSString*const ABEBranchEventNameInit           = @"io.branch.eventName.init";
-NSString*const ABEBranchEventNameShowShareSheet = @"io.branch.eventName.showShareSheet";
+NSString*const ABEBranchLinkTitleKey            = @"contentTitle";
+NSString*const ABEBranchLinkSummaryKey          = @"contentDescription";
+NSString*const ABEBranchLinkImageURLKey         = @"contentImage";
+NSString*const ABEBranchLinkCanonicalURLKey     = @"canonicalURLKey";
+NSString*const ABEBranchLinkUserInfoKey         = @"userInfo";
+NSString*const ABEBranchLinkCampaignKey         = @"campaign";
+NSString*const ABEBranchLinkTagsKey             = @"tags";
+NSString*const ABEBranchLinkShareTextKey        = @"shareText";
+NSString*const ABEBranchLinkIsFirstSessionKey   = @"isFirstSession";
 
-NSString*const BRANCH_EVENT_TYPE_INIT           = @"com.branch.eventType.init";
-NSString*const BRANCH_EVENT_TYPE_DEEP_LINK      = @"com.branch.eventType.deepLink";
-NSString*const BRANCH_EVENT_TYPE_SHARE_SHEET    = @"com.branch.eventType.shareSheet";
+NSString*const ABEBranchConfigBranchKey         = @"branchKey";
 
-NSString*const BRANCH_EVENT_SOURCE_STANDARD     = @"com.branch.eventSource.standard";
-NSString*const BRANCH_EVENT_SOURCE_CUSTOM       = @"com.branch.eventSource.custom";
-
-NSString* const ABEBranchLinkTitleKey           = @"contentTitle";
-NSString* const ABEBranchLinkSummaryKey         = @"contentDescription";
-NSString* const ABEBranchLinkImageURLKey        = @"contentImage";
-NSString* const ABEBranchLinkCanonicalURLKey    = @"canonicalURLKey";
-NSString* const ABEBranchLinkUserInfoKey        = @"userInfo";
-NSString* const ABEBranchLinkCampaignKey        = @"campaign";
-NSString* const ABEBranchLinkTagsKey            = @"tags";
-NSString* const ABEBranchLinkShareTextKey       = @"shareText";
+NSString*const ABEBranchDeepLinkNotification    = @"ABEBranchDeepLinkNotification";
 
 #pragma mark -
 
@@ -88,12 +81,6 @@ static Branch*bnc_branchInstance = nil;
     return bnc_branchInstance;
 }
 
-static void (^bnc_deepLinkCallback)(NSDictionary*, NSError*) = nil;
-
-+ (void) setDeepLinkCallback:(void (^_Nullable)(NSDictionary*_Nullable, NSError*_Nullable))deeplinkCallback {
-    bnc_deepLinkCallback = deeplinkCallback;
-}
-
 + (BOOL) application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity {
     return [bnc_branchInstance continueUserActivity:userActivity];
 }
@@ -109,10 +96,10 @@ static void (^bnc_deepLinkCallback)(NSDictionary*, NSError*) = nil;
     BNCLogSetDisplayLevel(BNCLogLevelAll); // Show all logging for now.
 
     self.eventTable = @{
-        @"branch-init":                 [NSValue valueWithPointer:@selector(branchInit:)],
-        @"deep-link-route":             [NSValue valueWithPointer:@selector(deepLinkRoute:)],
-//      @"branch-deep-link-received":   [NSValue valueWithPointer:@selector(branchDeepLinkReceived:)],
-        @"branch-share-sheet":          [NSValue valueWithPointer:@selector(branchShareSheet:)],
+        ABEBranchEventNameInitialize:     [NSValue valueWithPointer:@selector(branchInit:)],
+        @"deep-link-route":               [NSValue valueWithPointer:@selector(deepLinkRoute:)],
+//      @"branch-deep-link-received":     [NSValue valueWithPointer:@selector(branchDeepLinkReceived:)],
+        ABEBranchEventNameShowShareSheet: [NSValue valueWithPointer:@selector(branchShareSheet:)],
     };
 
     NSError* error = nil;
@@ -123,9 +110,9 @@ static void (^bnc_deepLinkCallback)(NSDictionary*, NSError*) = nil;
     }
 
     ACPExtensionEvent* initEvent =
-        [ACPExtensionEvent extensionEventWithName:@"branch-init"
-            type:BRANCH_EVENT_TYPE_INIT
-            source:BRANCH_EVENT_SOURCE_STANDARD
+        [ACPExtensionEvent extensionEventWithName:ABEBranchEventNameInitialize
+            type:ABEBranchEventType
+            source:ABEBranchEventSource
             data:@{}
             error:&error];
     if (![self.api setSharedEventState:@{} event:initEvent error:&error]) {
@@ -153,16 +140,6 @@ static void (^bnc_deepLinkCallback)(NSDictionary*, NSError*) = nil;
         [self trackEvent:event];
         return;
     }
-    /*
-    if (![event.eventType isEqualToString:@"com.adobe.eventType.rulesEngine"])
-        return;
-    */
-//    NSDictionary*consequence = event.eventData[@"triggeredconsequence"];
-//    NSString*type = consequence[@"type"];
-    //NSDictionary*detail = consequence[@"detail"];
-
-    // TODO: Add more secure check for Branch events in case someone tries to spoof Branch rules ??
-
     SEL selector = [self.eventTable[event.eventName] pointerValue];
     if (selector) {
         [self performSelectorOnMainThread:selector withObject:event waitUntilDone:NO];
@@ -174,7 +151,7 @@ static void (^bnc_deepLinkCallback)(NSDictionary*, NSError*) = nil;
 - (void) branchInit:(ACPExtensionEvent*)event {
     NSDictionary* configuration =
         [self.api getSharedEventState:@"com.adobe.module.configuration" event:event error:nil];
-    NSString*branchKey = configuration[BRANCH_KEY_CONFIG];
+    NSString*branchKey = configuration[ABEBranchConfigBranchKey];
     if (branchKey.length <= 0) return;
 
     __weak __typeof(self) weak_self = self;
@@ -192,32 +169,38 @@ static void (^bnc_deepLinkCallback)(NSDictionary*, NSError*) = nil;
     if (![[params objectForKey:@"+clicked_branch_link"] boolValue])
         return;
     BNCLogDebug(@"Received deep link: %@.", params);
+
+    // Clean up the params first, preventing integer overflow, for example.
+    NSMutableDictionary*mutableParams   = [params mutableCopy];
+    mutableParams[@"$identity_id"]      = [mutableParams[@"$identity_id"] description];
+    mutableParams[@"~id"]               = [mutableParams[@"~id"] description];
+
+    NSMutableDictionary*data = NSMutableDictionary.new;
+    data[ABEBranchLinkTitleKey]          = params[@"$og_title"];
+    data[ABEBranchLinkSummaryKey]        = params[@"$og_description"];
+    data[ABEBranchLinkImageURLKey]       = params[@"$og_image_url"];
+    data[ABEBranchLinkCanonicalURLKey]   = params[@"$canonical_url"];
+    data[ABEBranchLinkUserInfoKey]       = mutableParams;
+    data[ABEBranchLinkCampaignKey]       = params[@"~campaign"];
+    data[ABEBranchLinkTagsKey]           = params[@"~tags"];
+    data[ABEBranchLinkIsFirstSessionKey] = params[@"+is_first_session"];
+
     NSError*error = nil;
     ACPExtensionEvent*event =
-        [ACPExtensionEvent extensionEventWithName:@"branch-deep-link-received"
-            type:BRANCH_EVENT_TYPE_DEEP_LINK
-            source:BRANCH_EVENT_SOURCE_STANDARD
-            data:params
+        [ACPExtensionEvent extensionEventWithName:ABEBranchEventNameDeepLinkOpened
+            type:ABEBranchEventType
+            source:ABEBranchEventSource
+            data:data
             error:&error];
-
     // TODO: See if we can add Branch deep link data to sharedShared state
     if ([ACPCore dispatchEvent:event error:&error]) {
        BNCLogError(@"Can't dispatch event: %@.", error);
     }
+    [[NSNotificationCenter defaultCenter]
+        postNotificationName:ABEBranchDeepLinkNotification
+        object:self
+        userInfo:data];
 }
-
-//po event.eventData
-//{
-//    triggeredconsequence =     {
-//        detail =         {
-//            campaign = tete;
-//            channel = ete;
-//            tags = tetete;
-//        };
-//        id = RCc140c5095d244b92b89f379a3c1b6e71;
-//        type = "show-share-sheet";
-//    };
-//}
 
 - (void) deepLinkRoute:(NSDictionary*)detail {
     // TODO: Implement deep linking here
@@ -250,7 +233,7 @@ static void (^bnc_deepLinkCallback)(NSDictionary*, NSError*) = nil;
 
 - (void) branchShareSheet:(ACPExtensionEvent*)event {
     /*
-    *Adobe Branch Fields*
+    *Branch Link Fields*
 
     FOUNDATION_EXPORT NSString* const ABEBranchLinkTitleKey;
     FOUNDATION_EXPORT NSString* const ABEBranchLinkSummaryKey;
@@ -268,7 +251,7 @@ static void (^bnc_deepLinkCallback)(NSDictionary*, NSError*) = nil;
     buo.contentDescription = data[ABEBranchLinkSummaryKey];
     buo.imageUrl = data[ABEBranchLinkImageURLKey];
     buo.canonicalUrl = data[ABEBranchLinkCanonicalURLKey];
-    buo.contentMetadata = data[ABEBranchLinkUserInfoKey];
+    buo.contentMetadata.customMetadata = data[ABEBranchLinkUserInfoKey];
     if (buo.title.length == 0 && buo.canonicalUrl.length == 0) {
         BNCLogError(@"Canonical ID or title must be set for Branch Universal Objects");
         return;

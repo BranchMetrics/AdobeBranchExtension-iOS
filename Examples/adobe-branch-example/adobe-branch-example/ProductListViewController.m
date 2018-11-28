@@ -3,13 +3,14 @@
 //  adobe-branch-example
 //
 //  Created by Aaron Lopez on 8/13/18.
-//  Copyright © 2018 Aaron Lopez. All rights reserved.
+//  Copyright © 2018 Branch Metrics. All rights reserved.
 //
 
 #import "ProductListViewController.h"
 #import "Product.h"
 #import "ProductViewController.h"
 #import <ACPCore_iOS/ACPCore_iOS.h>
+#import <AdobeBranchExtension/AdobeBranchExtension.h>
 
 @interface ProductListViewController () <UITableViewDelegate, UITableViewDataSource>
 @property (nonatomic, strong)   NSArray<Product*>*products;
@@ -31,7 +32,33 @@
         @"View",
         @"Purchase"
     ];
-    //[ADBMobileMarketing analyticsTrackAction:@"HI" data:nil];
+
+    // Listen for deep links:
+    [[NSNotificationCenter defaultCenter]
+        addObserver:self
+        selector:@selector(showDeepLinkNotification:)
+        name:ABEBranchDeepLinkNotification
+        object:nil];
+}
+
+- (void) showDeepLinkNotification:(NSNotification*)notification {
+    NSDictionary*data = notification.userInfo;
+    Product*product = Product.new;
+    product.name        = data[ABEBranchLinkTitleKey];
+    product.summary     = data[ABEBranchLinkSummaryKey];
+    product.imageName   = data[ABEBranchLinkUserInfoKey][@"imageName"];
+    product.URL         = data[ABEBranchLinkCanonicalURLKey];
+    product.imageURL    = data[ABEBranchLinkImageURLKey];
+
+    ProductViewController *pvc =
+        [self.storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
+    pvc.title = product.name;
+    pvc.product = product;
+    [self.navigationController pushViewController:pvc animated:YES];
+}
+
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -73,10 +100,10 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        ProductViewController *nextVC;
-        nextVC = [self.storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
-        nextVC.product = self.products[indexPath.row];
-        [self.navigationController pushViewController:nextVC animated:YES];
+        ProductViewController *pvc =
+            [self.storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
+        pvc.product = self.products[indexPath.row];
+        [self.navigationController pushViewController:pvc animated:YES];
     } else
     if (indexPath.section == 1) {
         NSString*eventName = [self.events[indexPath.row] uppercaseString];

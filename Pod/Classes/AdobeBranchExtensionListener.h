@@ -3,7 +3,7 @@
 //  AdobeBranchExtension
 //
 //  Created by Aaron Lopez on 8/26/18.
-//  Copyright © 2018 Aaron Lopez. All rights reserved.
+//  Copyright © 2018 Branch Metrics. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

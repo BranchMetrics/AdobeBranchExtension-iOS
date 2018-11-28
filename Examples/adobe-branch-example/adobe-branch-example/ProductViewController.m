@@ -3,7 +3,7 @@
 //  adobe-branch-example
 //
 //  Created by Aaron Lopez on 9/25/18.
-//  Copyright © 2018 Aaron Lopez. All rights reserved.
+//  Copyright © 2018 Branch Metrics. All rights reserved.
 //
 
 #import "ProductViewController.h"
@@ -37,14 +37,18 @@
 - (IBAction)shareButton:(id)sender {
     NSError* error = nil;
     ACPExtensionEvent* shareSheetEvent =
-        [ACPExtensionEvent extensionEventWithName:@"branch-share-sheet"
-            type:BRANCH_EVENT_TYPE_SHARE_SHEET
-            source:BRANCH_EVENT_SOURCE_STANDARD
+        [ACPExtensionEvent extensionEventWithName:ABEBranchEventNameShowShareSheet
+            type:ABEBranchEventType
+            source:ABEBranchEventSource
             data:@{
                 ABEBranchLinkTitleKey:          self.product.name,
                 ABEBranchLinkSummaryKey:        self.product.summary,
                 ABEBranchLinkImageURLKey:       self.product.imageURL,
                 ABEBranchLinkCanonicalURLKey:   self.product.URL,
+                ABEBranchLinkCampaignKey:       @"Sharing",
+                ABEBranchLinkShareTextKey:      @"Check out this Branch swag!",
+                ABEBranchLinkTagsKey:           @[ @"Swag", @"Branch"],
+                ABEBranchLinkUserInfoKey:       @{ @"imageName": self.product.imageName }
             }
             error:&error];
     if ([ACPCore dispatchEvent:shareSheetEvent error:&error]) {

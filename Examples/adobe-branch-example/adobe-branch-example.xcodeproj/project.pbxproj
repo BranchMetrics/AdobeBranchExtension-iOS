@@ -182,8 +182,9 @@
 		ACAE80FC212263F30049505B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = ABE;
 				LastUpgradeCheck = 0940;
-				ORGANIZATIONNAME = "Aaron Lopez";
+				ORGANIZATIONNAME = "Branch Metrics";
 				TargetAttributes = {
 					ACAE8103212263F30049505B = {
 						CreatedOnToolsVersion = 9.4;
