@@ -36,7 +36,6 @@
     [ACPLifecycle registerExtension];
     
     [ACPCore lifecycleStart:nil];
-    // [ADBMobileMarketing analyticsTrackAction:@"my v5 action" data:@{@"key1":@"value1"}];
     // [ACPCore registerExtension:[AdobeBranchExtension class] withName:@"com.branch.extension" withVersion:@"1.0.0" error:&error]
     if ([ACPCore registerExtension:[AdobeBranchExtension class] error:&error]) {
         NSLog(@"AdobeBranchExtension Registered");

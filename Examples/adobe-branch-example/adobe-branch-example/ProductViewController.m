@@ -27,7 +27,7 @@
     self.productImage.layer.cornerRadius = 5.0f;
     self.productImage.layer.masksToBounds = YES;
     self.productTitle.text = self.product.name;
-    [ACPCore trackAction:@"VIEW" data:@{
+    [ACPCore trackState:@"VIEW" data:@{
         @"name":        self.product.name,
         @"revenue":     @"200.0",
         @"currency":    @"USD"
@@ -35,6 +35,11 @@
 }
 
 - (IBAction)shareButton:(id)sender {
+    [ACPCore trackAction:@"Share Button Pressed" data:@{
+        @"name":        self.product.name,
+        @"revenue":     @"200.0",
+        @"currency":    @"USD"
+    }];
     NSError* error = nil;
     ACPExtensionEvent* shareSheetEvent =
         [ACPExtensionEvent extensionEventWithName:ABEBranchEventNameShowShareSheet

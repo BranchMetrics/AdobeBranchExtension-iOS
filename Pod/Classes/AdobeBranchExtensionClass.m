@@ -362,7 +362,8 @@ static Branch*bnc_branchInstance = nil;
 
 - (void) trackEvent:(ACPExtensionEvent*)event {
     NSDictionary*eventData = event.eventData;
-    NSString*eventName = [eventData objectForKey:@"action"];
+    NSString*eventName = eventData[@"action"];
+    if (!eventName.length) eventName = eventData[@"state"];
     if (!eventName.length) return;
     NSDictionary*content = [eventData objectForKey:@"contextdata"];
     BranchEvent*branchEvent = [self.class branchEventFromAdbobeEventName:eventName dictionary:content];
