@@ -21,7 +21,12 @@ FOUNDATION_EXPORT NSString*const ABEBranchEventNameInitialize;
 
 /// Branch opened a deep link with the link parameters in `eventData` with the ABEBranchLink keys.
 FOUNDATION_EXPORT NSString*const ABEBranchEventNameDeepLinkOpened;
-FOUNDATION_EXPORT NSString*const BRANCH_EVENT_NAME_DEEP_LINK;
+
+/// Create a Branch deep link from the parameters passed in the eventData key/values.
+FOUNDATION_EXPORT NSString*const ABEBranchEventNameCreateDeepLink;
+
+/// A Branch deep link was created. The response is in the eventData key `ABEBranchLinkKey`.
+FOUNDATION_EXPORT NSString*const ABEBranchEventNameDeepLinkCreated;
 
 /// Show a share sheet with the link parameters as specified by the keys in the ABEBranchLink keys.
 FOUNDATION_EXPORT NSString*const ABEBranchEventNameShowShareSheet;
@@ -42,6 +47,8 @@ FOUNDATION_EXPORT NSString*const ABEBranchLinkCampaignKey;
 FOUNDATION_EXPORT NSString*const ABEBranchLinkTagsKey;
 FOUNDATION_EXPORT NSString*const ABEBranchLinkShareTextKey;
 FOUNDATION_EXPORT NSString*const ABEBranchLinkIsFirstSessionKey;
+
+FOUNDATION_EXPORT NSString*const ABEBranchLinkKey;
 
 FOUNDATION_EXPORT NSString*const ABEBranchDeepLinkNotification;
 

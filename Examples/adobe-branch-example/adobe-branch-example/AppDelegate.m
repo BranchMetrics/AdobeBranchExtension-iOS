@@ -43,7 +43,7 @@
     } else {
         NSLog(@"%@", error);
     }
-    
+    [ACPCore start:nil];
     return YES;
 }
 

@@ -11,9 +11,11 @@
 
 #pragma mark Constants
 
-NSString*const ABEBranchEventNameInitialize     = @"branch-init";
-NSString*const ABEBranchEventNameShowShareSheet = @"branch-share-sheet";
-NSString*const ABEBranchEventNameDeepLinkOpened = @"branch-deep-link-opened";
+NSString*const ABEBranchEventNameInitialize      = @"branch-init";
+NSString*const ABEBranchEventNameShowShareSheet  = @"branch-share-sheet";
+NSString*const ABEBranchEventNameDeepLinkOpened  = @"branch-deep-link-opened";
+NSString*const ABEBranchEventNameCreateDeepLink  = @"branch-create-deep-link";
+NSString*const ABEBranchEventNameDeepLinkCreated = @"branch-deep-link-created";
 
 NSString*const ABEBranchEventType               = @"com.branch.eventType";
 NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
@@ -27,6 +29,7 @@ NSString*const ABEBranchLinkCampaignKey         = @"campaign";
 NSString*const ABEBranchLinkTagsKey             = @"tags";
 NSString*const ABEBranchLinkShareTextKey        = @"shareText";
 NSString*const ABEBranchLinkIsFirstSessionKey   = @"isFirstSession";
+NSString*const ABEBranchLinkKey                 = @"branchLink";
 
 NSString*const ABEBranchConfigBranchKey         = @"branchKey";
 
@@ -93,35 +96,19 @@ static Branch*bnc_branchInstance = nil;
     self = [super init];
     if (!self) return self;
 
-    BNCLogSetDisplayLevel(BNCLogLevelAll); // Show all logging for now.
+    BNCLogSetDisplayLevel(BNCLogLevelAll); // TODO: Show all logging for now. Turn off later.
 
     self.eventTable = @{
         ABEBranchEventNameInitialize:     [NSValue valueWithPointer:@selector(branchInit:)],
-        @"deep-link-route":               [NSValue valueWithPointer:@selector(deepLinkRoute:)],
-//      @"branch-deep-link-received":     [NSValue valueWithPointer:@selector(branchDeepLinkReceived:)],
-        ABEBranchEventNameShowShareSheet: [NSValue valueWithPointer:@selector(branchShareSheet:)],
+        ABEBranchEventNameCreateDeepLink: [NSValue valueWithPointer:@selector(createDeepLink:)],
+        ABEBranchEventNameShowShareSheet: [NSValue valueWithPointer:@selector(showShareSheet:)],
     };
 
     NSError* error = nil;
-    if ([self.api registerWildcardListener:AdobeBranchExtensionListener.class error:&error]) {
+    if ([self.api registerWildcardListener:AdobeBranchExtensionListener.class error:&error])
         BNCLogDebug(@"BranchExtensionRuleListener was registered.");
-    } else {
+    else
         BNCLogError(@"Can't register AdobeBranchExtensionRuleListener: %@.", error);
-    }
-
-    ACPExtensionEvent* initEvent =
-        [ACPExtensionEvent extensionEventWithName:ABEBranchEventNameInitialize
-            type:ABEBranchEventType
-            source:ABEBranchEventSource
-            data:@{}
-            error:&error];
-    if (![self.api setSharedEventState:@{} event:initEvent error:&error]) {
-        BNCLogError(@"Can't set shared state: %@.", error);
-    }
-    if (![ACPCore dispatchEvent:initEvent error:&error]) {
-        BNCLogError(@"Can't dispatch event %@.", error);
-    }
-
     return self;
 }
 
@@ -135,22 +122,37 @@ static Branch*bnc_branchInstance = nil;
 
 - (void) handleEvent:(ACPExtensionEvent*)event {
     BNCLogDebug(@"Event: %@", event);
+    if ([event.eventType isEqualToString:@"com.adobe.eventType.configuration"] &&
+        [event.eventSource isEqualToString:@"com.adobe.eventSource.requestContent"]) {
+        [self branchInit:event];
+        return;
+    }
+    if (!Branch.branchKeyIsSet)
+        return;
     if ([event.eventType isEqualToString:@"com.adobe.eventType.generic.track"] &&
         [event.eventSource isEqualToString:@"com.adobe.eventSource.requestContent"]) {
         [self trackEvent:event];
         return;
     }
-    SEL selector = [self.eventTable[event.eventName] pointerValue];
-    if (selector) {
-        [self performSelectorOnMainThread:selector withObject:event waitUntilDone:NO];
+    NSString*eventName = event.eventName;
+    if (eventName.length) {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        SEL selector = [self.eventTable[event.eventName] pointerValue];
+        if (selector) [self performSelector:selector withObject:event];
+        #pragma clang diagnostic pop
     }
 }
 
 #pragma mark - Deep Linking
 
 - (void) branchInit:(ACPExtensionEvent*)event {
-    NSDictionary* configuration =
-        [self.api getSharedEventState:@"com.adobe.module.configuration" event:event error:nil];
+    if (Branch.branchKeyIsSet) return;
+    NSDictionary* configuration = event.eventData[@"config.update"];
+    if (!configuration) {
+        configuration =
+            [self.api getSharedEventState:@"com.adobe.module.configuration" event:event error:nil];
+    }
     NSString*branchKey = configuration[ABEBranchConfigBranchKey];
     if (branchKey.length <= 0) return;
 
@@ -196,42 +198,17 @@ static Branch*bnc_branchInstance = nil;
     if ([ACPCore dispatchEvent:event error:&error]) {
        BNCLogError(@"Can't dispatch event: %@.", error);
     }
-    [[NSNotificationCenter defaultCenter]
-        postNotificationName:ABEBranchDeepLinkNotification
-        object:self
-        userInfo:data];
-}
-
-- (void) deepLinkRoute:(NSDictionary*)detail {
-    // TODO: Implement deep linking here
-    NSLog(@"Deep link routed: %@.", detail);
-/*
-//  NSString *deepLinkController = [consequenceDetail objectForKey:@"deepLinkController"];
-
-    UINavigationController *navigationController =
-        (id) [UIApplication sharedApplication].delegate.window.rootViewController;
-
-
-    //            NSString *productName = [params objectForKey:@"productName"];
-    NSString *productName = @"glasses";
-    NSDictionary *params = @{@"productName":@"glasses"};
-    //            //UIViewController *nextVC;
-    ProductViewController *nextVC;
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    if (productName) {
-        nextVC = [storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
-        nextVC.product = Product.new;
-        nextVC.product.name =
-        [navigationController pushViewController:nextVC animated:YES];
-        //[navC setViewControllers:@[nextVC] animated:YES];
-        //[navC pushViewController:nextVC animated:NO];
-    }
-*/
+    dispatch_async(dispatch_get_main_queue(), ^ {
+        [[NSNotificationCenter defaultCenter]
+            postNotificationName:ABEBranchDeepLinkNotification
+            object:self
+            userInfo:data];
+    });
 }
 
 #pragma mark - Creating & Sharing Links
 
-- (void) branchShareSheet:(ACPExtensionEvent*)event {
+- (BranchShareLink*) shareLinkWithDictionary:(NSDictionary*)data {
     /*
     *Branch Link Fields*
 
@@ -244,8 +221,6 @@ static Branch*bnc_branchInstance = nil;
     FOUNDATION_EXPORT NSSTring* const ABEBranchLinkShareTextKey;
     FOUNDATION_EXPORT NSSTring* const ABEBranchLinkTagsKey;
     */
-
-    NSDictionary*data = event.eventData;
     BranchUniversalObject *buo = BranchUniversalObject.new;
     buo.title = data[ABEBranchLinkTitleKey];
     buo.contentDescription = data[ABEBranchLinkSummaryKey];
@@ -254,7 +229,7 @@ static Branch*bnc_branchInstance = nil;
     buo.contentMetadata.customMetadata = data[ABEBranchLinkUserInfoKey];
     if (buo.title.length == 0 && buo.canonicalUrl.length == 0) {
         BNCLogError(@"Canonical ID or title must be set for Branch Universal Objects");
-        return;
+        return nil;
     }
     buo.locallyIndex = YES;
 
@@ -272,7 +247,42 @@ static Branch*bnc_branchInstance = nil;
         [[BranchShareLink alloc] initWithUniversalObject:buo linkProperties:lp];
     shareLink.title = buo.title ?: @"";
     shareLink.shareText = data[ABEBranchLinkShareTextKey] ?: @"";
-    [shareLink presentActivityViewControllerFromViewController:nil anchor:nil];
+    return shareLink;
+}
+
+- (void) showShareSheet:(ACPExtensionEvent*)event {
+    BranchShareLink*shareLink = [self shareLinkWithDictionary:event.eventData];
+    dispatch_async(dispatch_get_main_queue(), ^ {
+        [shareLink presentActivityViewControllerFromViewController:nil anchor:nil];
+    });
+}
+
+- (void) createDeepLink:(ACPExtensionEvent*)requestEvent {
+//   dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^ {
+        NSString*branchLink = nil;
+        BranchShareLink*shareLink = [self shareLinkWithDictionary:requestEvent.eventData];
+        if (shareLink)
+            branchLink = [shareLink.universalObject getShortUrlWithLinkProperties:shareLink.linkProperties];
+        NSMutableDictionary*data = NSMutableDictionary.new;
+        data[ABEBranchLinkKey] = branchLink;
+
+        NSError*error = nil;
+        ACPExtensionEvent*responseEvent =
+            [ACPExtensionEvent extensionEventWithName:ABEBranchEventNameDeepLinkCreated
+                type:ABEBranchEventType
+                source:ABEBranchEventSource
+                data:data
+                error:&error];
+        if (error)
+            BNCLogError(@"Error creating reponse event: %@.", error);
+        else {
+            [ACPCore dispatchResponseEvent:responseEvent
+                requestEvent:requestEvent
+                error:&error];
+            if (error) BNCLogError(@"Couldn't send response event: %@.", error);
+        }
+
+//   });
 }
 
 #pragma mark - Action Events
@@ -309,7 +319,7 @@ static Branch*bnc_branchInstance = nil;
     BranchEvent *event = [[BranchEvent alloc] initWithName:eventName];
     if (!dictionary) return event;
 
-    /* Translate some special fields, otherwise add the dictionary as BranchEvent.userData:
+    /* Translate some special fields tp BranchEvent, otherwise add the dictionary as BranchEvent.userData:
 
     currency
     revenue

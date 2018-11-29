@@ -136,5 +136,47 @@
             </objects>
             <point key="canvasLocation" x="669.60000000000002" y="35.532233883058474"/>
         </scene>
+        <!--Text View Controller-->
+        <scene sceneID="qOS-zI-G0b">
+            <objects>
+                <viewController storyboardIdentifier="TextViewController" id="C54-op-p6V" customClass="TextViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Fwq-M1-0dH">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Branch Short Link" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cHM-bI-tDx">
+                                <rect key="frame" x="8" y="44" width="137" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Dkz-Zy-iUJ">
+                                <rect key="frame" x="0.0" y="73" width="375" height="594"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Dkz-Zy-iUJ" firstAttribute="top" secondItem="cHM-bI-tDx" secondAttribute="bottom" constant="8" id="82I-na-HCU"/>
+                            <constraint firstItem="Icf-mx-1jg" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="cHM-bI-tDx" secondAttribute="trailing" symbolic="YES" id="eY2-Iq-QKp"/>
+                            <constraint firstItem="Icf-mx-1jg" firstAttribute="bottom" secondItem="Dkz-Zy-iUJ" secondAttribute="bottom" id="f36-4d-Ywf"/>
+                            <constraint firstItem="cHM-bI-tDx" firstAttribute="top" secondItem="Icf-mx-1jg" secondAttribute="top" constant="24" id="kJ7-YA-Ywo"/>
+                            <constraint firstItem="cHM-bI-tDx" firstAttribute="leading" secondItem="Icf-mx-1jg" secondAttribute="leading" constant="8" id="nZY-qJ-rez"/>
+                            <constraint firstItem="Dkz-Zy-iUJ" firstAttribute="leading" secondItem="Icf-mx-1jg" secondAttribute="leading" id="s3m-Ca-wJB"/>
+                            <constraint firstItem="Icf-mx-1jg" firstAttribute="trailing" secondItem="Dkz-Zy-iUJ" secondAttribute="trailing" id="xgc-8l-lPM"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Icf-mx-1jg"/>
+                    </view>
+                    <connections>
+                        <outlet property="textView" destination="Dkz-Zy-iUJ" id="gpi-6M-nDh"/>
+                        <outlet property="titleLabel" destination="cHM-bI-tDx" id="UIA-Qf-e5u"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kji-Hu-yTP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="670" y="746"/>
+        </scene>
     </scenes>
 </document>

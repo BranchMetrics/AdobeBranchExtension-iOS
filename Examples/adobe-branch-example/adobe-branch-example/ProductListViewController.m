@@ -9,6 +9,7 @@
 #import "ProductListViewController.h"
 #import "Product.h"
 #import "ProductViewController.h"
+#import "TextViewController.h"
 #import <ACPCore_iOS/ACPCore_iOS.h>
 #import <AdobeBranchExtension/AdobeBranchExtension.h>
 
@@ -62,13 +63,14 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
     case 0:     return self.products.count;
-    case 1:     return self.events.count;
+    case 1:     return 1;
+    case 2:     return self.events.count;
     }
     return self.products.count;
 }
@@ -76,7 +78,8 @@
 - (NSString*) tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (section) {
     case 0:     return @"Branch Swag";
-    case 1:     return @"Events";
+    case 1:     return @"Short Links";
+    case 2:     return @"Events";
     default:    return @"Program Error";
     }
 }
@@ -85,27 +88,71 @@
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellId = @"cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if (indexPath.section == 0) {
+    switch (indexPath.section) {
+    case 0: {
         Product*product = self.products[indexPath.row];
         cell.textLabel.text = product.name;
         cell.imageView.image = [UIImage imageNamed:product.imageName];
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    } else {
+        break;
+    }
+    case 1:
+        cell.textLabel.text = @"Create Short Link";
+        cell.imageView.image = nil;
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        break;
+    case 2:
         cell.textLabel.text = self.events[indexPath.row];
         cell.imageView.image = nil;
         cell.accessoryType = UITableViewCellAccessoryNone;
+        break;
     }
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
+    switch (indexPath.section) {
+    case 0: {
         ProductViewController *pvc =
             [self.storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
         pvc.product = self.products[indexPath.row];
         [self.navigationController pushViewController:pvc animated:YES];
-    } else
-    if (indexPath.section == 1) {
+        break;
+    }
+    case 1: {
+        NSError*error = nil;
+        ACPExtensionEvent* createLinkEvent =
+            [ACPExtensionEvent extensionEventWithName:ABEBranchEventNameCreateDeepLink
+                type:ABEBranchEventType
+                source:[NSBundle mainBundle].bundleIdentifier //ABEBranchEventSource
+                data:@{
+                    ABEBranchLinkTitleKey:          @"Branch Glasses",
+                    ABEBranchLinkSummaryKey:        @"Look stylish -- Branch style -- in these Branch sun glasses.",
+                    ABEBranchLinkImageURLKey:       @"https://cdn.branch.io/branch-assets/1538165719615-og_image.jpeg",
+                    ABEBranchLinkCanonicalURLKey:   @"https://branch.io/branch/Glasses.html",
+                    ABEBranchLinkCampaignKey:       @"Adobe",
+                    ABEBranchLinkTagsKey:           @[ @"Swag", @"Branch"],
+                    ABEBranchLinkUserInfoKey: @{
+                        @"imageName":   @"glasses",
+                        @"linkDate":    [NSDate date].description
+                    }
+                }
+                error:&error];
+        if (error) {
+            NSLog(@"Error create event: %@.", error);
+            return;
+        }
+        [ACPCore dispatchEventWithResponseCallback:createLinkEvent
+            responseCallback:^ (ACPExtensionEvent*responseEvent) {
+                [self showCreatedLink:responseEvent];
+            }
+            error:&error];
+        if (error) {
+            NSLog(@"Error dispatching event: %@.", error);
+        }
+        break;
+    }
+    case 2: {
         NSString*eventName = [self.events[indexPath.row] uppercaseString];
         eventName = [eventName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
         [ACPCore trackAction:eventName data:@{
@@ -116,8 +163,18 @@
             @"category":    @"Apparel & Accessories",
             @"sku":         @"sku-bee-doo",
         }];
-    }
+        break;
+    }}
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
+
+- (void) showCreatedLink:(ACPExtensionEvent*)responseEvent {
+    TextViewController*tvc =
+        [self.storyboard instantiateViewControllerWithIdentifier:@"TextViewController"];
+    tvc.title = @"Branch Link";
+    tvc.titleLabel.text = @"Branch Short Link";
+    tvc.textView.text = responseEvent.eventData[ABEBranchLinkKey];
+    [self.navigationController pushViewController:tvc animated:YES];
 }
 
 @end
