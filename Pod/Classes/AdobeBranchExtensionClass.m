@@ -99,9 +99,14 @@ static Branch*bnc_branchInstance = nil;
     BNCLogSetDisplayLevel(BNCLogLevelAll); // TODO: Show all logging for now. Turn off later.
 
     self.eventTable = @{
-        ABEBranchEventNameInitialize:     [NSValue valueWithPointer:@selector(branchInit:)],
-        ABEBranchEventNameCreateDeepLink: [NSValue valueWithPointer:@selector(createDeepLink:)],
-        ABEBranchEventNameShowShareSheet: [NSValue valueWithPointer:@selector(showShareSheet:)],
+        ABEBranchEventNameInitialize:
+            [NSValue valueWithPointer:@selector(branchInit:)],
+        ABEBranchEventNameCreateDeepLink:
+            [NSValue valueWithPointer:@selector(createDeepLink:)],
+        ABEBranchEventNameShowShareSheet:
+            [NSValue valueWithPointer:@selector(showShareSheet:)],
+        ABEBranchEventNameSetDeepLinkCallback:
+            [NSValue valueWithPointer:@selector(setDeepLinkCallback:)],
     };
 
     NSError* error = nil;
@@ -204,6 +209,10 @@ static Branch*bnc_branchInstance = nil;
             object:self
             userInfo:data];
     });
+}
+
+- (void) setDeepLinkCallback:(ACPExtensionEvent*)event {
+
 }
 
 #pragma mark - Creating & Sharing Links

@@ -31,13 +31,19 @@ FOUNDATION_EXPORT NSString*const ABEBranchEventNameDeepLinkCreated;
 /// Show a share sheet with the link parameters as specified by the keys in the ABEBranchLink keys.
 FOUNDATION_EXPORT NSString*const ABEBranchEventNameShowShareSheet;
 
+/// Set the deep link callback block for Branch deep links.
+FOUNDATION_EXPORT NSString*const ABEBranchEventNameSetDeepLinkCallback;
+
 /// Branch extension event type
 FOUNDATION_EXPORT NSString*const ABEBranchEventType;
 
 /// Branch extension event source
 FOUNDATION_EXPORT NSString*const ABEBranchEventSource;
 
-/// Branch deep link keys
+/**
+ @brief Branch deep link keys
+*/
+
 FOUNDATION_EXPORT NSString*const ABEBranchLinkTitleKey;
 FOUNDATION_EXPORT NSString*const ABEBranchLinkSummaryKey;
 FOUNDATION_EXPORT NSString*const ABEBranchLinkImageURLKey;

@@ -40,6 +40,29 @@
         selector:@selector(showDeepLinkNotification:)
         name:ABEBranchDeepLinkNotification
         object:nil];
+
+    // Listen for deep links a different way:
+    NSError*error = nil;
+    ACPExtensionEvent* deepLinkListenerEvent =
+        [ACPExtensionEvent extensionEventWithName:@"branch-deep-link-listener"
+            type:ABEBranchEventType
+            source:[NSBundle mainBundle].bundleIdentifier
+            data:@{}
+            error:&error];
+    if (error) {
+        NSLog(@"Error create event: %@.", error);
+        return;
+    }
+    [ACPCore dispatchEventWithResponseCallback:deepLinkListenerEvent
+        responseCallback:^ (ACPExtensionEvent*responseEvent) {
+            dispatch_async(dispatch_get_main_queue(), ^ {
+                [self showCreatedLink:responseEvent];
+            });
+        }
+        error:&error];
+    if (error) {
+        NSLog(@"Error dispatching event: %@.", error);
+    }
 }
 
 - (void) showDeepLinkNotification:(NSNotification*)notification {
