@@ -258,7 +258,7 @@ static Branch*bnc_branchInstance = nil;
 }
 
 - (void) createDeepLink:(ACPExtensionEvent*)requestEvent {
-//   dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^ {
+    dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0), ^ {
         NSString*branchLink = nil;
         BranchShareLink*shareLink = [self shareLinkWithDictionary:requestEvent.eventData];
         if (shareLink)
@@ -281,8 +281,7 @@ static Branch*bnc_branchInstance = nil;
                 error:&error];
             if (error) BNCLogError(@"Couldn't send response event: %@.", error);
         }
-
-//   });
+    });
 }
 
 #pragma mark - Action Events

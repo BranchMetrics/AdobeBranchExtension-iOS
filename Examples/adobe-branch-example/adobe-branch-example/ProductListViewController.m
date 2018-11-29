@@ -124,7 +124,7 @@
         ACPExtensionEvent* createLinkEvent =
             [ACPExtensionEvent extensionEventWithName:ABEBranchEventNameCreateDeepLink
                 type:ABEBranchEventType
-                source:[NSBundle mainBundle].bundleIdentifier //ABEBranchEventSource
+                source:[NSBundle mainBundle].bundleIdentifier
                 data:@{
                     ABEBranchLinkTitleKey:          @"Branch Glasses",
                     ABEBranchLinkSummaryKey:        @"Look stylish -- Branch style -- in these Branch sun glasses.",
@@ -144,7 +144,9 @@
         }
         [ACPCore dispatchEventWithResponseCallback:createLinkEvent
             responseCallback:^ (ACPExtensionEvent*responseEvent) {
-                [self showCreatedLink:responseEvent];
+                dispatch_async(dispatch_get_main_queue(), ^ {
+                    [self showCreatedLink:responseEvent];
+                });
             }
             error:&error];
         if (error) {
@@ -169,8 +171,8 @@
 }
 
 - (void) showCreatedLink:(ACPExtensionEvent*)responseEvent {
-    TextViewController*tvc =
-        [self.storyboard instantiateViewControllerWithIdentifier:@"TextViewController"];
+    TextViewController*tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"TextViewController"];
+    [tvc loadViewIfNeeded];
     tvc.title = @"Branch Link";
     tvc.titleLabel.text = @"Branch Short Link";
     tvc.textView.text = responseEvent.eventData[ABEBranchLinkKey];
