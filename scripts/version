@@ -31,7 +31,7 @@ Options:
 USAGE
 }
 
-version=0.1.0
+version=0.1.1
 
 if (( $# == 0 )); then
     echo $version
@@ -40,10 +40,10 @@ fi
 
 scriptfile="$( cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 scriptfile="${scriptfile}"/$(basename "$0")
-cd $(dirname "$scriptfile")
+cd "$(dirname "$scriptfile")"
 
 
-IFS=$'.' read  M m p < <(echo "$version")
+IFS=$'.' read -r M m p < <(echo "$version")
 
 major=
 minor=
