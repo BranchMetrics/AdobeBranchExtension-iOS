@@ -37,6 +37,7 @@ git add --all
 git commit --allow-empty -m "Release ${version}."
 git tag v"${version}"
 git push --tags origin master
+git push
 
 pod spec lint
 pod trunk push AdobeBranchExtension.podspec
