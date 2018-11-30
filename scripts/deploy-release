@@ -27,7 +27,7 @@ pod lib lint --allow-warnings
 version="$(./scripts/version)"
 git_branch=$(git symbolic-ref --short HEAD)
 echo '>>> The build is successful so far.' 1>&2
-if ! ./scripts/askYN "Commit and deploy release branch ${git_branch} version ${version}?"; then
+if ! ./scripts/askYN "Commit and deploy release branch '${git_branch}' version ${version}?"; then
     echo ">>> Nothing deployed." 1>&2
     exit 1
 fi
@@ -41,6 +41,7 @@ git push --tags origin master
 git push
 git checkout master
 git pull origin $git_branch
+git push
 
 # Remove `--allow-warnings` when Adobe fixes their warnings.
 pod spec lint --allow-warnings
