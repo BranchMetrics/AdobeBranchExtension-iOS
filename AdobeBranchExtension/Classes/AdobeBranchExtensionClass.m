@@ -11,6 +11,8 @@
 
 #pragma mark Constants
 
+NSString*const ABEBranchExtensionVersion        = @"0.1.0";
+
 NSString*const ABEBranchEventNameInitialize      = @"branch-init";
 NSString*const ABEBranchEventNameShowShareSheet  = @"branch-share-sheet";
 NSString*const ABEBranchEventNameDeepLinkOpened  = @"branch-deep-link-opened";
@@ -117,7 +119,7 @@ static Branch*bnc_branchInstance = nil;
 }
 
 - (nullable NSString*) version {
-    return @"1.0.0"; // TODO: Read version number from package config instead
+    return ABEBranchExtensionVersion;
 }
 
 - (void) handleEvent:(ACPExtensionEvent*)event {

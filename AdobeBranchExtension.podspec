@@ -13,7 +13,7 @@ This is the Branch extension for the Adobe Marketing Cloud iOS library.
                        DESC
 
   s.homepage         = "https://github.com/BranchMetrics/AdobeBranchExtension-iOS"
-  s.license          = 'MIT'
+  s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { "Branch Metrics" => "support@branch.io" }
   s.source           = { :git => "https://github.com/BranchMetrics/AdobeBranchExtension-iOS.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/branchmetrics'
