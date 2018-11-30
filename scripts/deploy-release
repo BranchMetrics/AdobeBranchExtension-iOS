@@ -37,7 +37,10 @@ git add --all
 git commit --allow-empty -m "Release ${version}."
 git tag "${version}"
 git push --tags origin master
-git push
+git push origin master
+git checkout master
+git pull
 
-pod spec lint
-pod trunk push AdobeBranchExtension.podspec
+# Remove `--allow-warnings` when Adobe fixes their warnings.
+pod spec lint --allow-warnings
+pod trunk push --allow-warnings AdobeBranchExtension.podspec
