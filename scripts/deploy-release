@@ -35,7 +35,7 @@ echo ">>> Publishing version $version to 'master'..." 1>&2
 
 git add --all
 git commit --allow-empty -m "Release ${version}."
-git tag v"${version}"
+git tag "${version}"
 git push --tags origin master
 git push
 
