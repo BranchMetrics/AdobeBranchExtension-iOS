@@ -148,6 +148,31 @@ static Branch*bnc_branchInstance = nil;
 
 #pragma mark - Deep Linking
 
+NSString*_Nonnull BNCStringWithObject(id<NSObject> object) {
+    if (object == nil) return @"";
+    if ([object isKindOfClass:NSString.class]) {
+        return (NSString*) object;
+    } else
+    if ([object respondsToSelector:@selector(stringValue)]) {
+        return [(id)object stringValue];
+    } else
+    if ([object respondsToSelector:@selector(description)]) {
+        return [object description];
+    }
+    return [NSString stringWithFormat:@"Object of type %@", NSStringFromClass(object.class)];
+}
+
+NSMutableDictionary* BNCStringDictionaryWithDictionary(NSDictionary*dictionary_) {
+    if (![dictionary_ isKindOfClass:NSDictionary.class]) return nil;
+    NSMutableDictionary *dictionary = [NSMutableDictionary new];
+    for(id<NSObject> key in dictionary_.keyEnumerator) {
+        NSString* stringValue = BNCStringWithObject(dictionary_[key]);
+        NSString* stringKey = BNCStringWithObject(key);
+        if (stringKey.length && stringValue.length) dictionary[stringKey] = stringValue;
+    }
+    return dictionary;
+}
+
 - (void) branchInit:(ACPExtensionEvent*)event {
     if (Branch.branchKeyIsSet) return;
     NSDictionary* configuration = event.eventData[@"config.update"];
@@ -218,17 +243,17 @@ static Branch*bnc_branchInstance = nil;
     FOUNDATION_EXPORT NSString* const ABEBranchLinkSummaryKey;
     FOUNDATION_EXPORT NSString* const ABEBranchLinkImageURLKey;
     FOUNDATION_EXPORT NSString* const ABEBranchLinkCanonicalURLKey;
-    FOUNDATION_EXPORT NSSTring* const ABEBranchLinkUserInfoKey;
-    FOUNDATION_EXPORT NSSTring* const ABEBranchLinkCampaignKey;
-    FOUNDATION_EXPORT NSSTring* const ABEBranchLinkShareTextKey;
-    FOUNDATION_EXPORT NSSTring* const ABEBranchLinkTagsKey;
+    FOUNDATION_EXPORT NSString* const ABEBranchLinkUserInfoKey;
+    FOUNDATION_EXPORT NSString* const ABEBranchLinkCampaignKey;
+    FOUNDATION_EXPORT NSString* const ABEBranchLinkShareTextKey;
+    FOUNDATION_EXPORT NSString* const ABEBranchLinkTagsKey;
     */
     BranchUniversalObject *buo = BranchUniversalObject.new;
-    buo.title = data[ABEBranchLinkTitleKey];
-    buo.contentDescription = data[ABEBranchLinkSummaryKey];
-    buo.imageUrl = data[ABEBranchLinkImageURLKey];
-    buo.canonicalUrl = data[ABEBranchLinkCanonicalURLKey];
-    buo.contentMetadata.customMetadata = data[ABEBranchLinkUserInfoKey];
+    buo.title = BNCStringWithObject(data[ABEBranchLinkTitleKey]);
+    buo.contentDescription = BNCStringWithObject(data[ABEBranchLinkSummaryKey]);
+    buo.imageUrl = BNCStringWithObject(data[ABEBranchLinkImageURLKey]);
+    buo.canonicalUrl = BNCStringWithObject(data[ABEBranchLinkCanonicalURLKey]);
+    buo.contentMetadata.customMetadata = BNCStringDictionaryWithDictionary(data[ABEBranchLinkUserInfoKey]);
     if (buo.title.length == 0 && buo.canonicalUrl.length == 0) {
         BNCLogError(@"Canonical ID or title must be set for Branch Universal Objects");
         return nil;
@@ -236,7 +261,7 @@ static Branch*bnc_branchInstance = nil;
     buo.locallyIndex = YES;
 
     BranchLinkProperties *lp = [[BranchLinkProperties alloc] init];
-    lp.campaign = data[ABEBranchLinkCampaignKey];
+    lp.campaign = BNCStringWithObject(data[ABEBranchLinkCampaignKey]);
     NSArray*tags = data[ABEBranchLinkTagsKey];
     if ([tags isKindOfClass:NSString.class]) {
         tags = @[ tags ];
@@ -248,7 +273,7 @@ static Branch*bnc_branchInstance = nil;
     BranchShareLink*shareLink =
         [[BranchShareLink alloc] initWithUniversalObject:buo linkProperties:lp];
     shareLink.title = buo.title ?: @"";
-    shareLink.shareText = data[ABEBranchLinkShareTextKey] ?: @"";
+    shareLink.shareText = BNCStringWithObject(data[ABEBranchLinkShareTextKey]);
     return shareLink;
 }
 
@@ -288,31 +313,6 @@ static Branch*bnc_branchInstance = nil;
 
 #pragma mark - Action Events
 
-+ (NSString*) stringFromObject:(id<NSObject>)object {
-    if (object == nil) return nil;
-    if ([object isKindOfClass:NSString.class]) {
-        return (NSString*) object;
-    } else
-    if ([object respondsToSelector:@selector(stringValue)]) {
-        return [(id)object stringValue];
-    } else
-    if ([object respondsToSelector:@selector(description)]) {
-        return [object description];
-    }
-    return [NSString stringWithFormat:@"Object of type %@", NSStringFromClass(object.class)];
-}
-
-+ (NSMutableDictionary*) stringDictionaryFromDictionary:(NSDictionary*)dictionary_ {
-    if (dictionary_ == nil) return nil;
-    NSMutableDictionary *dictionary = [NSMutableDictionary new];
-    for(id<NSObject> key in dictionary_.keyEnumerator) {
-        NSString* stringValue = [self stringFromObject:dictionary_[key]];
-        NSString* stringKey = [self stringFromObject:key];
-        if (stringKey.length) dictionary[stringKey] = stringValue;
-    }
-    return dictionary;
-}
-
 + (BranchEvent*) branchEventFromAdbobeEventName:(NSString*)eventName
                                  dictionary:(NSDictionary*)dictionary {
 
@@ -332,33 +332,38 @@ static Branch*bnc_branchInstance = nil;
     searchQuery
     */
 
-    NSString*value = dictionary[@"currency"];
+    #define stringForKey(key) \
+        BNCStringWithObject(dictionary[@#key])
+
+    NSString*value = stringForKey(currency);
     if (value.length) event.currency = value;
 
-    value = dictionary[@"revenue"];
+    value = stringForKey(revenue);
     if (value.length) event.revenue = [NSDecimalNumber decimalNumberWithString:value];
 
-    value = dictionary[@"shipping"];
+    value = stringForKey(shipping);
     if (value.length) event.shipping = [NSDecimalNumber decimalNumberWithString:value];
 
-    value = dictionary[@"tax"];
+    value = stringForKey(tax);
     if (value.length) event.tax = [NSDecimalNumber decimalNumberWithString:value];
 
-    value = dictionary[@"coupon"];
+    value = stringForKey(coupon);
     if (value.length) event.coupon = value;
 
-    value = dictionary[@"affiliation"];
+    value = stringForKey(affiliation);
     if (value.length) event.affiliation = value;
 
-    value = dictionary[@"title"];
-    if (value.length == 0) value = dictionary[@"name"];
-    if (value.length == 0) value = dictionary[@"description"];
+    value = stringForKey(title);
+    if (value.length == 0) value = stringForKey(name);
+    if (value.length == 0) value = stringForKey(description);
     if (value.length) event.eventDescription = value;
 
-    value = dictionary[@"query"];
+    value = stringForKey(query);
     if (value.length) event.searchQuery = value;
 
-    event.customData = [self.class stringDictionaryFromDictionary:dictionary];
+    #undef stringForKey
+
+    event.customData = BNCStringDictionaryWithDictionary(dictionary);
     return event;
 }
 

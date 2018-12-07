@@ -23,6 +23,6 @@ This is the Branch extension for the Adobe Marketing Cloud iOS library.
 
   s.source_files     = 'AdobeBranchExtension/Classes/**/*'
 
-  s.dependency 'ACPCoreBeta', '= 1.0.2beta2'
-  s.dependency 'Branch', '>= 0.25.9'
+  s.dependency 'ACPCoreBeta',   '= 1.0.2beta2'
+  s.dependency 'Branch',        '>= 0.25.9'
 end
