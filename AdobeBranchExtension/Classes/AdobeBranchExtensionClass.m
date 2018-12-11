@@ -42,10 +42,15 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
 
 @implementation AdobeBranchExtension
 
-static Branch* bnc_branchInstance = nil;
++ (Branch *)bnc_branchInstance {
+    if (!_bnc_branchInstance) {
+        _bnc_branchInstance = [Branch getInstance];
+    }
+    return _bnc_branchExtInstance;
+}
 
-+ (Branch *)getInstance {
-    return bnc_branchInstance;
+- (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback {
+    [bnc_branchInstance initSessionWithLaunchOptions:options andRegisterDeepLinkHandler:callback];
 }
 
 + (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity {
