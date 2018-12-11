@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <ACPCore_iOS/ACPCore_iOS.h>
-@class Branch;
+#import <Branch/Branch.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -27,7 +27,7 @@ FOUNDATION_EXPORT NSString*const ABEBranchEventSource;
  */
 @interface AdobeBranchExtension : ACPExtension
 
-- (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback;
++ (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback;
 
 + (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity;
 

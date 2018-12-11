@@ -33,29 +33,6 @@
         @"View",
         @"Purchase"
     ];
-
-    // Listen for deep links:
-    [[NSNotificationCenter defaultCenter]
-        addObserver:self
-        selector:@selector(showDeepLinkNotification:)
-        name:ABEBranchDeepLinkNotification
-        object:nil];
-}
-
-- (void) showDeepLinkNotification:(NSNotification*)notification {
-    NSDictionary*data = notification.userInfo;
-    Product*product = Product.new;
-    product.name        = data[ABEBranchLinkTitleKey];
-    product.summary     = data[ABEBranchLinkSummaryKey];
-    product.imageName   = data[ABEBranchLinkUserInfoKey][@"imageName"];
-    product.URL         = data[ABEBranchLinkCanonicalURLKey];
-    product.imageURL    = data[ABEBranchLinkImageURLKey];
-
-    ProductViewController *pvc =
-        [self.storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
-    pvc.title = product.name;
-    pvc.product = product;
-    [self.navigationController pushViewController:pvc animated:YES];
 }
 
 - (void) dealloc {
@@ -120,36 +97,20 @@
         break;
     }
     case 1: {
-        NSError*error = nil;
-        ACPExtensionEvent* createLinkEvent =
-            [ACPExtensionEvent extensionEventWithName:ABEBranchEventNameCreateDeepLink
-                type:ABEBranchEventType
-                source:[NSBundle mainBundle].bundleIdentifier
-                data:@{
-                    @"$og_title":          @"Branch Glasses",
-                    @"$og_description":        @"Look stylish -- Branch style -- in these Branch sun glasses.",
-                    @"$og_image_url":       @"https://cdn.branch.io/branch-assets/1538165719615-og_image.jpeg",
-                    @"$canonical_url":   @"https://branch.io/branch/Glasses.html",
-                    ABEBranchLinkUserInfoKey: @{
-                        @"imageName":   @"glasses",
-                        @"linkDate":    [NSDate date].description
-                    }
-                }
-                error:&error];
-        if (error) {
-            NSLog(@"Error create event: %@.", error);
-            return;
-        }
-        [ACPCore dispatchEventWithResponseCallback:createLinkEvent
-            responseCallback:^ (ACPExtensionEvent*responseEvent) {
-                dispatch_async(dispatch_get_main_queue(), ^ {
-                    [self showCreatedLink:responseEvent];
-                });
-            }
-            error:&error];
-        if (error) {
-            NSLog(@"Error dispatching event: %@.", error);
-        }
+        BranchUniversalObject* branchUniversalObject = [[BranchUniversalObject alloc] initWithCanonicalIdentifier: @"https://branch.io/branch/Glasses.html"];
+        branchUniversalObject.canonicalUrl = @"https://branch.io/branch/Glasses.html";
+        branchUniversalObject.title = @"Branch Glasses";
+        branchUniversalObject.contentDescription = @"Look stylish -- Branch style -- in these Branch sun glasses.";
+        branchUniversalObject.imageUrl = @"https://cdn.branch.io/branch-assets/1538165719615-og_image.jpeg";
+        
+        BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
+        linkProperties.feature = @"Sharing";
+        linkProperties.tags = @[@"Swag", @"Branch"];
+        [linkProperties addControlParam:@"$desktop_url" withValue:  @"https://branch.io/branch/Glasses.html"];
+        
+        [branchUniversalObject getShortUrlWithLinkProperties:linkProperties andCallback:^(NSString *url, NSError *error) {
+            [self showCreatedLink:url];
+        }];
         break;
     }
     case 2: {
@@ -168,12 +129,12 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
-- (void) showCreatedLink:(ACPExtensionEvent*)responseEvent {
+- (void) showCreatedLink:(NSString*)url {
     TextViewController*tvc = [self.storyboard instantiateViewControllerWithIdentifier:@"TextViewController"];
     [tvc loadViewIfNeeded];
     tvc.title = @"Branch Link";
     tvc.titleLabel.text = @"Branch Short Link";
-    tvc.textView.text = responseEvent.eventData[ABEBranchLinkKey];
+    tvc.textView.text = url;
     [self.navigationController pushViewController:tvc animated:YES];
 }
 

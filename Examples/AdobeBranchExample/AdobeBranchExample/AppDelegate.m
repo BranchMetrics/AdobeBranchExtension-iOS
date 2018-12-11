@@ -43,6 +43,22 @@
         NSLog(@"%@", error);
     }
     [ACPCore start:nil];
+    
+    [AdobeBranchExtension initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary * _Nullable params, NSError * _Nullable error) {
+        if (!error && params && params[@"+clicked_branch_link"]) {
+            Product*product = Product.new;
+            product.name        = params[@"$og_title"];
+            product.summary     = params[@"$og_description"];
+            product.URL         = params[@"$canonical_url"];
+            product.imageURL    = params[@"$og_image_url"];
+            
+            ProductViewController *pvc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ProductViewController"];
+            pvc.title = product.name;
+            pvc.product = product;
+            [((UINavigationController *)self.window.rootViewController) pushViewController:pvc animated:YES];
+        }
+    }];
+    
     return YES;
 }
 

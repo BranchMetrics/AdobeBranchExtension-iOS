@@ -9,7 +9,6 @@
 #import "ProductViewController.h"
 #import "Product.h"
 #import <ACPCore_iOS/ACPCore_iOS.h>
-#import <Branch/Branch.h>
 #import <AdobeBranchExtension/AdobeBranchExtension.h>
 
 @interface ProductViewController () <BranchShareLinkDelegate>
@@ -60,15 +59,7 @@
     shareLink.delegate = self;
     shareLink.shareText = @"Shared from Branch's Adobe TestBed.";
     
-    UIActivityViewController *activityController =
-    [[UIActivityViewController alloc]
-     initWithActivityItems:shareLink.activityItems
-     applicationActivities:nil];
-    
-    if (activityController) {
-        [self presentViewController:activityController animated:YES completion:nil];
-    }
-    
+    [shareLink presentActivityViewControllerFromViewController:self anchor:sender];
 }
 
 - (void) branchShareLink:(BranchShareLink*)shareLink didComplete:(BOOL)completed withError:(NSError*)error {

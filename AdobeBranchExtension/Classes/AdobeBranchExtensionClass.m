@@ -42,14 +42,22 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
 
 @implementation AdobeBranchExtension
 
+static Branch *bnc_branchInstance;
+
 + (Branch *)bnc_branchInstance {
-    if (!_bnc_branchInstance) {
-        _bnc_branchInstance = [Branch getInstance];
-    }
-    return _bnc_branchExtInstance;
+    static Branch *branchInstance = nil;
+    
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
+        if (!branchInstance) {
+            branchInstance = [Branch getInstance];
+        }
+    });
+    
+    return branchInstance;
 }
 
-- (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback {
++ (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback {
     [bnc_branchInstance initSessionWithLaunchOptions:options andRegisterDeepLinkHandler:callback];
 }
 
@@ -114,38 +122,33 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
     searchQuery
     */
 
-    #define stringForKey(key) \
-        BNCStringWithObject(dictionary[@#key])
-
-    NSString *value = stringForKey(currency);
+    NSString *value = [[dictionary objectForKey:@"currency"] stringValue];
     if (value.length) event.currency = value;
 
-    value = stringForKey(revenue);
+    value = [[dictionary objectForKey:@"revenue"] stringValue];
     if (value.length) event.revenue = [NSDecimalNumber decimalNumberWithString:value];
 
-    value = stringForKey(shipping);
+    value = [[dictionary objectForKey:@"shipping"] stringValue];
     if (value.length) event.shipping = [NSDecimalNumber decimalNumberWithString:value];
 
-    value = stringForKey(tax);
+    value = [[dictionary objectForKey:@"tax"] stringValue];
     if (value.length) event.tax = [NSDecimalNumber decimalNumberWithString:value];
 
-    value = stringForKey(coupon);
+    value = [[dictionary objectForKey:@"coupon"] stringValue];
     if (value.length) event.coupon = value;
 
-    value = stringForKey(affiliation);
+    value = [[dictionary objectForKey:@"affiliation"] stringValue];
     if (value.length) event.affiliation = value;
 
-    value = stringForKey(title);
-    if (value.length == 0) value = stringForKey(name);
-    if (value.length == 0) value = stringForKey(description);
+    value = [[dictionary objectForKey:@"title"] stringValue];
+    if (value.length == 0) value = [[dictionary objectForKey:@"name"] stringValue];
+    if (value.length == 0) value = [[dictionary objectForKey:@"description"] stringValue];
     if (value.length) event.eventDescription = value;
 
-    value = stringForKey(query);
+    value = [[dictionary objectForKey:@"query"] stringValue];
     if (value.length) event.searchQuery = value;
 
-    #undef stringForKey
-
-    event.customData = BNCStringDictionaryWithDictionary(dictionary);
+    event.customData = [dictionary objectForKey:@"dictionary"];
     return event;
 }
 
