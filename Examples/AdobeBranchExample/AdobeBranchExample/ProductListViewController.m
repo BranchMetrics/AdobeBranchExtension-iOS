@@ -126,12 +126,10 @@
                 type:ABEBranchEventType
                 source:[NSBundle mainBundle].bundleIdentifier
                 data:@{
-                    ABEBranchLinkTitleKey:          @"Branch Glasses",
-                    ABEBranchLinkSummaryKey:        @"Look stylish -- Branch style -- in these Branch sun glasses.",
-                    ABEBranchLinkImageURLKey:       @"https://cdn.branch.io/branch-assets/1538165719615-og_image.jpeg",
-                    ABEBranchLinkCanonicalURLKey:   @"https://branch.io/branch/Glasses.html",
-                    ABEBranchLinkCampaignKey:       @"Adobe",
-                    ABEBranchLinkTagsKey:           @[ @"Swag", @"Branch"],
+                    @"$og_title":          @"Branch Glasses",
+                    @"$og_description":        @"Look stylish -- Branch style -- in these Branch sun glasses.",
+                    @"$og_image_url":       @"https://cdn.branch.io/branch-assets/1538165719615-og_image.jpeg",
+                    @"$canonical_url":   @"https://branch.io/branch/Glasses.html",
                     ABEBranchLinkUserInfoKey: @{
                         @"imageName":   @"glasses",
                         @"linkDate":    [NSDate date].description
