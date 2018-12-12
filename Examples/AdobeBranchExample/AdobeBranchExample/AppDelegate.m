@@ -45,7 +45,8 @@
     [ACPCore start:nil];
     
     [AdobeBranchExtension initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary * _Nullable params, NSError * _Nullable error) {
-        if (!error && params && params[@"+clicked_branch_link"]) {
+        if (!error && params && [params[@"+clicked_branch_link"] boolValue]) {
+
             Product*product = Product.new;
             product.name        = params[@"$og_title"];
             product.summary     = params[@"$og_description"];
