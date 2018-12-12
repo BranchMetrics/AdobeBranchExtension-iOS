@@ -46,6 +46,7 @@
     branchUniversalObject.title = self.product.name;
     branchUniversalObject.contentDescription = self.product.summary;
     branchUniversalObject.imageUrl = self.product.imageURL;
+    branchUniversalObject.contentMetadata.customMetadata[@"imageName"] = self.product.imageName;
     
     BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
     linkProperties.feature = @"Sharing";

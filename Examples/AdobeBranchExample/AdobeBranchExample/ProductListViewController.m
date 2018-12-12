@@ -102,6 +102,7 @@
         branchUniversalObject.title = @"Branch Glasses";
         branchUniversalObject.contentDescription = @"Look stylish -- Branch style -- in these Branch sun glasses.";
         branchUniversalObject.imageUrl = @"https://cdn.branch.io/branch-assets/1538165719615-og_image.jpeg";
+        branchUniversalObject.contentMetadata.customMetadata[@"imageName"] = @"glasses";
         
         BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
         linkProperties.feature = @"Sharing";

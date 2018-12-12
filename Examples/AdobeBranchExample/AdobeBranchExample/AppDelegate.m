@@ -51,6 +51,7 @@
             product.name        = params[@"$og_title"];
             product.summary     = params[@"$og_description"];
             product.URL         = params[@"$canonical_url"];
+            product.imageName   = params[@"image_name];
             product.imageURL    = params[@"$og_image_url"];
             
             ProductViewController *pvc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ProductViewController"];
