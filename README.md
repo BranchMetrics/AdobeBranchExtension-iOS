@@ -8,26 +8,19 @@
 
 # AdobeBranchExtension
 
-Add the power of Branch deep linking and analytics to your Adobe Marketing Cloud app.
-
-With Branch's deep linking platform, mobile developers and marketers can leverage
-their app content to improve discoverability and optimize install campaigns.
-
-This is the Branch extension for the Adobe Marketing Cloud iOS library.
+Add the power of Branch deep linking and attribute to your Adobe Marketing Cloud app. With Branch's linking platform, mobile developers and marketers can grow their mobile business with world class deep linking and attribution.
 
 ## Features
-1. Deep Link into your app's content.
-2. Track Adobe Actions and States along with deep link sessions on the Branch dashboard to optimize your app's marketing and virility reach.
-3. Generate Branch short URLs in your app.
-4. Show a share sheet with a short URL in your app.
+1. All events tracked with the Adobe SDK will automatically be sent to Branch without any extra work
+2. All core Branch functionality is accessible
 
 ## Requirements
 - iOS 10
-- Adobe Core Platform 1.0.2beta2
-- Branch SDK version 0.25.9 or above.
-- For the Android counterpart, if applicable: Android API 14, 4.0.1
+- Adobe Core Platform
+- Branch SDK
 
 ## Example
+
 An example app can be found in the AdobeBranchExtension-iOS repository, in the `Examples/AdobeBranchExample`
 project.
 
@@ -35,33 +28,32 @@ project.
 - [AdobeBranchExtension-iOS Repository](https://github.com/BranchMetrics/AdobeBranchExtension-iOS)
 
 ## Installation & Usage
+
 Here's a brief outline of how to use the AdobeBranchExtension in your app:
 
-1. You'll need to configure your app and get a Branch API key in the Branch Metrics dashboard.
+1. You'll need to configure your app and get a Branch API key in the [Branch Metrics dashboard](https://branch.dashboard.branch.io/account-settings/app). You can read more about configuring your dashboard in the Branch docs here.
 
-   [Configuring  your dashboard and getting a Branch key](https://docs.branch.io/pages/dashboard/integrate/)
 2. For deep linking, you'll need to add associated domains for universal links as described in the Branch docs here:
 
-   [Configure associated domains](https://docs.branch.io/pages/apps/ios/#configure-associated-domains)
-   [Configure entitlements](https://docs.branch.io/pages/apps/ios/#configure-entitlements)
-3. Also add an app URI scheme for you app for deep linking.
+   - [Configure associated domains](https://docs.branch.io/pages/apps/ios/#configure-associated-domains)
+   - [Configure entitlements](https://docs.branch.io/pages/apps/ios/#configure-entitlements)
 
-   [Configure your Info.plist for URI schemes](https://docs.branch.io/pages/apps/ios/#configure-infoplist)
+3. Also add an app URI scheme and your Branch key to the plist file for you app for deep linking.
+
+   - [Configure your Info.plist with Branch key and for URI schemes](https://docs.branch.io/pages/apps/ios/#configure-infoplist)
+
 4. In the Adobe dashboard, activate Branch and add your Branch key to your app's configuration.
 
    Activate Branch:
 
    ![Activate Branch](scripts/images/adobe-dash-install.png)
 
-   Add your Branch key:
-
-   ![Add your Branch key](scripts/images/adobe-dash-key.png)
 5. Add the AdobeBranchExtension to your app's Podfile.
 
         pod 'AdobeBranchExtension'
 
 6. Run `pod install` and `pod update` do install the latest version of the extension.
-7. Add some code to you AppDelegate class to activate the AdobeBranchExtension:
+7. Register the Branch `AdobeBranchExtension` with `ACPCore` in `didFinishLaunchingWithOptions`:
 
 ```
     #import <AdobeBranchExtension/AdobeBranchExtension.h>
@@ -69,14 +61,42 @@ Here's a brief outline of how to use the AdobeBranchExtension in your app:
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     ...
     [ACPCore registerExtension:[AdobeBranchExtension class] error:&error]
+
+
     ...
     return YES; // Important! If you return `NO` iOS will not handle deep linking as expected.
 }
 ```
 
-Add deep link handlers in your app delegate class in two places:
+8. Add the Branch deep link routers and receivers in your AppDelegate class in three places as shown below. You can see some [best practices on deep link routing in this doc](https://docs.branch.io/pages/deep-linking/routing/).
 
 ```
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+
+    // Up here you register your AdobeBranchExtension with ACPCore
+    
+    // Handle your Branch deep link routing in the callback
+    [AdobeBranchExtension initSessionWithLaunchOptions:launchOptions
+                            andRegisterDeepLinkHandler:^(NSDictionary * _Nullable params, NSError * _Nullable error) {
+        if (!error && params && [params[@"+clicked_branch_link"] boolValue]) {
+
+//            EXAMPLE ROUTING CODE
+//            Product*product = Product.new;
+//            product.name        = params[@"$og_title"];
+//            product.summary     = params[@"$og_description"];
+//            product.URL         = params[@"$canonical_url"];
+//            product.imageName   = params[@"image_name];
+//            product.imageURL    = params[@"$og_image_url"];
+//            
+//            ProductViewController *pvc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"ProductViewController"];
+//            pvc.title = product.name;
+//            pvc.product = product;
+//            [((UINavigationController *)self.window.rootViewController) pushViewController:pvc animated:YES];
+
+        }
+    }];
+}
+
 - (BOOL)application:(UIApplication *)application
         openURL:(NSURL *)url
         options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
@@ -96,50 +116,11 @@ Add deep link handlers in your app delegate class in two places:
 Congratulations! With those seven quick and easy steps you've installed and activated the AdobeBranchExtension.
 
 ## Implementing Branch Features
-Once you've added the AdobeBranchExtension and Branch, you can always use Branch features directly or use the
-features through the  AdobeBranchExtension interface.
 
-[You can learn about using the Branch features here, in the Branch documentation for iOS.](https://github.com/BranchMetrics/ios-branch-deep-linking#init-branch-session-and-deep-link-routing-function)
-
-Below outlines using Branch features through the AdobeBranchExtension.
-
-### Deep Linking
-When you've implemented the code above you're ready to start listen for deep links.
-
- Add a `NSNotificationCenter` listener for deep links:
-
-     // Listen for deep links:
-    [[NSNotificationCenter defaultCenter]
-        addObserver:self
-        selector:@selector(showDeepLinkNotification:)
-        name:ABEBranchDeepLinkNotification
-        object:nil];
+Once you've added the AdobeBranchExtension and Branch, you can always use Branch features directly. You can learn about using the Branch features here, in the Branch documentation for iOS.](https://docs.branch.io/pages/apps/ios/)
 
 
-[Here's an example that shows how to add a deep link observer.](https://github.com/BranchMetrics/AdobeBranchExtension-iOS/blob/master/Examples/AdobeBranchExample/AdobeBranchExample/ProductListViewController.m#L38)
-
-And add a handler for the listener:
-
-```
-- (void) showDeepLinkNotification:(NSNotification*)notification {
-    NSDictionary*data = notification.userInfo;
-    Product*product = Product.new;
-    product.name        = data[ABEBranchLinkTitleKey];
-    product.summary     = data[ABEBranchLinkSummaryKey];
-    product.imageName   = data[ABEBranchLinkUserInfoKey][@"imageName"];
-    product.URL         = data[ABEBranchLinkCanonicalURLKey];
-    product.imageURL    = data[ABEBranchLinkImageURLKey];
-
-    ProductViewController *pvc =
-        [self.storyboard instantiateViewControllerWithIdentifier:@"ProductViewController"];
-    pvc.title = product.name;
-    pvc.product = product;
-    [self.navigationController pushViewController:pvc animated:YES];
-}
-```
-[Here's the working example that shows the notification handler.](https://github.com/BranchMetrics/AdobeBranchExtension-iOS/blob/master/Examples/AdobeBranchExample/AdobeBranchExample/ProductListViewController.m#L45)
-
-### Track Action and State
+### Automatic: Track Action and State
 When you track actions and state in Adobe Launch, the action and state messages are sent to Branch too and shown on the
 Branch dashboards. This allows you to track the effectiveness of deep link campaigns and viral sharing in your app's actions.
 
@@ -151,73 +132,10 @@ Here's an example of tracking app state via Adobe Launch:
         @"currency":    @"USD"
     }];
 
-### Show a Share Sheet
-Here's an example of showing a share sheet that allows the user to share a Branch short URL deep link:
-
-    ACPExtensionEvent* shareSheetEvent =
-        [ACPExtensionEvent extensionEventWithName:ABEBranchEventNameShowShareSheet
-            type:ABEBranchEventType
-            source:ABEBranchEventSource
-            data:@{
-                ABEBranchLinkTitleKey:          self.product.name,
-                ABEBranchLinkSummaryKey:        self.product.summary,
-                ABEBranchLinkImageURLKey:       self.product.imageURL,
-                ABEBranchLinkCanonicalURLKey:   self.product.URL,
-                ABEBranchLinkCampaignKey:       @"Sharing",
-                ABEBranchLinkShareTextKey:      @"Check out this Branch swag!",
-                ABEBranchLinkTagsKey:           @[ @"Swag", @"Branch"],
-                ABEBranchLinkUserInfoKey:       @{ @"imageName": self.product.imageName }
-            }
-            error:&error];
-
-
-[Here's the example in context of the example.](https://github.com/BranchMetrics/AdobeBranchExtension-iOS/blob/master/Examples/AdobeBranchExample/AdobeBranchExample/ProductViewController.m#L37-L62)
-
-### Generate Branch short links in you app
-Here's an example that shows how to create a Branch short URL via the AdobeBranchExtension interface.
-
-Note that `dispatchEventWithResponseCallback` is used to dispatch the event so that the short URL can be passed in the
-response.
-
-        NSError*error = nil;
-        ACPExtensionEvent* createLinkEvent =
-            [ACPExtensionEvent extensionEventWithName:ABEBranchEventNameCreateDeepLink
-                type:ABEBranchEventType
-                source:[NSBundle mainBundle].bundleIdentifier
-                data:@{
-                    ABEBranchLinkTitleKey:          @"Branch Glasses",
-                    ABEBranchLinkSummaryKey:        @"Look stylish -- Branch style -- in these Branch sun glasses.",
-                    ABEBranchLinkImageURLKey:       @"https://cdn.branch.io/branch-assets/1538165719615-og_image.jpeg",
-                    ABEBranchLinkCanonicalURLKey:   @"https://branch.io/branch/Glasses.html",
-                    ABEBranchLinkCampaignKey:       @"Adobe",
-                    ABEBranchLinkTagsKey:           @[ @"Swag", @"Branch"],
-                    ABEBranchLinkUserInfoKey: @{
-                        @"imageName":   @"glasses",
-                        @"linkDate":    [NSDate date].description
-                    }
-                }
-                error:&error];
-        if (error) {
-            NSLog(@"Error create event: %@.", error);
-            return;
-        }
-        [ACPCore dispatchEventWithResponseCallback:createLinkEvent
-            responseCallback:^ (ACPExtensionEvent*responseEvent) {
-                dispatch_async(dispatch_get_main_queue(), ^ {
-                    [self showCreatedLink:responseEvent];
-                });
-            }
-            error:&error];
-        if (error) {
-            NSLog(@"Error dispatching event: %@.", error);
-        }
-        break;
-
-[Here's a link to the example in context.](https://github.com/BranchMetrics/AdobeBranchExtension-iOS/blob/master/Examples/AdobeBranchExample/AdobeBranchExample/ProductListViewController.m#L123-L154)
 
 ## Author
 
-Edward Smith, esmith@branch.io
+Ernest Cho echo@branch.io
 
 ## License
 

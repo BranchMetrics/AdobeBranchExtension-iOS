@@ -11,7 +11,7 @@
 #import <ACPCore_iOS/ACPCore_iOS.h>
 #import <AdobeBranchExtension/AdobeBranchExtension.h>
 
-@interface ProductViewController ()
+@interface ProductViewController () <BranchShareLinkDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *productImage;
 @property (weak, nonatomic) IBOutlet UILabel     *productTitle;
 @property (weak, nonatomic) IBOutlet UIButton    *shareButton;
@@ -40,24 +40,36 @@
         @"revenue":     @"200.0",
         @"currency":    @"USD"
     }];
-    NSError* error = nil;
-    ACPExtensionEvent* shareSheetEvent =
-        [ACPExtensionEvent extensionEventWithName:ABEBranchEventNameShowShareSheet
-            type:ABEBranchEventType
-            source:ABEBranchEventSource
-            data:@{
-                ABEBranchLinkTitleKey:          self.product.name,
-                ABEBranchLinkSummaryKey:        self.product.summary,
-                ABEBranchLinkImageURLKey:       self.product.imageURL,
-                ABEBranchLinkCanonicalURLKey:   self.product.URL,
-                ABEBranchLinkCampaignKey:       @"Sharing",
-                ABEBranchLinkShareTextKey:      @"Check out this Branch swag!",
-                ABEBranchLinkTagsKey:           @[ @"Swag", @"Branch"],
-                ABEBranchLinkUserInfoKey:       @{ @"imageName": self.product.imageName }
-            }
-            error:&error];
-    if ([ACPCore dispatchEvent:shareSheetEvent error:&error]) {
-        NSLog(@"Can't dispatch event: %@.", error);
+
+    BranchUniversalObject* branchUniversalObject = [[BranchUniversalObject alloc] initWithCanonicalIdentifier:self.product.URL];
+    branchUniversalObject.canonicalUrl = self.product.URL;
+    branchUniversalObject.title = self.product.name;
+    branchUniversalObject.contentDescription = self.product.summary;
+    branchUniversalObject.imageUrl = self.product.imageURL;
+    branchUniversalObject.contentMetadata.customMetadata[@"imageName"] = self.product.imageName;
+    
+    BranchLinkProperties *linkProperties = [[BranchLinkProperties alloc] init];
+    linkProperties.feature = @"Sharing";
+    linkProperties.tags = @[@"Swag", @"Branch"];
+
+    [linkProperties addControlParam:@"$desktop_url" withValue: self.product.URL];
+    
+    BranchShareLink *shareLink = [[BranchShareLink alloc] initWithUniversalObject:branchUniversalObject linkProperties:linkProperties];
+    
+    shareLink.title = @"Check out this Branch swag!";
+    shareLink.delegate = self;
+    shareLink.shareText = @"Shared from Branch's Adobe TestBed.";
+    
+    [shareLink presentActivityViewControllerFromViewController:self anchor:sender];
+}
+
+- (void) branchShareLink:(BranchShareLink*)shareLink didComplete:(BOOL)completed withError:(NSError*)error {
+    if (error != nil) {
+        NSLog(@"Branch: Error while sharing! Error: %@.", error);
+    } else if (completed) {
+        NSLog(@"Branch: User completed sharing to channel '%@'.", shareLink.linkProperties.channel);
+    } else {
+        NSLog(@"Branch: User cancelled sharing.");
     }
 }
 

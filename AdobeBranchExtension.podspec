@@ -1,15 +1,13 @@
 Pod::Spec.new do |s|
   s.name             = "AdobeBranchExtension"
-  s.version          = "0.1.4"
+  s.version          = "0.1.5"
   s.summary          = "The Branch extension for Adobe Cloud Platform on iOS."
 
   s.description      = <<-DESC
-Add the power of Branch deep linking and analytics to your Adobe Marketing Cloud app.
+Add the power of Branch deep linking and attribution to your Adobe Marketing Cloud app.
 
-With Branch's deep linking platform, mobile developers and marketers can leverage
-their app content to improve discoverability and optimize install campaigns.
-
-This is the Branch extension for the Adobe Marketing Cloud iOS library.
+With Branch's platform, mobile developers and marketers can leverage
+their app content to improve discoverability and optimize mobile campaigns.
                        DESC
 
   s.homepage         = "https://github.com/BranchMetrics/AdobeBranchExtension-iOS"

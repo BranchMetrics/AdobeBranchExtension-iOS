@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>branch_key</key>
+	<string>key_live_nbB0KZ4UGOKaHEWCjQI2ThncEAeRJmhy</string>
 	<key>ADBMobileAppID</key>
 	<string>launch-EN250ff13ac5814cb1a8750820b1f89b0a</string>
 	<key>CFBundleDevelopmentRegion</key>
