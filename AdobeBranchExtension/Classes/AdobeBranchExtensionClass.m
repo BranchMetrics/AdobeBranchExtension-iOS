@@ -8,6 +8,7 @@
 
 #import "AdobeBranchExtension.h"
 #import <Branch/Branch.h>
+#import <ACPIdentity_iOS/ACPIdentity_iOS.h>
 
 #pragma mark Constants
 
@@ -57,6 +58,12 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
 
 + (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback {
     [[self bnc_branchInstance] initSessionWithLaunchOptions:options andRegisterDeepLinkHandler:callback];
+    
+    [ACPIdentity getExperienceCloudId:^(NSString * _Nullable experienceCloudId) {
+        if (experienceCloudId) {
+            [[self bnc_branchInstance] setIdentity:experienceCloudId];
+        }
+    }];
 }
 
 + (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity {
