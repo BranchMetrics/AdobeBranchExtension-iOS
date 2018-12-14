@@ -71,9 +71,7 @@
     return YES;
 }
 
-- (BOOL)application:(UIApplication *)application
-        continueUserActivity:(NSUserActivity *)userActivity
-        restorationHandler:(void(^)(NSArray<id<UIUserActivityRestoring>> * __nullable restorableObjects))restorationHandler {
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler {
     [AdobeBranchExtension application:application continueUserActivity:userActivity];
     return YES;
 }
