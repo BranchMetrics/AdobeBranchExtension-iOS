@@ -8,7 +8,7 @@
 
 #import "AdobeBranchExtension.h"
 #import <Branch/Branch.h>
-#import <ACPIdentity_iOS/ACPIdentity_iOS.h>
+#import "ACPIdentity.h"
 
 #pragma mark Constants
 
