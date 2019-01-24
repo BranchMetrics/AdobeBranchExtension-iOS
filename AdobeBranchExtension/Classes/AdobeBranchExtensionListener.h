@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <ACPCore_iOS/ACPCore_iOS.h>
+#import "ACPCore.h"
+#import "ACPExtension.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

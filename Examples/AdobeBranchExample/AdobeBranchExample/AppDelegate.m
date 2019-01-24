@@ -7,10 +7,11 @@
 //
 
 #import "AppDelegate.h"
-#import <ACPCore_iOS/ACPCore.h>
-#import <ACPLifecycle_iOS/ACPLifecycle_iOS.h>
-#import <AdobeBranchExtension/AdobeBranchExtension.h>
 #import "ProductViewController.h"
+
+#import "ACPCore.h"
+#import "ACPLifecycle.h"
+#import <AdobeBranchExtension/AdobeBranchExtension.h>
 
 @interface AppDelegate ()
 @end

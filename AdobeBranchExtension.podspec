@@ -21,6 +21,6 @@ their app content to improve discoverability and optimize mobile campaigns.
 
   s.source_files     = 'AdobeBranchExtension/Classes/**/*'
 
-  s.dependency 'ACPCoreBeta',   '= 1.0.2beta2'
+  s.dependency 'ACPCoreBeta',   '= 2.0.0beta2'
   s.dependency 'Branch',        '>= 0.25.9'
 end
