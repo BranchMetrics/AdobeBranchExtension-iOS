@@ -44,5 +44,5 @@ git pull origin $git_branch
 git push
 
 # Remove `--allow-warnings` when Adobe fixes their warnings.
-pod spec lint --allow-warnings
-pod trunk push --allow-warnings AdobeBranchExtension.podspec
+pod spec lint --allow-warnings --use-libraries
+pod trunk push --allow-warnings --use-libraries AdobeBranchExtension.podspec
