@@ -10,7 +10,6 @@
 #import "Product.h"
 #import "ProductViewController.h"
 #import "TextViewController.h"
-#import <ACPCore_iOS/ACPCore_iOS.h>
 #import <AdobeBranchExtension/AdobeBranchExtension.h>
 
 @interface ProductListViewController () <UITableViewDelegate, UITableViewDataSource>

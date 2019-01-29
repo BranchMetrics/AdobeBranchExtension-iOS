@@ -8,7 +8,6 @@
 
 #import "ProductViewController.h"
 #import "Product.h"
-#import <ACPCore_iOS/ACPCore_iOS.h>
 #import <AdobeBranchExtension/AdobeBranchExtension.h>
 
 @interface ProductViewController () <BranchShareLinkDelegate>
