@@ -11,7 +11,7 @@
 
 #pragma mark Constants
 
-NSString*const ABEBranchExtensionVersion        = @"0.1.5";
+NSString*const ABEBranchExtensionVersion        = @"0.1.6";
 
 NSString*const ABEBranchEventType               = @"com.branch.eventType";
 NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
