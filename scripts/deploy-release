@@ -22,7 +22,7 @@ project_directory="$(full_path_of_directory AdobeBranchExtension-iOS)"
 cd "$project_directory"
 
 # Remove `--allow-warnings` when Adobe fixes their warnings.
-pod lib lint --allow-warnings
+pod lib lint --allow-warnings --use-libraries
 
 version="$(./scripts/version)"
 git_branch=$(git symbolic-ref --short HEAD)
@@ -44,5 +44,5 @@ git pull origin $git_branch
 git push
 
 # Remove `--allow-warnings` when Adobe fixes their warnings.
-pod spec lint --allow-warnings
-pod trunk push --allow-warnings AdobeBranchExtension.podspec
+pod spec lint --allow-warnings --use-libraries
+pod trunk push --allow-warnings --use-libraries AdobeBranchExtension.podspec
