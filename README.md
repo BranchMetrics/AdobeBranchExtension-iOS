@@ -132,11 +132,6 @@ Here's an example of tracking app state via Adobe Launch:
         @"currency":    @"USD"
     }];
 
-
-## Author
-
-Ernest Cho echo@branch.io
-
 ## License
 
 AdobeBranchExtension is available under the MIT license. See the LICENSE file for more info.
