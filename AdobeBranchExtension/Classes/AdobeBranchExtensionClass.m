@@ -11,7 +11,7 @@
 
 #pragma mark Constants
 
-NSString*const ABEBranchExtensionVersion        = @"0.1.6";
+NSString*const ABEBranchExtensionVersion        = @"1.0.0";
 
 NSString*const ABEBranchEventType               = @"com.branch.eventType";
 NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
@@ -51,7 +51,7 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
             branchInstance = [Branch getInstance];
         }
     });
-    
+
     return branchInstance;
 }
 
@@ -147,7 +147,7 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
 
     #define stringForKey(key) \
         BNCStringWithObject(dictionary[@#key])
-    
+
     NSString *value = stringForKey(currency);
     if (value.length) event.currency = value;
 
@@ -175,7 +175,7 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     if (value.length) event.searchQuery = value;
 
     #undef stringForKey
-    
+
     event.customData = BNCStringDictionaryWithDictionary(dictionary);
     return event;
 }

@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <Branch/Branch.h>
-#import "ACPCore.h"
-#import "ACPExtension.h"
+#import <ACPCore/ACPCore.h>
+#import <ACPCore/ACPExtension.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
