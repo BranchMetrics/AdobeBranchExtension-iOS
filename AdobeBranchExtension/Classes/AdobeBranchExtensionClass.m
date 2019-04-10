@@ -11,7 +11,7 @@
 
 #pragma mark Constants
 
-NSString*const ABEBranchExtensionVersion        = @"1.0.0";
+NSString*const ABEBranchExtensionVersion        = @"1.0.1";
 
 NSString*const ABEBranchEventType               = @"com.branch.eventType";
 NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
@@ -71,7 +71,7 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
     self = [super init];
     if (!self) return self;
 
-    BNCLogSetDisplayLevel(BNCLogLevelAll); // TODO: Show all logging for now. Turn off later.
+    BNCLogSetDisplayLevel(BNCLogLevelError);
 
     NSError *error = nil;
     if ([self.api registerWildcardListener:AdobeBranchExtensionListener.class error:&error])
