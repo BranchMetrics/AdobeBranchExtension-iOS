@@ -2,6 +2,6 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '10.0'
 
 target 'AdobeBranchExample' do
-  pod 'ACPCore' # ,  '>= 1.0.1beta'
+  pod 'ACPCore'
   pod 'AdobeBranchExtension', :path => '../../'
 end
