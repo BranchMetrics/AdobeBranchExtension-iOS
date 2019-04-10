@@ -71,7 +71,7 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
     self = [super init];
     if (!self) return self;
 
-    BNCLogSetDisplayLevel(BNCLogLevelAll); // TODO: Show all logging for now. Turn off later.
+    BNCLogSetDisplayLevel(BNCLogError);
 
     NSError *error = nil;
     if ([self.api registerWildcardListener:AdobeBranchExtensionListener.class error:&error])
