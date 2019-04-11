@@ -7,6 +7,7 @@
 //
 
 #import "AdobeBranchExtension.h"
+#import "AdobeBranchExtensionConfig.h"
 #import <Branch/Branch.h>
 
 #pragma mark Constants
@@ -67,6 +68,15 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
     return [[self bnc_branchInstance] application:application openURL:url options:options];
 }
 
++ (void)configureEventTypes:(NSArray<NSString *> *)eventTypes andEventSources:(NSArray<NSString *> *)eventSources {
+    if (eventTypes) {
+        [AdobeBranchExtensionConfig instance].eventTypes = eventTypes;
+    }
+    if (eventSources) {
+        [AdobeBranchExtensionConfig instance].eventSources = eventSources;
+    }
+}
+
 - (instancetype)init {
     self = [super init];
     if (!self) return self;
@@ -74,10 +84,11 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
     BNCLogSetDisplayLevel(BNCLogLevelError);
 
     NSError *error = nil;
-    if ([self.api registerWildcardListener:AdobeBranchExtensionListener.class error:&error])
+    if ([self.api registerWildcardListener:AdobeBranchExtensionListener.class error:&error]) {
         BNCLogDebug(@"BranchExtensionRuleListener was registered.");
-    else
+    } else {
         BNCLogError(@"Can't register AdobeBranchExtensionRuleListener: %@.", error);
+    }
     return self;
 }
 
@@ -92,8 +103,8 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
 - (void)handleEvent:(ACPExtensionEvent*)event {
     BNCLogDebug(@"Event: %@", event);
 
-    if ([event.eventType isEqualToString:@"com.adobe.eventType.generic.track"] &&
-        [event.eventSource isEqualToString:@"com.adobe.eventSource.requestContent"]) {
+    if ([[AdobeBranchExtensionConfig instance].eventTypes containsObject:event.eventType] &&
+        [[AdobeBranchExtensionConfig instance].eventSources containsObject:event.eventSource]) {
         [self trackEvent:event];
         return;
     }
@@ -126,7 +137,7 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     return dictionary;
 }
 
-+ (BranchEvent *)branchEventFromAdbobeEventName:(NSString *)eventName
++ (BranchEvent *)branchEventFromAdobeEventName:(NSString *)eventName
                                  dictionary:(NSDictionary *)dictionary {
 
     if (eventName.length == 0) return nil;
@@ -186,7 +197,7 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     if (!eventName.length) eventName = eventData[@"state"];
     if (!eventName.length) return;
     NSDictionary *content = [eventData objectForKey:@"contextdata"];
-    BranchEvent *branchEvent = [self.class branchEventFromAdbobeEventName:eventName dictionary:content];
+    BranchEvent *branchEvent = [self.class branchEventFromAdobeEventName:eventName dictionary:content];
     [branchEvent logEvent];
 }
 
