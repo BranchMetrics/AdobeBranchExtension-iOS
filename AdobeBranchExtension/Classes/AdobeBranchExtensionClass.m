@@ -69,16 +69,17 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
 }
 
 + (void)configureEventTypes:(nullable NSArray<NSString *> *)eventTypes andEventSources:(nullable NSArray<NSString *> *)eventSources {
+    AdobeBranchExtensionConfig *config = [AdobeBranchExtensionConfig instance];
     if (eventTypes) {
-        [AdobeBranchExtensionConfig instance].eventTypes = eventTypes;
+        config.eventTypes = eventTypes;
     } else {
-        [AdobeBranchExtensionConfig instance].eventTypes = @[];
+        config.eventTypes = @[];
     }
     
     if (eventSources) {
-        [AdobeBranchExtensionConfig instance].eventSources = eventSources;
+        config.eventSources = eventSources;
     } else {
-        [AdobeBranchExtensionConfig instance].eventSources = @[];
+        config.eventSources = @[];
     }
 }
 
@@ -108,8 +109,9 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
 - (void)handleEvent:(ACPExtensionEvent*)event {
     BNCLogDebug(@"Event: %@", event);
 
-    if ([[AdobeBranchExtensionConfig instance].eventTypes containsObject:event.eventType] &&
-        [[AdobeBranchExtensionConfig instance].eventSources containsObject:event.eventSource]) {
+    AdobeBranchExtensionConfig *config = [AdobeBranchExtensionConfig instance];
+    if ([config.eventTypes containsObject:event.eventType] &&
+        [config.eventSources containsObject:event.eventSource]) {
         [self trackEvent:event];
         return;
     }

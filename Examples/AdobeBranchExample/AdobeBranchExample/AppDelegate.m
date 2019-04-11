@@ -46,7 +46,7 @@
     [ACPCore start:nil];
     
     // Disable event sharing
-    //[AdobeBranchExtension configureEventTypes:nil andEventSources:nil];
+    [AdobeBranchExtension configureEventTypes:nil andEventSources:nil];
     
     [AdobeBranchExtension initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary * _Nullable params, NSError * _Nullable error) {
         if (!error && params && [params[@"+clicked_branch_link"] boolValue]) {
