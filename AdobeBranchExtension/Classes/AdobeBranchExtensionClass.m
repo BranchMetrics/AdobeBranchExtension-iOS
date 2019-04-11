@@ -68,12 +68,17 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
     return [[self bnc_branchInstance] application:application openURL:url options:options];
 }
 
-+ (void)configureEventTypes:(NSArray<NSString *> *)eventTypes andEventSources:(NSArray<NSString *> *)eventSources {
++ (void)configureEventTypes:(nullable NSArray<NSString *> *)eventTypes andEventSources:(nullable NSArray<NSString *> *)eventSources {
     if (eventTypes) {
         [AdobeBranchExtensionConfig instance].eventTypes = eventTypes;
+    } else {
+        [AdobeBranchExtensionConfig instance].eventTypes = @[];
     }
+    
     if (eventSources) {
         [AdobeBranchExtensionConfig instance].eventSources = eventSources;
+    } else {
+        [AdobeBranchExtensionConfig instance].eventSources = @[];
     }
 }
 

@@ -34,7 +34,7 @@ FOUNDATION_EXPORT NSString*const ABEBranchEventSource;
 
 + (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary *)options;
 
-+ (void)configureEventTypes:(NSArray<NSString *> *)eventTypes andEventSources:(NSArray<NSString *> *)eventSources;
++ (void)configureEventTypes:(nullable NSArray<NSString *> *)eventTypes andEventSources:(nullable NSArray<NSString *> *)eventSources;
 
 - (void)handleEvent:(ACPExtensionEvent*)event;
 
