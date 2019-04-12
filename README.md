@@ -134,7 +134,7 @@ Here's an example of tracking app state via Adobe Launch:
 
 You can also customize which event types and sources are shared with Branch.  Providing empty lists disables sharing.
 
-    [AdobeBranchExtension configureEventTypes:@[ @"com.adobe.eventType.generic.track" ] andEventSources:@[ @"com.adobe.eventSource.requestContent" ];
+    [AdobeBranchExtension configureEventTypes:@[ @"com.adobe.eventType.generic.track" ] andEventSources:@[ @"com.adobe.eventSource.requestContent" ]];
 
 ## License
 
