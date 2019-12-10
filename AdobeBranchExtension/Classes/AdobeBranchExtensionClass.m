@@ -23,7 +23,7 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
 
 // events of this type and source
 NSString *const EVENT_TYPE_ADOBE_HUB = @"com.adobe.eventtype.hub";
-NSString *const ADOBE_SHARED_STATE_EVENT_SOURCE = "com.adobe.eventsource.sharedstate";
+NSString *const ADOBE_SHARED_STATE_EVENT_SOURCE = @"com.adobe.eventsource.sharedstate";
 // whose owner (extension/module causing the specific event)
 NSString *const SHARED_STATE_OWNER = @"stateowner";
 // is either
@@ -78,7 +78,7 @@ NSString *const ADOBE_ANALYTICS_EXTENSION = @"com.adobe.module.analytics";
     [[self bnc_branchInstance] initSessionWithLaunchOptions:options andRegisterDeepLinkHandler:callback];
 }
 
-+ (void) delayInitSessionToCollectAdobeIDs() {
++ (void) delayInitSessionToCollectAdobeIDs {
     [self.bnc_branchInstance dispatchToIsolationQueue:^{
         // we use semaphore to block Branch session initialization thread, we wait for 2 seconds
         // to populate experienceCloudID/analyticsCustomVisitorID/analyticsVisitorID properties,
@@ -88,13 +88,13 @@ NSString *const ADOBE_ANALYTICS_EXTENSION = @"com.adobe.module.analytics";
             id experienceCloudID_ = [self valueForKey:@"experienceCloudID"];
             id analyticsCustomVisitorID_ = [self valueForKey:@"analyticsCustomVisitorID"];
             id analyticsVisitorID_ = [self valueForKey:@"analyticsVisitorID"];
-            if (experienceCloudID_) {
+            if (experienceCloudID_ && ![experienceCloudID_ isEqualToString:@""]) {
                 [self.bnc_branchInstance setRequestMetadataKey:@"$marketing_cloud_visitor_id" value:experienceCloudID_];
             }
-            if (analyticsCustomVisitorID_) {
+            if (analyticsCustomVisitorID_ && ![analyticsCustomVisitorID_ isEqualToString:@""]) {
                 [self.bnc_branchInstance setRequestMetadataKey:@"$analytics_visitor_id" value:analyticsCustomVisitorID_];
             }
-            if (analyticsVisitorID_) {
+            if (analyticsVisitorID_ && ![analyticsVisitorID_ isEqualToString:@""]) {
                 [self.bnc_branchInstance setRequestMetadataKey:@"$adobe_visitor_id" value:analyticsVisitorID_];
             }
             dispatch_semaphore_signal(semaphore);
@@ -268,11 +268,12 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     for(id key in configSharedState) {
         NSLog(@"key=%@ value=%@", key, [configSharedState objectForKey:key]);
         if ([key isEqualToString:@"mid"]) {
-            self.experienceCloudID = [configSharedState objectForKey:key];
+//            [self setExperienceCloudID:(NSString *) [configSharedState objectForKey:key]];
+            self.experienceCloudID = (NSString *) [configSharedState objectForKey:key];
         } else if ([key isEqualToString:@"vid"]) {
-            self.analyticsCustomVisitorID = [configSharedState objectForKey:key];
+            self.analyticsCustomVisitorID =(NSString *) [configSharedState objectForKey:key];
         } else if ([key isEqualToString:@"aid"]) {
-           self.analyticsVisitorID = [configSharedState objectForKey:key];
+           self.analyticsVisitorID = (NSString *) [configSharedState objectForKey:key];
        }
     }
 }

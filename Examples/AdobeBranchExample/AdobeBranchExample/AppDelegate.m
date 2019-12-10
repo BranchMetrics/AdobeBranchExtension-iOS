@@ -25,7 +25,7 @@
     //[ADBMobileMarketing setLogLevel:ADBMobileLogLevelDebug];
     [ACPCore setLogLevel:ACPMobileLogLevelVerbose];
 
-    if ((NO)) {
+    if ((YES)) {
         // option 1 - access hosted Adobe config
         //[ADBMobileMarketing configureWithAppId:@"launch-ENe8e233db5c6a43628d097ba8125aeb26-development"];
         [ACPCore configureWithAppId:@"launch-EN250ff13ac5814cb1a8750820b1f89b0a-development"];
