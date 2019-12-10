@@ -6,16 +6,30 @@
 //  Copyright © 2018 Branch. All rights reserved.
 //
 
+#import "ACPCore.h"
 #import "AdobeBranchExtension.h"
 #import "AdobeBranchExtensionConfig.h"
 #import <Branch/Branch.h>
 
 #pragma mark Constants
 
+//// if owner type (i.e. extension/module) hat causes shared state events
+//NSString *const SHARED_STATE_CONFIGURATION = @"com.adobe.module.configuration";
+
 NSString*const ABEBranchExtensionVersion        = @"1.2.0";
 
 NSString*const ABEBranchEventType               = @"com.branch.eventType";
 NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
+
+// events of this type and source
+NSString *const EVENT_TYPE_ADOBE_HUB = @"com.adobe.eventtype.hub";
+NSString *const ADOBE_SHARED_STATE_EVENT_SOURCE = "com.adobe.eventsource.sharedstate";
+// whose owner (extension/module causing the specific event)
+NSString *const SHARED_STATE_OWNER = @"stateowner";
+// is either
+NSString *const ADOBE_IDENTITY_EXTENSION = @"com.adobe.module.identity";
+NSString *const ADOBE_ANALYTICS_EXTENSION = @"com.adobe.module.analytics";
+// will contain Adobe ID values needed to be passed to Branch prior to session initialization
 
 #pragma mark -
 
@@ -39,6 +53,9 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
 @end
 
 @interface AdobeBranchExtension()
+@property (nonatomic, strong, readwrite) NSString *experienceCloudID;
+@property (nonatomic, strong, readwrite) NSString *analyticsCustomVisitorID;
+@property (nonatomic, strong, readwrite) NSString *analyticsVisitorID;
 @end
 
 @implementation AdobeBranchExtension
@@ -57,7 +74,33 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
 }
 
 + (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback {
+    [self delayInitSessionToCollectAdobeIDs];
     [[self bnc_branchInstance] initSessionWithLaunchOptions:options andRegisterDeepLinkHandler:callback];
+}
+
++ (void) delayInitSessionToCollectAdobeIDs() {
+    [self.bnc_branchInstance dispatchToIsolationQueue:^{
+        // we use semaphore to block Branch session initialization thread, we wait for 2 seconds
+        // to populate experienceCloudID/analyticsCustomVisitorID/analyticsVisitorID properties,
+        // then pass them to Branch as request metadata and release the semaphore
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            id experienceCloudID_ = [self valueForKey:@"experienceCloudID"];
+            id analyticsCustomVisitorID_ = [self valueForKey:@"analyticsCustomVisitorID"];
+            id analyticsVisitorID_ = [self valueForKey:@"analyticsVisitorID"];
+            if (experienceCloudID_) {
+                [self.bnc_branchInstance setRequestMetadataKey:@"$marketing_cloud_visitor_id" value:experienceCloudID_];
+            }
+            if (analyticsCustomVisitorID_) {
+                [self.bnc_branchInstance setRequestMetadataKey:@"$analytics_visitor_id" value:analyticsCustomVisitorID_];
+            }
+            if (analyticsVisitorID_) {
+                [self.bnc_branchInstance setRequestMetadataKey:@"$adobe_visitor_id" value:analyticsVisitorID_];
+            }
+            dispatch_semaphore_signal(semaphore);
+        });
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    }];
 }
 
 + (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity {
@@ -111,7 +154,11 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
     if ([[AdobeBranchExtensionConfig instance].eventTypes containsObject:event.eventType] &&
         [[AdobeBranchExtensionConfig instance].eventSources containsObject:event.eventSource]) {
         [self trackEvent:event];
-        return;
+    } else if ([event.eventType isEqualToString:EVENT_TYPE_ADOBE_HUB] &&
+               [event.eventSource isEqualToString:ADOBE_SHARED_STATE_EVENT_SOURCE] &&
+               ([event.eventData[SHARED_STATE_OWNER] isEqualToString:ADOBE_IDENTITY_EXTENSION] ||
+                [event.eventData[SHARED_STATE_OWNER] isEqualToString:ADOBE_ANALYTICS_EXTENSION])) {
+        [self respondtoIDEvent:event];
     }
 }
 
@@ -204,6 +251,30 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     NSDictionary *content = [eventData objectForKey:@"contextdata"];
     BranchEvent *branchEvent = [self.class branchEventFromAdobeEventName:eventName dictionary:content];
     [branchEvent logEvent];
+}
+
+- (void) respondtoIDEvent:(ACPExtensionEvent*)eventToProcess {
+    NSError *error = nil;
+    NSDictionary *configSharedState = [self.api getSharedEventState:eventToProcess.eventData[SHARED_STATE_OWNER]
+                                                              event:eventToProcess error:&error];
+    if (!configSharedState) {
+        BNCLogDebug(@"Could not process event, configuration shared state is pending");
+        return;
+    }
+    if (!error) {
+        BNCLogDebug(@"Could not process event, an error occured while retrieving configuration shared state");
+        return;
+    }
+    for(id key in configSharedState) {
+        NSLog(@"key=%@ value=%@", key, [configSharedState objectForKey:key]);
+        if ([key isEqualToString:@"mid"]) {
+            self.experienceCloudID = [configSharedState objectForKey:key];
+        } else if ([key isEqualToString:@"vid"]) {
+            self.analyticsCustomVisitorID = [configSharedState objectForKey:key];
+        } else if ([key isEqualToString:@"aid"]) {
+           self.analyticsVisitorID = [configSharedState objectForKey:key];
+       }
+    }
 }
 
 @end

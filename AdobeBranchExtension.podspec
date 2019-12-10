@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "AdobeBranchExtension"
-  s.version          = "1.2.0"
+  s.version          = "1.2.1"
   s.summary          = "The Branch extension for Adobe Cloud Platform on iOS."
 
   s.description      = <<-DESC
@@ -23,5 +23,5 @@ their app content to improve discoverability and optimize mobile campaigns.
   s.source_files     = 'AdobeBranchExtension/Classes/**/*'
 
   s.dependency 'ACPCore',   '~> 2.3'
-  s.dependency 'Branch',    '= 0.28.1'
+#  s.dependency 'Branch',    '= 0.30.1'
 end

@@ -4,4 +4,5 @@ platform :ios, '10.0'
 target 'AdobeBranchExample' do
   pod 'ACPCore'
   pod 'AdobeBranchExtension', :path => '../../'
+  pod 'Branch', :path => '/Users/benas.klastaitis/XCodeProjects/ios-branch-deep-linking-attribution/Branch.podspec'
 end
