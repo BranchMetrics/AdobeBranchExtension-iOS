@@ -28,6 +28,7 @@
     // Override point for customization after application launch.
     //[ADBMobileMarketing setLogLevel:ADBMobileLogLevelError];
     [ACPCore setLogLevel:ACPMobileLogLevelVerbose];
+//    [ACPAnalytics setVisitorIdentifier:@"custom_identifier_bb"];// for testing passAdobeIdsToBranch method
 
     // register ACPCore
     if ((YES)) {

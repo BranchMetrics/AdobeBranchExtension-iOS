@@ -7,7 +7,8 @@
 //
 
 #import "AdobeBranchExtension.h"
-#import <Branch/Branch.h>
+
+#import "Branch.h"
 
 @implementation AdobeBranchExtensionListener
 

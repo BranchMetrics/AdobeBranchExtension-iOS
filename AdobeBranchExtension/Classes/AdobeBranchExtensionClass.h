@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Branch/Branch.h>
-#import <ACPCore/ACPCore.h>
-#import <ACPCore/ACPExtension.h>
+
+#import "Branch.h"
+#import "ACPCore.h"
+#import "ACPExtension.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,7 +31,7 @@ FOUNDATION_EXPORT NSString*const ABEBranchEventSource;
 
 + (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback;
 
-+ (void) delayInitSessionToCollectAdobeIDs;
+- (void) delayInitSessionToCollectAdobeIDs;
 
 + (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity;
 
