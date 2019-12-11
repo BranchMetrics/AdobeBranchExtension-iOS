@@ -239,6 +239,8 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     for(id key in configSharedState) {
         NSLog(@"BranchSDK_ key=%@ value=%@", key, [configSharedState objectForKey:key]);
         NSString *idAsString = [[configSharedState valueForKey:key] stringValue];
+        if ([idAsString isEqualToString:@""]) continue;
+        
         if ([key isEqualToString:@"mid"]) {
             [branch setRequestMetadataKey:@"$marketing_cloud_visitor_id" value:idAsString];
         } else if ([key isEqualToString:@"vid"]) {
