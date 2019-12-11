@@ -22,7 +22,7 @@ NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
 // 1. events of this type and source
 NSString *const EVENT_TYPE_ADOBE_HUB = @"com.adobe.eventType.hub";
 NSString *const ADOBE_SHARED_STATE_EVENT_SOURCE = @"com.adobe.eventSource.sharedState";
-// 2. whose owner (extension/module causing the specific event) retrieved with this key from even data
+// 2. whose owner (i.e. extension/module) retrieved with this key from event data
 NSString *const SHARED_STATE_OWNER = @"stateowner";
 // 3. is either
 NSString *const ADOBE_IDENTITY_EXTENSION = @"com.adobe.module.identity";
@@ -119,7 +119,7 @@ NSString *const ADOBE_ANALYTICS_EXTENSION = @"com.adobe.module.analytics";
 }
 
 - (void)handleEvent:(ACPExtensionEvent*)event {
-    BNCLogDebug(@"BNC Event: %@", event);
+    BNCLogDebug(@"Event: %@", event);
 
     if ([[AdobeBranchExtensionConfig instance].eventTypes containsObject:event.eventType] &&
         [[AdobeBranchExtensionConfig instance].eventSources containsObject:event.eventSource]) {

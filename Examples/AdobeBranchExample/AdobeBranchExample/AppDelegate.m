@@ -25,9 +25,10 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    NSError* error = nil;
     // Override point for customization after application launch.
-    //[ADBMobileMarketing setLogLevel:ADBMobileLogLevelError];
-    [ACPCore setLogLevel:ACPMobileLogLevelVerbose];
+    [ACPCore setLogLevel:ACPMobileLogLevelError];
+//    [ACPCore setLogLevel:ACPMobileLogLevelVerbose];
 //    [ACPAnalytics setVisitorIdentifier:@"custom_identifier_bb"];// for testing passAdobeIdsToBranch method
 
     // register ACPCore
@@ -47,7 +48,6 @@
     [ACPLifecycle registerExtension];
     
     // register AdobeBranchExtension
-    NSError* error = nil;
     if ([ACPCore registerExtension:[AdobeBranchExtension class] error:&error]) {
         NSLog(@"AdobeBranchExtension Registered");
     } else {

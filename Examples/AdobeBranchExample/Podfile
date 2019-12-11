@@ -1,12 +1,11 @@
 source 'https://github.com/CocoaPods/Specs.git'
+use_frameworks!
 platform :ios, '13.0'
 
 target 'AdobeBranchExample' do
-#  use_frameworks!
   pod 'ACPCore', '~> 2.0'
   pod 'ACPAnalytics', '~> 2.0'
   pod 'ACPUserProfile', '~> 2.0'
 
   pod 'AdobeBranchExtension', :path => '../../'
-  pod 'Branch', '~> 0.31.0'
 end
