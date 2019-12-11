@@ -20,13 +20,13 @@ NSString*const ABEBranchEventType               = @"com.branch.eventType";
 NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
 
 // 1. events of this type and source
-NSString *const EVENT_TYPE_ADOBE_HUB = @"com.adobe.eventType.hub";
-NSString *const ADOBE_SHARED_STATE_EVENT_SOURCE = @"com.adobe.eventSource.sharedState";
+NSString *const ABEAdobeHubEventType = @"com.adobe.eventType.hub";
+NSString *const ABEAdobeSharedStateEventSource = @"com.adobe.eventSource.sharedState";
 // 2. whose owner (i.e. extension/module) retrieved with this key from event data
-NSString *const SHARED_STATE_OWNER = @"stateowner";
+NSString *const ABEAdobeEventDataKey_StateOwner = @"stateowner";
 // 3. is either
-NSString *const ADOBE_IDENTITY_EXTENSION = @"com.adobe.module.identity";
-NSString *const ADOBE_ANALYTICS_EXTENSION = @"com.adobe.module.analytics";
+NSString *const ABEAdobeIdentityExtension = @"com.adobe.module.identity";
+NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 // 4. will contain Adobe ID values needed to be passed to Branch prior to session initialization
 
 #pragma mark -
@@ -124,10 +124,10 @@ NSString *const ADOBE_ANALYTICS_EXTENSION = @"com.adobe.module.analytics";
     if ([[AdobeBranchExtensionConfig instance].eventTypes containsObject:event.eventType] &&
         [[AdobeBranchExtensionConfig instance].eventSources containsObject:event.eventSource]) {
         [self trackEvent:event];
-    } else if ([event.eventType isEqualToString:EVENT_TYPE_ADOBE_HUB] &&
-               [event.eventSource isEqualToString:ADOBE_SHARED_STATE_EVENT_SOURCE] &&
-               ([event.eventData[SHARED_STATE_OWNER] isEqualToString:ADOBE_IDENTITY_EXTENSION] ||
-                [event.eventData[SHARED_STATE_OWNER] isEqualToString:ADOBE_ANALYTICS_EXTENSION])) {
+    } else if ([event.eventType isEqualToString:ABEAdobeHubEventType] &&
+               [event.eventSource isEqualToString:ABEAdobeSharedStateEventSource] &&
+               ([event.eventData[ABEAdobeEventDataKey_StateOwner] isEqualToString:ABEAdobeIdentityExtension] ||
+                [event.eventData[ABEAdobeEventDataKey_StateOwner] isEqualToString:ABEAdobeAnalyticsExtension])) {
         [self passAdobeIdsToBranch:event];
     }
 }
@@ -225,7 +225,7 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
 
 - (void) passAdobeIdsToBranch:(ACPExtensionEvent*)eventToProcess {
     NSError *error = nil;
-    NSDictionary *configSharedState = [self.api getSharedEventState:eventToProcess.eventData[SHARED_STATE_OWNER]
+    NSDictionary *configSharedState = [self.api getSharedEventState:eventToProcess.eventData[ABEAdobeEventDataKey_StateOwner]
                                                               event:eventToProcess error:&error];
     if (!configSharedState) {
         BNCLogDebug(@"BranchSDK_ Could not process event, configuration shared state is pending");
