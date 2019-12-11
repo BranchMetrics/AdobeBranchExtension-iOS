@@ -51,9 +51,6 @@ NSString *const ADOBE_ANALYTICS_EXTENSION = @"com.adobe.module.analytics";
 @end
 
 @interface AdobeBranchExtension()
-//@property (nonatomic, strong, readwrite) NSString *experienceCloudID;
-//@property (nonatomic, strong, readwrite) NSString *analyticsCustomVisitorID;
-//@property (nonatomic, strong, readwrite) NSString *analyticsVisitorID;
 @end
 
 @implementation AdobeBranchExtension
@@ -65,11 +62,11 @@ NSString *const ADOBE_ANALYTICS_EXTENSION = @"com.adobe.module.analytics";
 
 - (void) delayInitSessionToCollectAdobeIDs {
     [[Branch getInstance] dispatchToIsolationQueue:^{
-        // we use semaphore to block Branch session initialization thread, we wait for 2 seconds
-        // to populate experienceCloudID/analyticsCustomVisitorID/analyticsVisitorID properties,
-        // then pass them to Branch as request metadata and release the semaphore
+        // we use semaphore to block Branch session initialization thread for 1 seconds
+        // because it takes a couple hundred milliseconds to capture Adobe IDs and pass them
+        // to Branch as request metadata
         dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             dispatch_semaphore_signal(semaphore);
         });
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);

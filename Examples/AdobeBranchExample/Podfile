@@ -8,5 +8,5 @@ target 'AdobeBranchExample' do
   pod 'ACPUserProfile', '~> 2.0'
 
   pod 'AdobeBranchExtension', :path => '../../'
-  pod 'Branch', :path => '/Users/benas.klastaitis/XCodeProjects/ios-branch-deep-linking-attribution/Branch.podspec'
+  pod 'Branch', '~> 0.31.0'
 end
