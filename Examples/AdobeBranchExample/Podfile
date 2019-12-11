@@ -1,8 +1,12 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '10.0'
+platform :ios, '13.0'
 
 target 'AdobeBranchExample' do
-  pod 'ACPCore'
+#  use_frameworks!
+  pod 'ACPCore', '~> 2.0'
+  pod 'ACPAnalytics', '~> 2.0'
+  pod 'ACPUserProfile', '~> 2.0'
+
   pod 'AdobeBranchExtension', :path => '../../'
   pod 'Branch', :path => '/Users/benas.klastaitis/XCodeProjects/ios-branch-deep-linking-attribution/Branch.podspec'
 end
