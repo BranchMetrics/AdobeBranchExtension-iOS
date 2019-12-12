@@ -7,11 +7,17 @@
 //
 
 #import "AppDelegate.h"
-#import "ProductViewController.h"
 
 #import "ACPCore.h"
+#import "ACPAnalytics.h"
+#import "ACPIdentity.h"
 #import "ACPLifecycle.h"
-#import <AdobeBranchExtension/AdobeBranchExtension.h>
+#import "ACPSignal.h"
+#import "ACPUserProfile.h"
+
+#import "ProductViewController.h"
+
+#import "AdobeBranchExtension.h"
 
 @interface AppDelegate ()
 @end
@@ -20,34 +26,44 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSError* error = nil;
-
     // Override point for customization after application launch.
-    //[ADBMobileMarketing setLogLevel:ADBMobileLogLevelDebug];
-    [ACPCore setLogLevel:ACPMobileLogLevelVerbose];
+    [ACPCore setLogLevel:ACPMobileLogLevelError];
+//    [ACPCore setLogLevel:ACPMobileLogLevelVerbose];
+//    [ACPAnalytics setVisitorIdentifier:@"custom_identifier_bb"];// for testing passAdobeIdsToBranch method
 
-    if ((NO)) {
+    // register ACPCore
+    if ((YES)) {
         // option 1 - access hosted Adobe config
         //[ADBMobileMarketing configureWithAppId:@"launch-ENe8e233db5c6a43628d097ba8125aeb26-development"];
-        [ACPCore configureWithAppId:@"launch-EN250ff13ac5814cb1a8750820b1f89b0a-development"];
+//        [ACPCore configureWithAppId:@"launch-EN250ff13ac5814cb1a8750820b1f89b0a-development"];
+        [ACPCore configureWithAppId:@"d10f76259195/c769149ebd48/launch-f972d1367b58-development"];//Adobe Launch property: "iOS Test"
     } else {
         // option 2 - set config at runtime
         [self setupTestConfig];
     }
-    [ACPCore downloadRules];
+    
+    // register extensions (for Adobe Launch property: "iOS Test")
+    [ACPAnalytics registerExtension];
+    [ACPIdentity registerExtension];
     [ACPLifecycle registerExtension];
     
-    [ACPCore lifecycleStart:nil];
-    // [ACPCore registerExtension:[AdobeBranchExtension class] withName:@"com.branch.extension" withVersion:@"1.0.0" error:&error]
+    // register AdobeBranchExtension
     if ([ACPCore registerExtension:[AdobeBranchExtension class] error:&error]) {
         NSLog(@"AdobeBranchExtension Registered");
     } else {
         NSLog(@"%@", error);
     }
+    
+    // start Adobe SDK & extensions
+    [ACPCore lifecycleStart:nil];
     [ACPCore start:nil];
     
     // Disable event sharing
     //[AdobeBranchExtension configureEventTypes:nil andEventSources:nil];
     
+    // initialize Branch session, [AdobeBranchExtension initSessionWithLaunchOptions] is different from
+    // [[Branch getInstance] initSessionWithLaunchOptions] in that it holds up initialization in order to collect
+    // Adobe IDs and pass them to Branch as request metadata, see [AdobeBranchExtension delayInitSessionToCollectAdobeIDs]
     [AdobeBranchExtension initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary * _Nullable params, NSError * _Nullable error) {
         if (!error && params && [params[@"+clicked_branch_link"] boolValue]) {
 

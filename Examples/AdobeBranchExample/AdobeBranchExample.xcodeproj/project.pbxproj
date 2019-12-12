@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C32DC67D5A305502173C088 /* libPods-AdobeBranchExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFBBC7A62D08C7161630F13C /* libPods-AdobeBranchExample.a */; };
 		4D16DBA421AF037F00E362A2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D16DBA321AF037F00E362A2 /* Launch Screen.storyboard */; };
 		4D16DBA721AF5B6300E362A2 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D16DBA621AF5B6300E362A2 /* TextViewController.m */; };
 		4DE097FD219CEABE008AC401 /* Products.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DE097FC219CEABE008AC401 /* Products.json */; };
 		4DE09800219CEE71008AC401 /* Product.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DE097FF219CEE71008AC401 /* Product.m */; };
-		9F8BABF7CA208D2ECCF1EF74 /* libPods-AdobeBranchExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 65609A52DF0F3BD8EF2C8171 /* libPods-AdobeBranchExample.a */; };
 		AC21DF78215AA0EB00CD5DAC /* ProductViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AC21DF77215AA0EB00CD5DAC /* ProductViewController.m */; };
 		ACAE8109212263F30049505B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ACAE8108212263F30049505B /* AppDelegate.m */; };
 		ACAE810C212263F40049505B /* ProductListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ACAE810B212263F40049505B /* ProductListViewController.m */; };
@@ -37,7 +37,6 @@
 		4DE097FE219CEE71008AC401 /* Product.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Product.h; sourceTree = "<group>"; };
 		4DE097FF219CEE71008AC401 /* Product.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Product.m; sourceTree = "<group>"; };
 		5FF9D44421FA692500A73E56 /* libACPCoreBeta.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libACPCoreBeta.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		65609A52DF0F3BD8EF2C8171 /* libPods-AdobeBranchExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AdobeBranchExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC21DF76215AA0EB00CD5DAC /* ProductViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProductViewController.h; sourceTree = "<group>"; };
 		AC21DF77215AA0EB00CD5DAC /* ProductViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProductViewController.m; sourceTree = "<group>"; };
 		ACAE8104212263F30049505B /* AdobeBranchExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdobeBranchExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +62,7 @@
 		ACF671D921534E4F00CDC900 /* ACPLifecycle_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPLifecycle_iOS.framework; path = Pods/ACPCoreBeta/ACPLifecycle_iOS.framework; sourceTree = "<group>"; };
 		F8688AE753553EE80251EE11 /* Pods-adobe-branch-example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.release.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.release.xcconfig"; sourceTree = "<group>"; };
 		FD81B1B19DDC0E314016948F /* Pods-adobe-branch-example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.debug.xcconfig"; sourceTree = "<group>"; };
+		FFBBC7A62D08C7161630F13C /* libPods-AdobeBranchExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AdobeBranchExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +76,7 @@
 				ACAE812F2122644F0049505B /* libz.tbd in Frameworks */,
 				ACAE812D212264480049505B /* libstdc++.tbd in Frameworks */,
 				ACAE812B2122643A0049505B /* libsqlite3.tbd in Frameworks */,
-				9F8BABF7CA208D2ECCF1EF74 /* libPods-AdobeBranchExample.a in Frameworks */,
+				1C32DC67D5A305502173C088 /* libPods-AdobeBranchExample.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,7 +152,7 @@
 				ACAE812C212264480049505B /* libstdc++.tbd */,
 				ACAE812A2122643A0049505B /* libsqlite3.tbd */,
 				2E21CAD8A1C925AAF24986BC /* libPods-adobe-branch-example.a */,
-				65609A52DF0F3BD8EF2C8171 /* libPods-AdobeBranchExample.a */,
+				FFBBC7A62D08C7161630F13C /* libPods-AdobeBranchExample.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
