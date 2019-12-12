@@ -55,11 +55,11 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 @implementation AdobeBranchExtension
 
 + (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback {
-    [[AdobeBranchExtension new] delayInitSessionToCollectAdobeIDs];
+    [self delayInitSessionToCollectAdobeIDs];
     [[Branch getInstance] initSessionWithLaunchOptions:options andRegisterDeepLinkHandler:callback];
 }
 
-- (void) delayInitSessionToCollectAdobeIDs {
++ (void) delayInitSessionToCollectAdobeIDs {
     [[Branch getInstance] dispatchToIsolationQueue:^{
         // we use semaphore to block Branch session initialization thread for 1 seconds
         // because it takes a couple hundred milliseconds to capture Adobe IDs and pass them

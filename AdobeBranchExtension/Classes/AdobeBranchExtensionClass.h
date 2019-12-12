@@ -30,8 +30,6 @@ FOUNDATION_EXPORT NSString*const ABEBranchEventSource;
 
 + (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback;
 
-- (void) delayInitSessionToCollectAdobeIDs;
-
 + (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity;
 
 + (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary *)options;
