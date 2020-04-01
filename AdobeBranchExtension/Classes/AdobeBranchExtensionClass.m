@@ -165,7 +165,7 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     BranchEvent *event = [[BranchEvent alloc] initWithName:eventName];
     if (!dictionary) return event;
 
-    /* Translate some special fields tp BranchEvent, otherwise add the dictionary as BranchEvent.userData:
+    /* Translate some special fields to BranchEvent, otherwise add the dictionary as BranchEvent.userData:
 
     currency
     revenue
@@ -175,6 +175,8 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     affiliation
     eventDescription
     searchQuery
+    transactionID
+
     */
 
     #define stringForKey(key) \
@@ -197,6 +199,9 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
 
     value = stringForKey(affiliation);
     if (value.length) event.affiliation = value;
+
+    value = stringForKey(transaction_id);
+    if (value.length) event.transactionID = value;
 
     value = stringForKey(title);
     if (value.length == 0) value = stringForKey(name);
