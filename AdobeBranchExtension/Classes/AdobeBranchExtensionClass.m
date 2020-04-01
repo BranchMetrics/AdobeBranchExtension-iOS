@@ -12,8 +12,6 @@
 
 #pragma mark Constants
 
-NSString*const ABEBranchExtensionVersion        = @"1.2.1";
-
 // Branch events type and source
 NSString*const ABEBranchEventType               = @"com.branch.eventType";
 NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
@@ -56,6 +54,7 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 
 + (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback {
     [self delayInitSessionToCollectAdobeIDs];
+    [[Branch getInstance] registerPluginName:@"AdobeLaunch_iOS" version:ADOBE_BRANCH_VERSION];
     [[Branch getInstance] initSessionWithLaunchOptions:options andRegisterDeepLinkHandler:callback];
 }
 
@@ -114,7 +113,7 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 }
 
 - (nullable NSString *)version {
-    return ABEBranchExtensionVersion;
+    return ADOBE_BRANCH_VERSION;
 }
 
 - (void)handleEvent:(ACPExtensionEvent*)event {

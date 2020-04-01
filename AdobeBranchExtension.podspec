@@ -13,6 +13,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/BranchMetrics/AdobeBranchExtension-iOS"
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { "Branch Metrics" => "support@branch.io" }
+  s.compiler_flags   = %[-DADOBE_BRANCH_VERSION=@\\"#{s.version}\\"]
   s.source           = { :git => "https://github.com/BranchMetrics/AdobeBranchExtension-iOS.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/branchmetrics'
 
