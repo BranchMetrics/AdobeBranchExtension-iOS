@@ -117,12 +117,13 @@
         NSString*eventName = [self.events[indexPath.row] uppercaseString];
         eventName = [eventName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
         [ACPCore trackAction:eventName data:@{
-            @"name":        @"Branch Sunglasses",
-            @"revenue":     @"200.00",
-            @"currency":    @"USD",
-            @"timestamp":   [NSDate date].description,
-            @"category":    @"Apparel & Accessories",
-            @"sku":         @"sku-bee-doo",
+            @"name":            @"Branch Sunglasses",
+            @"revenue":         @"200.00",
+            @"currency":        @"USD",
+            @"transaction_id":  @"C000F1F7-D8DA-4C31-9049-93B57BF788ED",
+            @"timestamp":       [NSDate date].description,
+            @"category":        @"Apparel & Accessories",
+            @"sku":             @"sku-bee-doo",
         }];
         break;
     }}

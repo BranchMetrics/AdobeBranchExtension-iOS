@@ -12,8 +12,6 @@
 
 #pragma mark Constants
 
-NSString*const ABEBranchExtensionVersion        = @"1.2.1";
-
 // Branch events type and source
 NSString*const ABEBranchEventType               = @"com.branch.eventType";
 NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
@@ -56,6 +54,7 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 
 + (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback {
     [self delayInitSessionToCollectAdobeIDs];
+    [[Branch getInstance] registerPluginName:@"AdobeLaunch_iOS" version:ADOBE_BRANCH_VERSION];
     [[Branch getInstance] initSessionWithLaunchOptions:options andRegisterDeepLinkHandler:callback];
 }
 
@@ -114,7 +113,7 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 }
 
 - (nullable NSString *)version {
-    return ABEBranchExtensionVersion;
+    return ADOBE_BRANCH_VERSION;
 }
 
 - (void)handleEvent:(ACPExtensionEvent*)event {
@@ -165,7 +164,7 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     BranchEvent *event = [[BranchEvent alloc] initWithName:eventName];
     if (!dictionary) return event;
 
-    /* Translate some special fields tp BranchEvent, otherwise add the dictionary as BranchEvent.userData:
+    /* Translate some special fields to BranchEvent, otherwise add the dictionary as BranchEvent.userData:
 
     currency
     revenue
@@ -175,6 +174,8 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     affiliation
     eventDescription
     searchQuery
+    transactionID
+
     */
 
     #define stringForKey(key) \
@@ -197,6 +198,9 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
 
     value = stringForKey(affiliation);
     if (value.length) event.affiliation = value;
+
+    value = stringForKey(transaction_id);
+    if (value.length) event.transactionID = value;
 
     value = stringForKey(title);
     if (value.length == 0) value = stringForKey(name);
