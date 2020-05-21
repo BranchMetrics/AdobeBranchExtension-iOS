@@ -239,9 +239,10 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
         return;
     }
     Branch *branch = [Branch getInstance];
-    for(id key in configSharedState) {
+    for(id key in configSharedState.allKeys) {
         NSLog(@"BranchSDK_ key=%@ value=%@", key, [configSharedState objectForKey:key]);
-        NSString *idAsString = [[configSharedState valueForKey:key] stringValue];
+        NSString *idAsString = [NSString stringWithFormat:@"%@", [configSharedState objectForKey:key]];
+        
         if (!idAsString || [idAsString isEqualToString:@""]) continue;
         
         if ([key isEqualToString:@"mid"]) {
