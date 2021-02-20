@@ -103,7 +103,7 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
     if ([self.api registerWildcardListener:AdobeBranchExtensionListener.class error:&error]) {
         BNCLogDebug(@"BranchExtensionRuleListener was registered.");
     } else {
-        BNCLogError(@"Can't register AdobeBranchExtensionRuleListener: %@.", error);
+        BNCLogError([NSString stringWithFormat:@"Can't register AdobeBranchExtensionRuleListener: %@.", error]);
     }
     return self;
 }
@@ -117,7 +117,7 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 }
 
 - (void)handleEvent:(ACPExtensionEvent*)event {
-    BNCLogDebug(@"Event: %@", event);
+    BNCLogDebug([NSString stringWithFormat:@"Event: %@", event]);
 
     if ([[AdobeBranchExtensionConfig instance].eventTypes containsObject:event.eventType] &&
         [[AdobeBranchExtensionConfig instance].eventSources containsObject:event.eventSource]) {
