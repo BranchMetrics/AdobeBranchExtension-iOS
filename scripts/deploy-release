@@ -21,8 +21,7 @@ function full_path_of_directory() {
 project_directory="$(full_path_of_directory AdobeBranchExtension-iOS)"
 cd "$project_directory"
 
-# Remove `--allow-warnings` when Adobe fixes their warnings.
-pod lib lint --allow-warnings --use-libraries
+pod lib lint --use-libraries
 
 version="$(./scripts/version)"
 git_branch=$(git symbolic-ref --short HEAD)
@@ -43,6 +42,5 @@ git checkout master
 git pull origin $git_branch
 git push
 
-# Remove `--allow-warnings` when Adobe fixes their warnings.
-pod spec lint --allow-warnings --use-libraries
-pod trunk push --allow-warnings --use-libraries AdobeBranchExtension.podspec
+pod spec lint --use-libraries
+pod trunk push --use-libraries AdobeBranchExtension.podspec
