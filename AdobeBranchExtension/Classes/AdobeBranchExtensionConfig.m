@@ -24,6 +24,7 @@
         // default event type and source to track, client can override
         self.eventTypes = @[ @"com.adobe.eventType.generic.track" ];
         self.eventSources = @[ @"com.adobe.eventSource.requestContent" ];
+        self.excludedEventNames = [NSArray new];
     }
     return self;
 }

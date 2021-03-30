@@ -93,6 +93,12 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
     }
 }
 
++ (void)configureEventExclusionList:(nullable NSArray<NSString *> *)eventNames {
+    if (eventNames) {
+        [AdobeBranchExtensionConfig instance].excludedEventNames = eventNames;
+    }
+}
+
 - (instancetype)init {
     self = [super init];
     if (!self) return self;
@@ -221,6 +227,7 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     NSString *eventName = eventData[@"action"];
     if (!eventName.length) eventName = eventData[@"state"];
     if (!eventName.length) return;
+    if ([[AdobeBranchExtensionConfig instance].excludedEventNames containsObject: eventName]) return;
     NSDictionary *content = [eventData objectForKey:@"contextdata"];
     BranchEvent *branchEvent = [self.class branchEventFromAdobeEventName:eventName dictionary:content];
     [branchEvent logEvent];

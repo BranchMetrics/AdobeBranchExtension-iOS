@@ -10,13 +10,12 @@
 
 #import "ACPCore.h"
 #import "ACPAnalytics.h"
-#import "ACPIdentity.h"
-#import "ACPLifecycle.h"
+#import <ACPCore/ACPIdentity.h>
+#import <ACPCore/ACPLifecycle.h>
 #import "ACPSignal.h"
 #import "ACPUserProfile.h"
 
 #import "ProductViewController.h"
-
 #import "AdobeBranchExtension.h"
 
 @interface AppDelegate ()
@@ -47,6 +46,8 @@
     [ACPIdentity registerExtension];
     [ACPLifecycle registerExtension];
     
+    // Define the exclusion list of the events names
+    [AdobeBranchExtension configureEventExclusionList:@[@"VIEW"]];
     // register AdobeBranchExtension
     if ([ACPCore registerExtension:[AdobeBranchExtension class] error:&error]) {
         NSLog(@"AdobeBranchExtension Registered");
