@@ -38,6 +38,8 @@ FOUNDATION_EXPORT NSString*const ABEBranchEventSource;
 
 + (void)configureEventExclusionList:(nullable NSArray<NSString *> *)eventNames;
 
++ (void)configureEventAllowList:(nullable NSArray<NSString *> *)eventNames;
+
 - (void)handleEvent:(ACPExtensionEvent*)event;
 
 @end

@@ -95,7 +95,29 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 
 + (void)configureEventExclusionList:(nullable NSArray<NSString *> *)eventNames {
     if (eventNames) {
-        [AdobeBranchExtensionConfig instance].excludedEventNames = eventNames;
+        // If already defined allowList
+        if ([AdobeBranchExtensionConfig instance].allowList.count != 0) {
+            @throw [NSException
+                        exceptionWithName:@"InconsistentParameter"
+                        reason:@"Already defined allowList for AdobeBranchExtensionConfig"
+                        userInfo:nil];
+        } else {
+            [AdobeBranchExtensionConfig instance].exclusionList = eventNames;
+        }
+    }
+}
+
++ (void)configureEventAllowList:(nullable NSArray<NSString *> *)eventNames {
+    if (eventNames) {
+        // If already defined allowList
+        if ([AdobeBranchExtensionConfig instance].exclusionList.count != 0) {
+            @throw [NSException
+                        exceptionWithName:@"InconsistentParameter"
+                        reason:@"Already defined exclusionList for AdobeBranchExtensionConfig"
+                        userInfo:nil];
+        } else {
+            [AdobeBranchExtensionConfig instance].allowList = eventNames;
+        }
     }
 }
 
@@ -227,10 +249,22 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     NSString *eventName = eventData[@"action"];
     if (!eventName.length) eventName = eventData[@"state"];
     if (!eventName.length) return;
-    if ([[AdobeBranchExtensionConfig instance].excludedEventNames containsObject: eventName]) return;
+    if (![self isValidEventForBranch:eventName]) return;
     NSDictionary *content = [eventData objectForKey:@"contextdata"];
     BranchEvent *branchEvent = [self.class branchEventFromAdobeEventName:eventName dictionary:content];
     [branchEvent logEvent];
+}
+
+- (BOOL)isValidEventForBranch:(NSString*)eventName {
+    if ([AdobeBranchExtensionConfig instance].exclusionList.count == 0 && [AdobeBranchExtensionConfig instance].allowList.count == 0) {
+        return YES;
+    } else if ([AdobeBranchExtensionConfig instance].allowList.count != 0 && [[AdobeBranchExtensionConfig instance].allowList containsObject: eventName]) {
+        return YES;
+    } else if ([AdobeBranchExtensionConfig instance].exclusionList.count != 0 && [[AdobeBranchExtensionConfig instance].exclusionList containsObject: eventName]) {
+        return NO;
+    }
+
+    return NO;
 }
 
 - (void) passAdobeIdsToBranch:(ACPExtensionEvent*)eventToProcess {

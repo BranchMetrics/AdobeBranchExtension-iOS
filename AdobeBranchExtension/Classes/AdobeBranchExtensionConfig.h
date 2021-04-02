@@ -12,7 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AdobeBranchExtensionConfig : NSObject
 @property (nonatomic, strong, readwrite) NSArray<NSString *> *eventTypes;
 @property (nonatomic, strong, readwrite) NSArray<NSString *> *eventSources;
-@property (nonatomic, strong, readwrite) NSArray<NSString *> *excludedEventNames;
+@property (nonatomic, strong, readwrite) NSArray<NSString *> *exclusionList;
+@property (nonatomic, strong, readwrite) NSArray<NSString *> *allowList;
 
 + (AdobeBranchExtensionConfig *)instance;
 

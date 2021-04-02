@@ -46,8 +46,11 @@
     [ACPIdentity registerExtension];
     [ACPLifecycle registerExtension];
     
+    // NOTE! following code will enable you to configure exclusion list or allow list, but you can't define both! If you don't configure any, all events will send to Branch which is not ideal!
     // Define the exclusion list of the events names
-    [AdobeBranchExtension configureEventExclusionList:@[@"VIEW"]];
+//    [AdobeBranchExtension configureEventExclusionList:@[@"VIEW"]];
+    // Define the allow list of the events names
+    [AdobeBranchExtension configureEventAllowList:@[@"VIEW"]];
     // register AdobeBranchExtension
     if ([ACPCore registerExtension:[AdobeBranchExtension class] error:&error]) {
         NSLog(@"AdobeBranchExtension Registered");
