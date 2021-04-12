@@ -98,7 +98,7 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
         // If already configured allowList
         if ([AdobeBranchExtensionConfig instance].allowList.count != 0) {
             @throw [NSException
-                        exceptionWithName:@"InconsistentParameter"
+                        exceptionWithName:@"ConflictConfiguration"
                         reason:@"Already configured allowList for AdobeBranchExtensionConfig"
                         userInfo:nil];
         } else {
@@ -112,7 +112,7 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
         // If already configured allowList
         if ([AdobeBranchExtensionConfig instance].exclusionList.count != 0) {
             @throw [NSException
-                        exceptionWithName:@"InconsistentParameter"
+                        exceptionWithName:@"ConflictConfiguration"
                         reason:@"Already configured exclusionList for AdobeBranchExtensionConfig"
                         userInfo:nil];
         } else {
@@ -257,7 +257,7 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
 
 - (BOOL)isValidEventForBranch:(NSString*)eventName {
     if ([AdobeBranchExtensionConfig instance].exclusionList.count == 0 && [AdobeBranchExtensionConfig instance].allowList.count == 0) {
-        return YES;
+        return NO;
     } else if ([AdobeBranchExtensionConfig instance].allowList.count != 0 && [[AdobeBranchExtensionConfig instance].allowList containsObject: eventName]) {
         return YES;
     } else if ([AdobeBranchExtensionConfig instance].exclusionList.count != 0 && [[AdobeBranchExtensionConfig instance].exclusionList containsObject: eventName]) {
