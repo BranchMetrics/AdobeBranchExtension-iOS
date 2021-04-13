@@ -257,7 +257,7 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
 
 - (BOOL)isValidEventForBranch:(NSString*)eventName {
     if ([AdobeBranchExtensionConfig instance].exclusionList.count == 0 && [AdobeBranchExtensionConfig instance].allowList.count == 0) {
-        return NO;
+        return YES;
     } else if ([AdobeBranchExtensionConfig instance].allowList.count != 0 && [[AdobeBranchExtensionConfig instance].allowList containsObject: eventName]) {
         return YES;
     } else if ([AdobeBranchExtensionConfig instance].exclusionList.count != 0 && [[AdobeBranchExtensionConfig instance].exclusionList containsObject: eventName]) {
