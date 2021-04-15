@@ -260,8 +260,8 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
         return YES;
     } else if ([AdobeBranchExtensionConfig instance].allowList.count != 0 && [[AdobeBranchExtensionConfig instance].allowList containsObject: eventName]) {
         return YES;
-    } else if ([AdobeBranchExtensionConfig instance].exclusionList.count != 0 && [[AdobeBranchExtensionConfig instance].exclusionList containsObject: eventName]) {
-        return NO;
+    } else if ([AdobeBranchExtensionConfig instance].exclusionList.count != 0 && ![[AdobeBranchExtensionConfig instance].exclusionList containsObject: eventName]) {
+        return YES;
     }
 
     return NO;
