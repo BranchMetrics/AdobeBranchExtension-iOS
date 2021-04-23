@@ -48,9 +48,17 @@
     
     // NOTE! following code will enable you to configure exclusion list or allow list, but you can't define both! If you don't configure any, all events will send to Branch which is not ideal!
     // Define the exclusion list of the events names
-//    [AdobeBranchExtension configureEventExclusionList:@[@"VIEW"]];
+//    if ([AdobeBranchExtension configureEventExclusionList:@[@"VIEW"] error:&error]) {
+//        NSLog(@"AdobeBranchExtension AllowList configured");
+//    } else {
+//        NSLog(@"%@", error);
+//    }
     // Define the allow list of the events names
-    [AdobeBranchExtension configureEventAllowList:@[@"VIEW"]];
+    if ([AdobeBranchExtension configureEventAllowList:@[@"VIEW"] error:&error]) {
+        NSLog(@"AdobeBranchExtension AllowList configured");
+    } else {
+        NSLog(@"%@", error);
+    }
     // register AdobeBranchExtension
     if ([ACPCore registerExtension:[AdobeBranchExtension class] error:&error]) {
         NSLog(@"AdobeBranchExtension Registered");
