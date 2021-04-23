@@ -16,6 +16,9 @@
 NSString*const ABEBranchEventType               = @"com.branch.eventType";
 NSString*const ABEBranchEventSource             = @"com.branch.eventSource";
 
+// Adobe Launch Branch extension error domain
+NSString*const AdobeBranchExtensionErrorDomain  = @"io.branch.adobe_launch_extension.error";
+
 // 1. events of this type and source
 NSString *const ABEAdobeHubEventType = @"com.adobe.eventType.hub";
 NSString *const ABEAdobeSharedStateEventSource = @"com.adobe.eventSource.sharedState";
@@ -91,6 +94,34 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
     } else {
         [AdobeBranchExtensionConfig instance].eventSources = @[];
     }
+}
+
++ (BOOL)configureEventExclusionList:(nullable NSArray<NSString *> *)eventNames error:(NSError * __autoreleasing *)configError {
+    if (eventNames) {
+        // If already configured allowList
+        if ([AdobeBranchExtensionConfig instance].allowList.count != 0) {
+            *configError = [NSError errorWithDomain:AdobeBranchExtensionErrorDomain code:ABEBranchConflictConfiguration userInfo:@{NSLocalizedFailureReasonErrorKey: @"Already configured allowList for AdobeBranchExtensionConfig"}];
+            BNCLogError([NSString stringWithFormat:@"AdobeBranchExtensionConfig error: %@.", *configError]);
+            return NO;
+        } else {
+            [AdobeBranchExtensionConfig instance].exclusionList = eventNames;
+        }
+    }
+    return YES;
+}
+
++ (BOOL)configureEventAllowList:(nullable NSArray<NSString *> *)eventNames error:(NSError * __autoreleasing *)configError {
+    if (eventNames) {
+        // If already configured allowList
+        if ([AdobeBranchExtensionConfig instance].exclusionList.count != 0) {
+            *configError = [NSError errorWithDomain:AdobeBranchExtensionErrorDomain code:ABEBranchConflictConfiguration userInfo:@{NSLocalizedFailureReasonErrorKey: @"Already configured exclusionList for AdobeBranchExtensionConfig"}];
+            BNCLogError([NSString stringWithFormat:@"AdobeBranchExtensionConfig error: %@.", *configError]);
+            return NO;
+        } else {
+            [AdobeBranchExtensionConfig instance].allowList = eventNames;
+        }
+    }
+    return YES;
 }
 
 - (instancetype)init {
@@ -221,9 +252,22 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     NSString *eventName = eventData[@"action"];
     if (!eventName.length) eventName = eventData[@"state"];
     if (!eventName.length) return;
+    if (![self isValidEventForBranch:eventName]) return;
     NSDictionary *content = [eventData objectForKey:@"contextdata"];
     BranchEvent *branchEvent = [self.class branchEventFromAdobeEventName:eventName dictionary:content];
     [branchEvent logEvent];
+}
+
+- (BOOL)isValidEventForBranch:(NSString*)eventName {
+    if ([AdobeBranchExtensionConfig instance].exclusionList.count == 0 && [AdobeBranchExtensionConfig instance].allowList.count == 0) {
+        return YES;
+    } else if ([AdobeBranchExtensionConfig instance].allowList.count != 0 && [[AdobeBranchExtensionConfig instance].allowList containsObject: eventName]) {
+        return YES;
+    } else if ([AdobeBranchExtensionConfig instance].exclusionList.count != 0 && ![[AdobeBranchExtensionConfig instance].exclusionList containsObject: eventName]) {
+        return YES;
+    }
+
+    return NO;
 }
 
 - (void) passAdobeIdsToBranch:(ACPExtensionEvent*)eventToProcess {

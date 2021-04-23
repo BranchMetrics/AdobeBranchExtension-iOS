@@ -10,13 +10,12 @@
 
 #import "ACPCore.h"
 #import "ACPAnalytics.h"
-#import "ACPIdentity.h"
-#import "ACPLifecycle.h"
+#import <ACPCore/ACPIdentity.h>
+#import <ACPCore/ACPLifecycle.h>
 #import "ACPSignal.h"
 #import "ACPUserProfile.h"
 
 #import "ProductViewController.h"
-
 #import "AdobeBranchExtension.h"
 
 @interface AppDelegate ()
@@ -47,6 +46,19 @@
     [ACPIdentity registerExtension];
     [ACPLifecycle registerExtension];
     
+    // NOTE! following code will enable you to configure exclusion list or allow list, but you can't define both! If you don't configure any, all events will send to Branch which is not ideal!
+    // Define the exclusion list of the events names
+//    if ([AdobeBranchExtension configureEventExclusionList:@[@"VIEW"] error:&error]) {
+//        NSLog(@"AdobeBranchExtension AllowList configured");
+//    } else {
+//        NSLog(@"%@", error);
+//    }
+    // Define the allow list of the events names
+    if ([AdobeBranchExtension configureEventAllowList:@[@"VIEW"] error:&error]) {
+        NSLog(@"AdobeBranchExtension AllowList configured");
+    } else {
+        NSLog(@"%@", error);
+    }
     // register AdobeBranchExtension
     if ([ACPCore registerExtension:[AdobeBranchExtension class] error:&error]) {
         NSLog(@"AdobeBranchExtension Registered");

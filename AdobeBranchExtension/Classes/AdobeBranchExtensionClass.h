@@ -23,6 +23,11 @@ FOUNDATION_EXPORT NSString*const ABEBranchEventType;
 /// Branch extension event source
 FOUNDATION_EXPORT NSString*const ABEBranchEventSource;
 
+/// Branch extension error code
+typedef NS_ENUM(NSInteger, ABEBranchErrorCode) {
+    ABEBranchConflictConfiguration  = 2000,
+};
+
 /**
  This is the class defines the root Adobe / Branch integration for deep linking and events.
  */
@@ -35,6 +40,10 @@ FOUNDATION_EXPORT NSString*const ABEBranchEventSource;
 + (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(NSDictionary *)options;
 
 + (void)configureEventTypes:(nullable NSArray<NSString *> *)eventTypes andEventSources:(nullable NSArray<NSString *> *)eventSources;
+
++ (BOOL)configureEventExclusionList:(nullable NSArray<NSString *> *)eventNames error:(NSError * __autoreleasing *)configError;
+
++ (BOOL)configureEventAllowList:(nullable NSArray<NSString *> *)eventNames error:(NSError * __autoreleasing *)configError;
 
 - (void)handleEvent:(ACPExtensionEvent*)event;
 

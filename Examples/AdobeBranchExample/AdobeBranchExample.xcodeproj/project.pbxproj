@@ -3,11 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C32DC67D5A305502173C088 /* libPods-AdobeBranchExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFBBC7A62D08C7161630F13C /* libPods-AdobeBranchExample.a */; };
+		3228F43713344BCB4F316B9A /* Pods_AdobeBranchExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0EA9C30991048D8A522C726 /* Pods_AdobeBranchExample.framework */; };
 		4D16DBA421AF037F00E362A2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D16DBA321AF037F00E362A2 /* Launch Screen.storyboard */; };
 		4D16DBA721AF5B6300E362A2 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D16DBA621AF5B6300E362A2 /* TextViewController.m */; };
 		4DE097FD219CEABE008AC401 /* Products.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DE097FC219CEABE008AC401 /* Products.json */; };
@@ -60,9 +60,9 @@
 		ACF671D721534E4F00CDC900 /* ACPCore_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPCore_iOS.framework; path = Pods/ACPCoreBeta/ACPCore_iOS.framework; sourceTree = "<group>"; };
 		ACF671D821534E4F00CDC900 /* ACPSignal_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPSignal_iOS.framework; path = Pods/ACPCoreBeta/ACPSignal_iOS.framework; sourceTree = "<group>"; };
 		ACF671D921534E4F00CDC900 /* ACPLifecycle_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPLifecycle_iOS.framework; path = Pods/ACPCoreBeta/ACPLifecycle_iOS.framework; sourceTree = "<group>"; };
+		B0EA9C30991048D8A522C726 /* Pods_AdobeBranchExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdobeBranchExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8688AE753553EE80251EE11 /* Pods-adobe-branch-example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.release.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.release.xcconfig"; sourceTree = "<group>"; };
 		FD81B1B19DDC0E314016948F /* Pods-adobe-branch-example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.debug.xcconfig"; sourceTree = "<group>"; };
-		FFBBC7A62D08C7161630F13C /* libPods-AdobeBranchExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AdobeBranchExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +76,7 @@
 				ACAE812F2122644F0049505B /* libz.tbd in Frameworks */,
 				ACAE812D212264480049505B /* libstdc++.tbd in Frameworks */,
 				ACAE812B2122643A0049505B /* libsqlite3.tbd in Frameworks */,
-				1C32DC67D5A305502173C088 /* libPods-AdobeBranchExample.a in Frameworks */,
+				3228F43713344BCB4F316B9A /* Pods_AdobeBranchExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,7 +152,7 @@
 				ACAE812C212264480049505B /* libstdc++.tbd */,
 				ACAE812A2122643A0049505B /* libsqlite3.tbd */,
 				2E21CAD8A1C925AAF24986BC /* libPods-adobe-branch-example.a */,
-				FFBBC7A62D08C7161630F13C /* libPods-AdobeBranchExample.a */,
+				B0EA9C30991048D8A522C726 /* Pods_AdobeBranchExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -168,6 +168,7 @@
 				ACAE8100212263F30049505B /* Sources */,
 				ACAE8101212263F30049505B /* Frameworks */,
 				ACAE8102212263F30049505B /* Resources */,
+				7312F033701CC016ACD11288 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -185,7 +186,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = ABE;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "Branch Metrics";
 				TargetAttributes = {
 					ACAE8103212263F30049505B = {
@@ -231,6 +232,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		7312F033701CC016ACD11288 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AdobeBranchExample/Pods-AdobeBranchExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AdobeBranchExample/Pods-AdobeBranchExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AdobeBranchExample/Pods-AdobeBranchExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		80D4725CEFFA1CA56A0BB493 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -305,6 +323,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -330,7 +349,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -363,6 +382,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -382,7 +402,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -399,7 +419,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R63EM248DP;
 				INFOPLIST_FILE = "$(SRCROOT)/AdobeBranchExample/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -421,7 +441,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = R63EM248DP;
 				INFOPLIST_FILE = "$(SRCROOT)/AdobeBranchExample/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
