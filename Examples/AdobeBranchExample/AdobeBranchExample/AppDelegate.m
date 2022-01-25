@@ -29,7 +29,7 @@
     [ACPCore setLogLevel:ACPMobileLogLevelError];
 //    [ACPCore setLogLevel:ACPMobileLogLevelVerbose];
 //    [ACPAnalytics setVisitorIdentifier:@"custom_identifier_bb"];// for testing passAdobeIdsToBranch method
-
+    
     // register ACPCore
     if ((YES)) {
         // option 1 - access hosted Adobe config

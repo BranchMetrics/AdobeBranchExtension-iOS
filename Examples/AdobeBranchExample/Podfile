@@ -1,6 +1,6 @@
 target 'AdobeBranchExample' do
   use_frameworks!
-  pod 'Branch'
+  pod 'Branch', :path => '~/Documents/GitHub/ios-branch-deep-linking-attribution'
   pod 'ACPCore'
   pod 'ACPAnalytics'
   pod 'ACPUserProfile'
