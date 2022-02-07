@@ -9,6 +9,7 @@
 #import "AdobeBranchExtension.h"
 #import "AdobeBranchExtensionConfig.h"
 #import <Branch/Branch.h>
+#import <Branch/BranchPluginSupport.h>
 
 #pragma mark Constants
 
@@ -256,6 +257,7 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     NSDictionary *content = [eventData objectForKey:@"contextdata"];
     BranchEvent *branchEvent = [self.class branchEventFromAdobeEventName:eventName dictionary:content];
     [branchEvent logEvent];
+    [self deviceDataSharedState:event];
 }
 
 - (BOOL)isValidEventForBranch:(NSString*)eventName {
@@ -296,6 +298,15 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
         } else if ([key isEqualToString:@"aid"]) {
             [branch setRequestMetadataKey:@"$adobe_visitor_id" value:idAsString];
        }
+    }
+}
+
+- (void) deviceDataSharedState: (nonnull ACPExtensionEvent*) event {
+
+    NSDictionary* newDeviceData =  [[BranchPluginSupport instance] deviceDescription];
+    NSError* err = nil;
+    if (![self.api setSharedEventState:newDeviceData event:event error:&err] && err) {
+        NSLog(@"Error setting shared state %@:%ld", [err domain], [err code]);
     }
 }
 
