@@ -306,7 +306,7 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     NSDictionary* newDeviceData =  [[BranchPluginSupport instance] deviceDescription];
     NSError* err = nil;
     if (![self.api setSharedEventState:newDeviceData event:event error:&err] && err) {
-        NSLog(@"Error setting shared state %@:%ld", [err domain], [err code]);
+        NSLog(@"Error setting shared state %@:%ld", [err domain], (long)[err code]);
     }
 }
 
