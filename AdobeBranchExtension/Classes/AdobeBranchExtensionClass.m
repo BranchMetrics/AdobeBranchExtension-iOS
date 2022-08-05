@@ -58,7 +58,7 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 
 + (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback {
     [self delayInitSessionToCollectAdobeIDs];
-    [[Branch getInstance] registerPluginName:@"AdobeLaunch_iOS" version:ADOBE_BRANCH_VERSION];
+    [[Branch getInstance] registerPluginName:@"AdobeBranchExtension" version:ADOBE_BRANCH_VERSION];
     [[Branch getInstance] initSessionWithLaunchOptions:options andRegisterDeepLinkHandler:callback];
 }
 
