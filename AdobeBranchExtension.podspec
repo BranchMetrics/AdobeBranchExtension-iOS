@@ -24,5 +24,5 @@ Pod::Spec.new do |s|
   s.source_files     = 'AdobeBranchExtension/Classes/**/*'
 
   s.dependency 'ACPCore',   '~> 2.9.6'
-  s.dependency 'Branch',    '~> 1.43.1'
+  s.dependency 'Branch',    '~> 1.43.2'
 end
