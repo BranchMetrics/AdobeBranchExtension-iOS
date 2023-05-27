@@ -26,7 +26,7 @@
     self.productImage.layer.cornerRadius = 5.0f;
     self.productImage.layer.masksToBounds = YES;
     self.productTitle.text = self.product.name;
-    [ACPCore trackState:@"VIEW" data:@{
+    [AEPMobileCore trackState:@"VIEW" data:@{
         @"name":        self.product.name,
         @"revenue":     @"200.0",
         @"currency":    @"USD"
@@ -34,7 +34,7 @@
 }
 
 - (IBAction)shareButton:(id)sender {
-    [ACPCore trackAction:@"Share Button Pressed" data:@{
+    [AEPMobileCore trackAction:@"Share Button Pressed" data:@{
         @"name":        self.product.name,
         @"revenue":     @"200.0",
         @"currency":    @"USD"

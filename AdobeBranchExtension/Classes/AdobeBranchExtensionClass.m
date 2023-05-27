@@ -8,8 +8,10 @@
 
 #import "AdobeBranchExtension.h"
 #import "AdobeBranchExtensionConfig.h"
-#import <Branch/Branch.h>
-#import <Branch/BranchPluginSupport.h>
+#import <BranchSDK/Branch.h>
+#import <BranchSDK/BNCLog.h>
+#import <BranchSDK/BranchPluginSupport.h>
+#import <BranchSDK/BranchEvent.h>
 
 #pragma mark Constants
 
@@ -32,29 +34,79 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 
 #pragma mark -
 
-@interface ACPExtensionEvent (AdobeBranchExtension)
-- (NSString*) description;
-@end
-
-@implementation ACPExtensionEvent (AdobeBranchExtension)
-
-- (NSString*) description {
-    return [NSString stringWithFormat:@"<%@ %p name:'%@' type:'%@' source'%@'\n%@>",
-        NSStringFromClass(self.class),
-        (void*)self,
-        self.eventName,
-        self.eventType,
-        self.eventSource,
-        self.eventData
-    ];
-}
-
-@end
-
 @interface AdobeBranchExtension()
 @end
 
-@implementation AdobeBranchExtension
+@implementation AdobeBranchExtension {
+    id<AEPExtensionRuntime> runtime_;
+    NSString * stateValue;
+}
+
+
+- (NSString *)name {
+    return @"io.branch.adobe.extension";
+}
+
+- (NSString *)friendlyName {
+    return @"AdobeBranchExtension";
+}
+
++ (NSString * _Nonnull)extensionVersion {
+    return ADOBE_BRANCH_VERSION;
+}
+
+//TODO: Update this
+- (NSDictionary<NSString *,NSString *> *)metadata {
+    return nil;
+}
+
+- (id<AEPExtensionRuntime>)runtime {
+    return runtime_;
+}
+
+- (nullable instancetype)initWithRuntime:(id<AEPExtensionRuntime> _Nonnull)runtime {
+    self = [super init];
+    runtime_ = runtime;
+    return self;
+}
+
+- (void)onRegistered {
+
+    [runtime_ registerListenerWithType:@"" source:@"" listener:^(AEPEvent * _Nonnull event) {
+        [self handleEvent: event];
+        //This is where we need to handle events that come in
+    }];
+}
+
+- (void)onUnregistered {}
+
+- (BOOL)readyForEvent:(AEPEvent * _Nonnull)event {
+    AEPSharedStateResult *result = [runtime_ getSharedStateWithExtensionName:self.name event:event barrier:NO];
+    if (!result) {
+        return false;
+    }
+    
+    BNCLogDebug([NSString stringWithFormat:@"Ready for event: %@", event.name]);
+
+    return result.status == AEPSharedStateStatusSet;
+}
+
+//This is where filtering occured previously
+- (void)handleEvent:(AEPEvent*)event {
+    BNCLogDebug([NSString stringWithFormat:@"Event: %@", event]);
+
+    if ([[AdobeBranchExtensionConfig instance].eventTypes containsObject:event.type] &&
+        [[AdobeBranchExtensionConfig instance].eventSources containsObject:event.source]) {
+        BNCLogDebug(@"BranchSDK_ Could not process event, configuration shared state is pending");
+        [self trackEvent:event];
+    } else if ([event.type isEqualToString:ABEAdobeHubEventType] &&
+               [event.source isEqualToString:ABEAdobeSharedStateEventSource] &&
+               ([event.data[ABEAdobeEventDataKey_StateOwner] isEqualToString:ABEAdobeIdentityExtension] ||
+                [event.data[ABEAdobeEventDataKey_StateOwner] isEqualToString:ABEAdobeAnalyticsExtension])) {
+        [self passAdobeIdsToBranch:event];
+    }
+}
+
 
 + (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback {
     [self delayInitSessionToCollectAdobeIDs];
@@ -125,42 +177,31 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
     return YES;
 }
 
-- (instancetype)init {
-    self = [super init];
-    if (!self) return self;
+/*
+ /// Registers an `EventListener` for the specified `EventType` and `EventSource`
+ /// - Parameters:
+ ///   - type: `EventType` to listen for
+ ///   - source: `EventSource` to listen for
+ ///   - listener: Function or closure which will be invoked whenever the `EventHub` receives an `Event` matching `type` and `source`
+ func registerListener(type: String, source: String, listener: @escaping EventListener)
+ */
 
-    BNCLogSetDisplayLevel(BNCLogLevelError);
+//- (instancetype)init {
+//    self = [super init];
+//    if (!self) return self;
+//
+//    BNCLogSetDisplayLevel(BNCLogLevelError);
+//
+//    NSError *error = nil;
+////    if ([self.runtime registerListenerWithType:<#(NSString * _Nonnull)#> source:<#(NSString * _Nonnull)#> listener:<#^(AEPEvent * _Nonnull)listener#>]) {
+////        BNCLogDebug(@"BranchExtensionRuleListener was registered.");
+////    } else {
+////        BNCLogError([NSString stringWithFormat:@"Can't register AdobeBranchExtensionRuleListener: %@.", error]);
+////    }
+//    return self;
+//}
 
-    NSError *error = nil;
-    if ([self.api registerWildcardListener:AdobeBranchExtensionListener.class error:&error]) {
-        BNCLogDebug(@"BranchExtensionRuleListener was registered.");
-    } else {
-        BNCLogError([NSString stringWithFormat:@"Can't register AdobeBranchExtensionRuleListener: %@.", error]);
-    }
-    return self;
-}
 
-- (nullable NSString *)name {
-    return @"io.branch.adobe.extension";
-}
-
-- (nullable NSString *)version {
-    return ADOBE_BRANCH_VERSION;
-}
-
-- (void)handleEvent:(ACPExtensionEvent*)event {
-    BNCLogDebug([NSString stringWithFormat:@"Event: %@", event]);
-
-    if ([[AdobeBranchExtensionConfig instance].eventTypes containsObject:event.eventType] &&
-        [[AdobeBranchExtensionConfig instance].eventSources containsObject:event.eventSource]) {
-        [self trackEvent:event];
-    } else if ([event.eventType isEqualToString:ABEAdobeHubEventType] &&
-               [event.eventSource isEqualToString:ABEAdobeSharedStateEventSource] &&
-               ([event.eventData[ABEAdobeEventDataKey_StateOwner] isEqualToString:ABEAdobeIdentityExtension] ||
-                [event.eventData[ABEAdobeEventDataKey_StateOwner] isEqualToString:ABEAdobeAnalyticsExtension])) {
-        [self passAdobeIdsToBranch:event];
-    }
-}
 
 #pragma mark - Action Events
 
@@ -248,8 +289,8 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     return event;
 }
 
-- (void) trackEvent:(ACPExtensionEvent*)event {
-    NSDictionary *eventData = event.eventData;
+- (void) trackEvent:(AEPEvent*)event {
+    NSDictionary *eventData = event.data;
     NSString *eventName = eventData[@"action"];
     if (!eventName.length) eventName = eventData[@"state"];
     if (!eventName.length) return;
@@ -257,6 +298,8 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     NSDictionary *content = [eventData objectForKey:@"contextdata"];
     BranchEvent *branchEvent = [self.class branchEventFromAdobeEventName:eventName dictionary:content];
     [branchEvent logEvent];
+    BNCLogDebug(@"BranchSDK_ Logged Branch Event");
+
     [self deviceDataSharedState:event];
 }
 
@@ -268,15 +311,14 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     } else if ([AdobeBranchExtensionConfig instance].exclusionList.count != 0 && ![[AdobeBranchExtensionConfig instance].exclusionList containsObject: eventName]) {
         return YES;
     }
-
     return NO;
 }
 
-- (void) passAdobeIdsToBranch:(ACPExtensionEvent*)eventToProcess {
+- (void) passAdobeIdsToBranch:(AEPEvent*)eventToProcess {
     NSError *error = nil;
-    NSDictionary *configSharedState = [self.api getSharedEventState:eventToProcess.eventData[ABEAdobeEventDataKey_StateOwner]
-                                                              event:eventToProcess error:&error];
-    if (!configSharedState) {
+    AEPSharedStateResult *configSharedState = [self.runtime getSharedStateWithExtensionName:self.name event:eventToProcess barrier:NO];
+
+    if (!configSharedState.value) {
         BNCLogDebug(@"BranchSDK_ Could not process event, configuration shared state is pending");
         return;
     }
@@ -285,12 +327,13 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
         return;
     }
     Branch *branch = [Branch getInstance];
-    for(id key in configSharedState.allKeys) {
-        NSLog(@"BranchSDK_ key=%@ value=%@", key, [configSharedState objectForKey:key]);
-        NSString *idAsString = [NSString stringWithFormat:@"%@", [configSharedState objectForKey:key]];
-        
+    
+    for (id key in configSharedState.value.allKeys) {
+        NSLog(@"BranchSDK_ key=%@ value=%@", key, [configSharedState.value objectForKey:key]);
+        NSString *idAsString = [NSString stringWithFormat:@"%@", [configSharedState.value objectForKey:key]];
+
         if (!idAsString || [idAsString isEqualToString:@""]) continue;
-        
+
         if ([key isEqualToString:@"mid"]) {
             [branch setRequestMetadataKey:@"$marketing_cloud_visitor_id" value:idAsString];
         } else if ([key isEqualToString:@"vid"]) {
@@ -301,13 +344,10 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     }
 }
 
-- (void) deviceDataSharedState: (nonnull ACPExtensionEvent*) event {
+- (void) deviceDataSharedState: (nonnull AEPEvent*) event {
 
     NSDictionary* newDeviceData =  [[BranchPluginSupport instance] deviceDescription];
-    NSError* err = nil;
-    if (![self.api setSharedEventState:newDeviceData event:event error:&err] && err) {
-        NSLog(@"Error setting shared state %@:%ld", [err domain], (long)[err code]);
-    }
+    [self.runtime createSharedStateWithData:newDeviceData event:event];
 }
 
 @end

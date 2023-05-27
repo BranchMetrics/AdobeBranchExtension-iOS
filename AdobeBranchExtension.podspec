@@ -17,12 +17,15 @@ Pod::Spec.new do |s|
   s.source           = { :git => "https://github.com/BranchMetrics/AdobeBranchExtension-iOS.git", :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/branchmetrics'
 
-  s.platform         = :ios, '10.0'
+  s.platform         = :ios, '11.0'
   s.requires_arc     = true
   s.static_framework = true
 
   s.source_files     = 'AdobeBranchExtension/Classes/**/*'
 
-  s.dependency 'ACPCore',   '~> 2.9.6'
-  s.dependency 'Branch',    '~> 1.43.2'
+  s.dependency 'AEPCore',      '~> 3.9.0'
+  s.dependency 'AEPLifecycle', '~> 3.9.0'
+  s.dependency 'AEPIdentity',  '~> 3.9.0'
+  s.dependency 'AEPSignal',    '~> 3.9.0'
+  s.dependency 'BranchSDK',    '~> 2.1.2'
 end

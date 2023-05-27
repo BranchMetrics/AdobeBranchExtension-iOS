@@ -8,12 +8,13 @@
 
 #import "AppDelegate.h"
 
-#import "ACPCore.h"
-#import "ACPAnalytics.h"
-#import <ACPCore/ACPIdentity.h>
-#import <ACPCore/ACPLifecycle.h>
-#import "ACPSignal.h"
-#import "ACPUserProfile.h"
+@import AEPCore;
+@import AEPSignal;
+@import AEPLifecycle;
+@import AEPIdentity;
+@import AEPUserProfile;
+@import AEPServices;
+@import AEPAnalytics;
 
 #import "ProductViewController.h"
 #import "AdobeBranchExtension.h"
@@ -26,25 +27,31 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     NSError* error = nil;
     // Override point for customization after application launch.
-    [ACPCore setLogLevel:ACPMobileLogLevelError];
-//    [ACPCore setLogLevel:ACPMobileLogLevelVerbose];
+
 //    [ACPAnalytics setVisitorIdentifier:@"custom_identifier_bb"];// for testing passAdobeIdsToBranch method
-    
-    // register ACPCore
+    const UIApplicationState appState = application.applicationState;
+
+    [AEPMobileCore setLogLevel:AEPLogLevelError];
+    // register AEPCore
     if ((YES)) {
         // option 1 - access hosted Adobe config
         //[ADBMobileMarketing configureWithAppId:@"launch-ENe8e233db5c6a43628d097ba8125aeb26-development"];
-//        [ACPCore configureWithAppId:@"launch-EN250ff13ac5814cb1a8750820b1f89b0a-development"];
-        [ACPCore configureWithAppId:@"d10f76259195/c769149ebd48/launch-f972d1367b58-development"];//Adobe Launch property: "iOS Test"
+        //        [ACPCore configureWithAppId:@"launch-EN250ff13ac5814cb1a8750820b1f89b0a-development"];
+        
+        //[AEPMobileCore configureWithAppId:@"d10f76259195/c769149ebd48/launch-f972d1367b58-development"];//Adobe Launch property: "iOS Test"
+        [AEPMobileCore registerExtensions:@[AEPMobileSignal.class, AEPMobileLifecycle.class, AEPMobileUserProfile.class, AEPMobileIdentity.class, AEPMobileAnalytics.class] completion:^{
+            [AEPMobileCore configureWithAppId: @"d10f76259195/c769149ebd48/launch-f972d1367b58-development"];//Adobe Launch property: "iOS Test"
+            if (appState != UIApplicationStateBackground) {
+                // only start lifecycle if the application is not in the background
+                [AEPMobileCore lifecycleStart:@{@"contextDataKey": @"contextDataVal"}];
+            }
+        }];
     } else {
         // option 2 - set config at runtime
         [self setupTestConfig];
     }
     
-    // register extensions (for Adobe Launch property: "iOS Test")
-    [ACPAnalytics registerExtension];
-    [ACPIdentity registerExtension];
-    [ACPLifecycle registerExtension];
+    
     
     // NOTE! following code will enable you to configure exclusion list or allow list, but you can't define both! If you don't configure any, all events will send to Branch which is not ideal!
     // Define the exclusion list of the events names
@@ -59,16 +66,17 @@
     } else {
         NSLog(@"%@", error);
     }
+    
     // register AdobeBranchExtension
-    if ([ACPCore registerExtension:[AdobeBranchExtension class] error:&error]) {
+    [AEPMobileCore registerExtension:[AdobeBranchExtension class] completion:^{
         NSLog(@"AdobeBranchExtension Registered");
-    } else {
-        NSLog(@"%@", error);
-    }
+    }];
+
     
     // start Adobe SDK & extensions
-    [ACPCore lifecycleStart:nil];
-    [ACPCore start:nil];
+    [AEPMobileCore lifecycleStart:nil];
+//    [AEPMobileCore start:nil];
+
     
     // Disable event sharing
     //[AdobeBranchExtension configureEventTypes:nil andEventSources:nil];
@@ -176,7 +184,7 @@
     config[@"deepLinkKey"] = @"pictureId";
     
     //[ADBMobileMarketing updateConfiguration:config];
-    [ACPCore updateConfiguration:config];
+    [AEPMobileCore updateConfiguration:config];
 }
 
 @end

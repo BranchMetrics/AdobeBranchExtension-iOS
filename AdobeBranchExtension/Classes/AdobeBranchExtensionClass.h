@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Branch/Branch.h>
-#import <ACPCore/ACPCore.h>
-#import <ACPCore/ACPExtension.h>
+#import <BranchSDK/Branch.h>
+@import AEPCore;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -31,7 +30,7 @@ typedef NS_ENUM(NSInteger, ABEBranchErrorCode) {
 /**
  This is the class defines the root Adobe / Branch integration for deep linking and events.
  */
-@interface AdobeBranchExtension : ACPExtension
+@interface AdobeBranchExtension : NSObject <AEPExtension>
 
 + (void)initSessionWithLaunchOptions:(NSDictionary *)options andRegisterDeepLinkHandler:(callbackWithParams)callback;
 
@@ -45,7 +44,7 @@ typedef NS_ENUM(NSInteger, ABEBranchErrorCode) {
 
 + (BOOL)configureEventAllowList:(nullable NSArray<NSString *> *)eventNames error:(NSError * __autoreleasing *)configError;
 
-- (void)handleEvent:(ACPExtensionEvent*)event;
+- (void)handleEvent:(AEPEvent*)event;
 
 @end
 
