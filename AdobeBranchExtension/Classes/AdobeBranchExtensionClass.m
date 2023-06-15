@@ -38,7 +38,6 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 
 @implementation AdobeBranchExtension {
     id<AEPExtensionRuntime> runtime_;
-    NSString * stateValue;
 }
 
 #pragma mark - Extension Protocol Methods
@@ -65,20 +64,18 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 
 - (nullable instancetype)initWithRuntime:(id<AEPExtensionRuntime> _Nonnull)runtime {
     self = [super init];
-
+    
     runtime_ = runtime;
     return self;
 }
 
 - (void)onRegistered {
     BNCLogDebug(@"AdobeBranchExtension listener registered");
-
+    
     BNCLogSetDisplayLevel(BNCLogLevelAll);
     [self deviceDataSharedState: NULL];
     
     [runtime_ registerListenerWithType:AEPEventType.wildcard source:AEPEventSource.wildcard listener:^(AEPEvent * _Nonnull event) {
-        BNCLogDebug(@"AdobeBranchExtension listener handle event called");
-
         [self handleEvent:event];
     }];
 }
@@ -168,8 +165,8 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 #pragma mark - Action Events
 
 - (void)handleEvent:(AEPEvent*)event {
-    BNCLogDebug([NSString stringWithFormat:@"Event: %@", event]);
-
+    BNCLogDebug([NSString stringWithFormat:@"Handling Event: %@", event]);
+    
     if ([[AdobeBranchExtensionConfig instance].eventTypes containsObject:event.type] &&
         [[AdobeBranchExtensionConfig instance].eventSources containsObject:event.source]) {
         [self trackEvent:event];
@@ -207,60 +204,60 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
 }
 
 + (BranchEvent *)branchEventFromAdobeEventName:(NSString *)eventName
-                                 dictionary:(NSDictionary *)dictionary {
-
+                                    dictionary:(NSDictionary *)dictionary {
+    
     if (eventName.length == 0) return nil;
     BranchEvent *event = [[BranchEvent alloc] initWithName:eventName];
     if (!dictionary) return event;
-
+    
     /* Translate some special fields to BranchEvent, otherwise add the dictionary as BranchEvent.userData:
-
-    currency
-    revenue
-    shipping
-    tax
-    coupon
-    affiliation
-    eventDescription
-    searchQuery
-    transactionID
-
-    */
-
+     
+     currency
+     revenue
+     shipping
+     tax
+     coupon
+     affiliation
+     eventDescription
+     searchQuery
+     transactionID
+    
+     */
+    
     #define stringForKey(key) \
-        BNCStringWithObject(dictionary[@#key])
-
+    BNCStringWithObject(dictionary[@#key])
+    
     NSString *value = stringForKey(currency);
     if (value.length) event.currency = value;
-
+    
     value = stringForKey(revenue);
     if (value.length) event.revenue = [NSDecimalNumber decimalNumberWithString:value];
-
+    
     value = stringForKey(shipping);
     if (value.length) event.shipping = [NSDecimalNumber decimalNumberWithString:value];
-
+    
     value = stringForKey(tax);
     if (value.length) event.tax = [NSDecimalNumber decimalNumberWithString:value];
-
+    
     value = stringForKey(coupon);
     if (value.length) event.coupon = value;
-
+    
     value = stringForKey(affiliation);
     if (value.length) event.affiliation = value;
-
+    
     value = stringForKey(transaction_id);
     if (value.length) event.transactionID = value;
-
+    
     value = stringForKey(title);
     if (value.length == 0) value = stringForKey(name);
     if (value.length == 0) value = stringForKey(description);
     if (value.length) event.eventDescription = value;
-
+    
     value = stringForKey(query);
     if (value.length) event.searchQuery = value;
-
+    
     #undef stringForKey
-
+    
     event.customData = BNCStringDictionaryWithDictionary(dictionary);
     return event;
 }
@@ -273,33 +270,33 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     NSDictionary *content = getContentFromEvent(event);
     BranchEvent *branchEvent = [self.class branchEventFromAdobeEventName:eventName dictionary:content];
     [branchEvent logEvent];
-    BNCLogDebug(@"BranchSDK_ Logged Branch Event");
+    
     [self deviceDataSharedState:event];
 }
 
 NSDictionary* getContentFromEvent(AEPEvent *event) {
     NSString *hitUrl = event.data[@"hitUrl"];
-       if (!hitUrl) {
-           return nil;
-       }
-
-       NSArray *parameters = [hitUrl componentsSeparatedByString:@"&"];
-       NSMutableDictionary *content = [[NSMutableDictionary alloc] init];
-
-       NSArray *keys = @[@"category", @"currency", @"name", @"revenue", @"shipping", @"tax", @"coupon" ,@"sku", @"timestamp", @"transaction_id", @"affiliation", @"title", @"description", @"query"];
-       
-       for (NSString *param in parameters) {
-           for (NSString *key in keys) {
-               if ([param containsString:[NSString stringWithFormat:@"%@=", key]]) {
-                   NSString *value = [[param componentsSeparatedByString:@"="] lastObject];
-                   value = [value stringByRemovingPercentEncoding];
-                   [content setObject:value forKey:key];
-                   break;
-               }
-           }
-       }
-
-       return [content copy];
+    if (!hitUrl) {
+        return nil;
+    }
+    
+    NSArray *parameters = [hitUrl componentsSeparatedByString:@"&"];
+    NSMutableDictionary *content = [[NSMutableDictionary alloc] init];
+    
+    NSArray *keys = @[@"category", @"currency", @"name", @"revenue", @"shipping", @"tax", @"coupon" ,@"sku", @"timestamp", @"transaction_id", @"affiliation", @"title", @"description", @"query"];
+    
+    for (NSString *param in parameters) {
+        for (NSString *key in keys) {
+            if ([param containsString:[NSString stringWithFormat:@"%@=", key]]) {
+                NSString *value = [[param componentsSeparatedByString:@"="] lastObject];
+                value = [value stringByRemovingPercentEncoding];
+                [content setObject:value forKey:key];
+                break;
+            }
+        }
+    }
+    
+    return [content copy];
 }
 
 NSString* getEventNameFromEvent(AEPEvent *event) {
@@ -307,10 +304,10 @@ NSString* getEventNameFromEvent(AEPEvent *event) {
     if (!hitUrl) {
         return nil;
     }
-
+    
     NSArray *parameters = [hitUrl componentsSeparatedByString:@"&"];
     NSString *action = nil;
-
+    
     for (NSString *param in parameters) {
         if ([param containsString:@"action="]) {
             action = [[param componentsSeparatedByString:@"="] lastObject];
@@ -318,7 +315,7 @@ NSString* getEventNameFromEvent(AEPEvent *event) {
             break;
         }
     }
-
+    
     return action;
 }
 
@@ -331,7 +328,6 @@ NSString* getEventNameFromEvent(AEPEvent *event) {
     } else if ([AdobeBranchExtensionConfig instance].exclusionList.count != 0 && ![[AdobeBranchExtensionConfig instance].exclusionList containsObject: eventName]) {
         return YES;
     }
-    NSLog(@"%@ is not a valid event for Branch to log", eventName);
     return NO;
 }
 
@@ -339,7 +335,7 @@ NSString* getEventNameFromEvent(AEPEvent *event) {
     NSError *error = nil;
     
     AEPSharedStateResult *configSharedState = [self.runtime getSharedStateWithExtensionName:eventToProcess.data[ABEAdobeEventDataKey_StateOwner] event:eventToProcess barrier:NO];
-
+    
     if (!configSharedState.value) {
         BNCLogDebug(@"BranchSDK_ Could not process event, configuration shared state is pending");
         return;
@@ -351,18 +347,18 @@ NSString* getEventNameFromEvent(AEPEvent *event) {
     
     Branch *branch = [Branch getInstance];
     for (id key in configSharedState.value.allKeys) {
-        NSLog(@"BranchSDK_ key=%@ value=%@", key, [configSharedState.value objectForKey:key]);
+        
         NSString *idAsString = [NSString stringWithFormat:@"%@", [configSharedState.value objectForKey:key]];
-
+        
         if (!idAsString || [idAsString isEqualToString:@""]) continue;
-
+        
         if ([key isEqualToString:@"mid"]) {
             [branch setRequestMetadataKey:@"$marketing_cloud_visitor_id" value:idAsString];
         } else if ([key isEqualToString:@"vid"]) {
             [branch setRequestMetadataKey:@"$analytics_visitor_id" value:idAsString];
         } else if ([key isEqualToString:@"aid"]) {
             [branch setRequestMetadataKey:@"$adobe_visitor_id" value:idAsString];
-       }
+        }
     }
 }
 
