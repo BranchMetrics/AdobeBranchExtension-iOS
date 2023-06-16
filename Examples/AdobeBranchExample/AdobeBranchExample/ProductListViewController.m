@@ -116,7 +116,7 @@
     case 2: {
         NSString*eventName = [self.events[indexPath.row] uppercaseString];
         eventName = [eventName stringByReplacingOccurrencesOfString:@" " withString:@"_"];
-        [ACPCore trackAction:eventName data:@{
+        [AEPMobileCore trackAction:eventName data:@{
             @"name":            @"Branch Sunglasses",
             @"revenue":         @"200.00",
             @"currency":        @"USD",

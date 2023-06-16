@@ -1,9 +1,13 @@
 target 'AdobeBranchExample' do
   use_frameworks!
-  pod 'Branch'
-  pod 'ACPCore'
-  pod 'ACPAnalytics'
-  pod 'ACPUserProfile'
+  
+  pod 'BranchSDK'
+  pod 'AEPCore'
+  pod 'AEPLifecycle'
+  pod 'AEPIdentity'
+  pod 'AEPSignal'
+  pod 'AEPAnalytics'
+  pod 'AEPUserProfile'
 
   pod 'AdobeBranchExtension', :path => '../../'
 end
