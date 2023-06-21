@@ -15,7 +15,6 @@ Pod::Spec.new do |s|
   s.author           = { "Branch Metrics" => "support@branch.io" }
   s.compiler_flags   = %[-DADOBE_BRANCH_VERSION=@\\"#{s.version}\\"]
   s.source           = { :git => "https://github.com/BranchMetrics/AdobeBranchExtension-iOS.git", :tag => s.version.to_s }
-  s.social_media_url = 'https://twitter.com/branchmetrics'
 
   s.platform         = :ios, '11.0'
   s.requires_arc     = true
