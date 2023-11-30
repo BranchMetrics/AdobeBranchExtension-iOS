@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "AdobeBranchExtension"
-  s.version          = "2.0.0"
+  s.version          = "3.0.0"
   s.summary          = "The Branch extension for Adobe Cloud Platform on iOS."
 
   s.description      = <<-DESC
@@ -16,15 +16,15 @@ Pod::Spec.new do |s|
   s.compiler_flags   = %[-DADOBE_BRANCH_VERSION=@\\"#{s.version}\\"]
   s.source           = { :git => "https://github.com/BranchMetrics/AdobeBranchExtension-iOS.git", :tag => s.version.to_s }
 
-  s.platform         = :ios, '11.0'
+  s.platform         = :ios, '12.0'
   s.requires_arc     = true
   s.static_framework = true
 
   s.source_files     = 'AdobeBranchExtension/Classes/**/*'
 
-  s.dependency 'AEPCore',        '~> 4.0.0'
-  s.dependency 'AEPLifecycle',   '~> 4.0.0'
-  s.dependency 'AEPIdentity',    '~> 4.0.0'
-  s.dependency 'AEPSignal',      '~> 4.0.0'
-  s.dependency 'BranchSDK',      '~> 2.1.2'
+  s.dependency 'AEPCore',        '~> 4.2.0'
+  s.dependency 'AEPLifecycle',   '~> 4.2.0'
+  s.dependency 'AEPIdentity',    '~> 4.2.0'
+  s.dependency 'AEPSignal',      '~> 4.2.0'
+  s.dependency 'BranchSDK',      '~> 3.0.0'
 end
