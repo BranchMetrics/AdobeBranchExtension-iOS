@@ -26,5 +26,5 @@ Pod::Spec.new do |s|
   s.dependency 'AEPLifecycle',   '~> 4.2.0'
   s.dependency 'AEPIdentity',    '~> 4.2.0'
   s.dependency 'AEPSignal',      '~> 4.2.0'
-  s.dependency 'BranchSDK',      '~> 3.0.0'
+  s.dependency 'BranchSDK',      '~> 3.0.1'
 end
