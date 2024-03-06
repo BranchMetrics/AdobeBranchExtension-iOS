@@ -283,16 +283,13 @@ NSDictionary* getContentFromEvent(AEPEvent *event) {
     NSArray *parameters = [hitUrl componentsSeparatedByString:@"&"];
     NSMutableDictionary *content = [[NSMutableDictionary alloc] init];
     
-    NSArray *keys = @[@"category", @"currency", @"name", @"revenue", @"shipping", @"tax", @"coupon" ,@"sku", @"timestamp", @"transaction_id", @"affiliation", @"title", @"description", @"query"];
-    
     for (NSString *param in parameters) {
-        for (NSString *key in keys) {
-            if ([param containsString:[NSString stringWithFormat:@"%@=", key]]) {
-                NSString *value = [[param componentsSeparatedByString:@"="] lastObject];
-                value = [value stringByRemovingPercentEncoding];
-                [content setObject:value forKey:key];
-                break;
-            }
+        NSArray *keyValue = [param componentsSeparatedByString:@"="];
+        if (keyValue.count == 2) {
+            NSString *key = keyValue[0];
+            NSString *value = keyValue[1];
+            value = [value stringByRemovingPercentEncoding];
+            [content setObject:value forKey:key];
         }
     }
     
