@@ -125,7 +125,8 @@
             @"category":        @"Apparel & Accessories",
             @"sku":             @"sku-bee-doo",
             @"adobeTestID" :    @"12345",
-            @"myCustomValue":   @"Glasses"
+            @"myCustomValue":   @"Glasses",
+            @"emptyValue":      @""
         }];
         break;
     }}

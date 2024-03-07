@@ -198,7 +198,7 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
     for (id<NSObject> key in dictionary_.keyEnumerator) {
         NSString *stringValue = BNCStringWithObject(dictionary_[key]);
         NSString *stringKey = BNCStringWithObject(key);
-        if (stringKey.length && stringValue.length) dictionary[stringKey] = stringValue;
+        if (stringKey.length && stringValue != nil) dictionary[stringKey] = stringValue;
     }
     return dictionary;
 }
