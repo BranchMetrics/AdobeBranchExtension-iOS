@@ -124,6 +124,9 @@
             @"timestamp":       [NSDate date].description,
             @"category":        @"Apparel & Accessories",
             @"sku":             @"sku-bee-doo",
+            @"adobeTestID" :    @"12345",
+            @"myCustomValue":   @"Glasses",
+            @"emptyValue":      @""
         }];
         break;
     }}
