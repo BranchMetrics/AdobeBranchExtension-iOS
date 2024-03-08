@@ -9,7 +9,7 @@
 #import "AdobeBranchExtension.h"
 #import "AdobeBranchExtensionConfig.h"
 #import <BranchSDK/Branch.h>
-#import <BranchSDK/BNCLog.h>
+#import <BranchSDK/BranchLogger.h>
 #import <BranchSDK/BranchPluginSupport.h>
 #import <BranchSDK/BranchEvent.h>
 
@@ -70,9 +70,8 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 }
 
 - (void)onRegistered {
-    BNCLogDebug(@"AdobeBranchExtension listener registered");
+    [[BranchLogger shared] logDebug:@"AdobeBranchExtension listener registered"];
     
-    BNCLogSetDisplayLevel(BNCLogLevelAll);
     [self deviceDataSharedState: NULL];
     
     [runtime_ registerListenerWithType:AEPEventType.wildcard source:AEPEventSource.wildcard listener:^(AEPEvent * _Nonnull event) {
@@ -139,7 +138,7 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
         // If already configured allowList
         if ([AdobeBranchExtensionConfig instance].allowList.count != 0) {
             *configError = [NSError errorWithDomain:AdobeBranchExtensionErrorDomain code:ABEBranchConflictConfiguration userInfo:@{NSLocalizedFailureReasonErrorKey: @"Already configured allowList for AdobeBranchExtensionConfig"}];
-            BNCLogError([NSString stringWithFormat:@"AdobeBranchExtensionConfig error: %@.", *configError]);
+            [[BranchLogger shared] logWarning:[NSString stringWithFormat:@"AdobeBranchExtensionConfig error: %@.", *configError]];
             return NO;
         } else {
             [AdobeBranchExtensionConfig instance].exclusionList = eventNames;
@@ -153,7 +152,7 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
         // If already configured allowList
         if ([AdobeBranchExtensionConfig instance].exclusionList.count != 0) {
             *configError = [NSError errorWithDomain:AdobeBranchExtensionErrorDomain code:ABEBranchConflictConfiguration userInfo:@{NSLocalizedFailureReasonErrorKey: @"Already configured exclusionList for AdobeBranchExtensionConfig"}];
-            BNCLogError([NSString stringWithFormat:@"AdobeBranchExtensionConfig error: %@.", *configError]);
+            [[BranchLogger shared] logWarning:[NSString stringWithFormat:@"AdobeBranchExtensionConfig error: %@.", *configError]];
             return NO;
         } else {
             [AdobeBranchExtensionConfig instance].allowList = eventNames;
@@ -165,7 +164,7 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 #pragma mark - Action Events
 
 - (void)handleEvent:(AEPEvent*)event {
-    BNCLogDebug([NSString stringWithFormat:@"Handling Event: %@", event]);
+    [[BranchLogger shared] logDebug:[NSString stringWithFormat:@"Handling Event: %@", event]];
     
     if ([[AdobeBranchExtensionConfig instance].eventTypes containsObject:event.type] &&
         [[AdobeBranchExtensionConfig instance].eventSources containsObject:event.source]) {
@@ -334,11 +333,11 @@ NSString* getEventNameFromEvent(AEPEvent *event) {
     AEPSharedStateResult *configSharedState = [self.runtime getSharedStateWithExtensionName:eventToProcess.data[ABEAdobeEventDataKey_StateOwner] event:eventToProcess barrier:NO];
     
     if (!configSharedState.value) {
-        BNCLogDebug(@"BranchSDK_ Could not process event, configuration shared state is pending");
+        [[BranchLogger shared] logWarning: @"BranchSDK_ Could not process event, configuration shared state is pending"];
         return;
     }
     if (error) {
-        BNCLogDebug(@"BranchSDK_ Could not process event, an error occured while retrieving configuration shared state");
+        [[BranchLogger shared] logWarning: @"BranchSDK_ Could not process event, an error occured while retrieving configuration shared state"];
         return;
     }
     
