@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,6 +25,7 @@
 		ACAE81332122645B0049505B /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE81322122645B0049505B /* UserNotifications.framework */; };
 		ACAE8135212264610049505B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE8134212264610049505B /* SystemConfiguration.framework */; };
 		C10F392A278E39AD00BF5D36 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C10F3929278E39AD00BF5D36 /* AdSupport.framework */; };
+		C12534432C18F6E4008A83C4 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C12534422C18EE39008A83C4 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		ACF671D921534E4F00CDC900 /* ACPLifecycle_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPLifecycle_iOS.framework; path = Pods/ACPCoreBeta/ACPLifecycle_iOS.framework; sourceTree = "<group>"; };
 		B0EA9C30991048D8A522C726 /* Pods_AdobeBranchExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdobeBranchExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10F3929278E39AD00BF5D36 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		C12534422C18EE39008A83C4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		F8688AE753553EE80251EE11 /* Pods-adobe-branch-example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.release.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.release.xcconfig"; sourceTree = "<group>"; };
 		FD81B1B19DDC0E314016948F /* Pods-adobe-branch-example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,6 +120,7 @@
 		ACAE8106212263F30049505B /* AdobeBranchExample */ = {
 			isa = PBXGroup;
 			children = (
+				C12534422C18EE39008A83C4 /* PrivacyInfo.xcprivacy */,
 				ACF671CD2150B42800CDC900 /* AdobeBranchExample.entitlements */,
 				ACAE8107212263F30049505B /* AppDelegate.h */,
 				ACAE8108212263F30049505B /* AppDelegate.m */,
@@ -229,6 +232,7 @@
 				ACAE8111212263F40049505B /* Assets.xcassets in Resources */,
 				4DE097FD219CEABE008AC401 /* Products.json in Resources */,
 				4D16DBA421AF037F00E362A2 /* Launch Screen.storyboard in Resources */,
+				C12534432C18F6E4008A83C4 /* PrivacyInfo.xcprivacy in Resources */,
 				ACAE810F212263F40049505B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
