@@ -109,6 +109,7 @@
         [linkProperties addControlParam:@"$desktop_url" withValue:  @"https://branch.io/branch/Glasses.html"];
         
         [branchUniversalObject getShortUrlWithLinkProperties:linkProperties andCallback:^(NSString *url, NSError *error) {
+            NSLog(@"Created Short Link: %@", url);
             [self showCreatedLink:url];
         }];
         break;
