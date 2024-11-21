@@ -30,7 +30,8 @@
     // initialize Branch session, [AdobeBranchExtension initSessionWithLaunchOptions] is different from
     // [[Branch getInstance] initSessionWithLaunchOptions] in that it holds up initialization in order to collect
     // Adobe IDs and pass them to Branch as request metadata, see [AdobeBranchExtension delayInitSessionToCollectAdobeIDs]
-    [Branch enableLogging];
+    [Branch enableLoggingAtLevel:BranchLogLevelVerbose withCallback:nil];
+    
     [AdobeBranchExtension initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary * _Nullable params, NSError * _Nullable error) {
         if (!error && params && [params[@"+clicked_branch_link"] boolValue]) {
 
