@@ -1,6 +1,6 @@
 target 'AdobeBranchExample' do
   use_frameworks!
-  
+
   pod 'BranchSDK'
   pod 'AEPCore'
   pod 'AEPLifecycle'

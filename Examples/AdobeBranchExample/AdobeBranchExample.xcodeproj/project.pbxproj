@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3228F43713344BCB4F316B9A /* Pods_AdobeBranchExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0EA9C30991048D8A522C726 /* Pods_AdobeBranchExample.framework */; };
+		3B020CCC2E6B2F050088A3C7 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3B020CCB2E6B2F050088A3C7 /* PrivacyInfo.xcprivacy */; };
 		4D16DBA421AF037F00E362A2 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D16DBA321AF037F00E362A2 /* Launch Screen.storyboard */; };
 		4D16DBA721AF5B6300E362A2 /* TextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D16DBA621AF5B6300E362A2 /* TextViewController.m */; };
 		4DE097FD219CEABE008AC401 /* Products.json in Resources */ = {isa = PBXBuildFile; fileRef = 4DE097FC219CEABE008AC401 /* Products.json */; };
@@ -25,13 +25,10 @@
 		ACAE81332122645B0049505B /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE81322122645B0049505B /* UserNotifications.framework */; };
 		ACAE8135212264610049505B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACAE8134212264610049505B /* SystemConfiguration.framework */; };
 		C10F392A278E39AD00BF5D36 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C10F3929278E39AD00BF5D36 /* AdSupport.framework */; };
-		C12534432C18F6E4008A83C4 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = C12534422C18EE39008A83C4 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0BE775760A2797FAA8A52562 /* Pods-AdobeBranchExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdobeBranchExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdobeBranchExample/Pods-AdobeBranchExample.release.xcconfig"; sourceTree = "<group>"; };
-		2E21CAD8A1C925AAF24986BC /* libPods-adobe-branch-example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-adobe-branch-example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		48C7A99404C78CABED1B404C /* Pods-AdobeBranchExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdobeBranchExample.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdobeBranchExample/Pods-AdobeBranchExample.debug.xcconfig"; sourceTree = "<group>"; };
+		3B020CCB2E6B2F050088A3C7 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		4D16DBA321AF037F00E362A2 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		4D16DBA521AF5B6300E362A2 /* TextViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TextViewController.h; sourceTree = "<group>"; };
 		4D16DBA621AF5B6300E362A2 /* TextViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TextViewController.m; sourceTree = "<group>"; };
@@ -62,11 +59,7 @@
 		ACF671D721534E4F00CDC900 /* ACPCore_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPCore_iOS.framework; path = Pods/ACPCoreBeta/ACPCore_iOS.framework; sourceTree = "<group>"; };
 		ACF671D821534E4F00CDC900 /* ACPSignal_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPSignal_iOS.framework; path = Pods/ACPCoreBeta/ACPSignal_iOS.framework; sourceTree = "<group>"; };
 		ACF671D921534E4F00CDC900 /* ACPLifecycle_iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ACPLifecycle_iOS.framework; path = Pods/ACPCoreBeta/ACPLifecycle_iOS.framework; sourceTree = "<group>"; };
-		B0EA9C30991048D8A522C726 /* Pods_AdobeBranchExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdobeBranchExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C10F3929278E39AD00BF5D36 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
-		C12534422C18EE39008A83C4 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		F8688AE753553EE80251EE11 /* Pods-adobe-branch-example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.release.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.release.xcconfig"; sourceTree = "<group>"; };
-		FD81B1B19DDC0E314016948F /* Pods-adobe-branch-example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-adobe-branch-example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-adobe-branch-example/Pods-adobe-branch-example.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,22 +74,17 @@
 				ACAE812F2122644F0049505B /* libz.tbd in Frameworks */,
 				ACAE812D212264480049505B /* libstdc++.tbd in Frameworks */,
 				ACAE812B2122643A0049505B /* libsqlite3.tbd in Frameworks */,
-				3228F43713344BCB4F316B9A /* Pods_AdobeBranchExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2A2D7CB0FB3B721DEEBEE8E0 /* Pods */ = {
+		73C43ADAEA57DC95575EA85A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FD81B1B19DDC0E314016948F /* Pods-adobe-branch-example.debug.xcconfig */,
-				F8688AE753553EE80251EE11 /* Pods-adobe-branch-example.release.xcconfig */,
-				48C7A99404C78CABED1B404C /* Pods-AdobeBranchExample.debug.xcconfig */,
-				0BE775760A2797FAA8A52562 /* Pods-AdobeBranchExample.release.xcconfig */,
 			);
-			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		ACAE80FB212263F30049505B = {
@@ -105,7 +93,7 @@
 				ACAE8106212263F30049505B /* AdobeBranchExample */,
 				ACAE8105212263F30049505B /* Products */,
 				ACAE81292122643A0049505B /* Frameworks */,
-				2A2D7CB0FB3B721DEEBEE8E0 /* Pods */,
+				73C43ADAEA57DC95575EA85A /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -120,7 +108,6 @@
 		ACAE8106212263F30049505B /* AdobeBranchExample */ = {
 			isa = PBXGroup;
 			children = (
-				C12534422C18EE39008A83C4 /* PrivacyInfo.xcprivacy */,
 				ACF671CD2150B42800CDC900 /* AdobeBranchExample.entitlements */,
 				ACAE8107212263F30049505B /* AppDelegate.h */,
 				ACAE8108212263F30049505B /* AppDelegate.m */,
@@ -138,6 +125,7 @@
 				AC21DF77215AA0EB00CD5DAC /* ProductViewController.m */,
 				4D16DBA521AF5B6300E362A2 /* TextViewController.h */,
 				4D16DBA621AF5B6300E362A2 /* TextViewController.m */,
+				3B020CCB2E6B2F050088A3C7 /* PrivacyInfo.xcprivacy */,
 			);
 			path = AdobeBranchExample;
 			sourceTree = "<group>";
@@ -158,8 +146,6 @@
 				ACAE812E2122644E0049505B /* libz.tbd */,
 				ACAE812C212264480049505B /* libstdc++.tbd */,
 				ACAE812A2122643A0049505B /* libsqlite3.tbd */,
-				2E21CAD8A1C925AAF24986BC /* libPods-adobe-branch-example.a */,
-				B0EA9C30991048D8A522C726 /* Pods_AdobeBranchExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -171,11 +157,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = ACAE811A212263F40049505B /* Build configuration list for PBXNativeTarget "AdobeBranchExample" */;
 			buildPhases = (
-				80D4725CEFFA1CA56A0BB493 /* [CP] Check Pods Manifest.lock */,
 				ACAE8100212263F30049505B /* Sources */,
 				ACAE8101212263F30049505B /* Frameworks */,
 				ACAE8102212263F30049505B /* Resources */,
-				7312F033701CC016ACD11288 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -232,50 +216,12 @@
 				ACAE8111212263F40049505B /* Assets.xcassets in Resources */,
 				4DE097FD219CEABE008AC401 /* Products.json in Resources */,
 				4D16DBA421AF037F00E362A2 /* Launch Screen.storyboard in Resources */,
-				C12534432C18F6E4008A83C4 /* PrivacyInfo.xcprivacy in Resources */,
+				3B020CCC2E6B2F050088A3C7 /* PrivacyInfo.xcprivacy in Resources */,
 				ACAE810F212263F40049505B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		7312F033701CC016ACD11288 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AdobeBranchExample/Pods-AdobeBranchExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AdobeBranchExample/Pods-AdobeBranchExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AdobeBranchExample/Pods-AdobeBranchExample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		80D4725CEFFA1CA56A0BB493 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AdobeBranchExample-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		ACAE8100212263F30049505B /* Sources */ = {
@@ -419,7 +365,6 @@
 		};
 		ACAE811B212263F40049505B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 48C7A99404C78CABED1B404C /* Pods-AdobeBranchExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AdobeBranchExample/AdobeBranchExample.entitlements;
@@ -441,7 +386,6 @@
 		};
 		ACAE811C212263F40049505B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0BE775760A2797FAA8A52562 /* Pods-AdobeBranchExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AdobeBranchExample/AdobeBranchExample.entitlements;
