@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "AdobeBranchExtension"
-  s.version          = "4.1.0"
+  s.version          = "4.1.1"
   s.summary          = "The Branch extension for Adobe Cloud Platform on iOS."
 
   s.description      = <<-DESC
@@ -26,5 +26,5 @@ Pod::Spec.new do |s|
   s.dependency 'AEPLifecycle',   '~> 5.1.0'
   s.dependency 'AEPIdentity',    '~> 5.1.0'
   s.dependency 'AEPSignal',      '~> 5.1.0'
-  s.dependency 'BranchSDK',      '~> 3.13.0'
+  s.dependency 'BranchSDK',      '~> 3.13.3'
 end
