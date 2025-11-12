@@ -8,13 +8,9 @@
 
 #import "AppDelegate.h"
 
-@import AEPCore;
-@import AEPSignal;
-@import AEPLifecycle;
-@import AEPIdentity;
-@import AEPUserProfile;
+@import AEPEdge;
+@import AEPEdgeIdentity;
 @import AEPServices;
-@import AEPAnalytics;
 
 #import "ProductViewController.h"
 #import "AdobeBranchExtension.h"
@@ -30,7 +26,8 @@
     // initialize Branch session, [AdobeBranchExtension initSessionWithLaunchOptions] is different from
     // [[Branch getInstance] initSessionWithLaunchOptions] in that it holds up initialization in order to collect
     // Adobe IDs and pass them to Branch as request metadata, see [AdobeBranchExtension delayInitSessionToCollectAdobeIDs]
-    [Branch enableLogging];
+    [AEPMobileCore setLogLevel: AEPLogLevelDebug];
+    [Branch enableLoggingAtLevel:BranchLogLevelVerbose withCallback:nil];
     [AdobeBranchExtension initSessionWithLaunchOptions:launchOptions andRegisterDeepLinkHandler:^(NSDictionary * _Nullable params, NSError * _Nullable error) {
         if (!error && params && [params[@"+clicked_branch_link"] boolValue]) {
 
@@ -48,16 +45,37 @@
         }
     }];
 
-    [AEPMobileAnalytics setVisitorIdentifier:@"custom_identifier_bb"];// for testing passAdobeIdsToBranch method
+    //[AEPMobileAnalytics setVisitorIdentifier:@"custom_identifier_bb"];// for testing passAdobeIdsToBranch method
+    //Becomes ->
+    
+    NSString *MY_ID_NAMESPACE = @"custom_namespace";
+    NSString *MY_ID_VALUE = @"custom_identifier_bb2";
+
+    AEPIdentityItem *identityItem = [[AEPIdentityItem alloc] initWithId:MY_ID_VALUE
+                                                      authenticatedState:AEPAuthenticatedStateAuthenticated
+                                                                 primary:NO];
+
+    AEPIdentityMap *identityMap = [[AEPIdentityMap alloc] init];
+    [identityMap addItem:identityItem withNamespace:MY_ID_NAMESPACE];
+
+    // 4. Call updateIdentities to send the ID to the Edge Network
+    [AEPMobileEdgeIdentity updateIdentities:identityMap];
+    
     const UIApplicationState appState = application.applicationState;
 
-    [AEPMobileCore setLogLevel: AEPLogLevelDebug];
+    
     
     // register AEPCore
     if ((YES)) {
         // option 1 - access hosted Adobe config
+        NSArray *extensionsToRegister = @[AEPMobileCore.self,
+                                        AEPMobileEdge.self,
+                                        AEPMobileEdgeIdentity.self,
+                                        AdobeBranchExtension.self];
 
-        [AEPMobileCore registerExtensions:@[AEPMobileSignal.class, AEPMobileLifecycle.class, AEPMobileUserProfile.class, AEPMobileIdentity.class, AEPMobileAnalytics.class, AdobeBranchExtension.class] completion:^{
+        [AEPMobileCore registerExtensions:extensionsToRegister completion:^{
+            [[BranchLogger shared] logDebug:@"registerExtensions:extensionsToRegister" error:nil];
+            // Configuration setup
             [AEPMobileCore configureWithAppId: @"d10f76259195/c769149ebd48/launch-f972d1367b58-development"];//Adobe Launch property: "iOS Test"
             if (appState != UIApplicationStateBackground) {
                 // only start lifecycle if the application is not in the background
