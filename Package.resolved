@@ -1,0 +1,52 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "AEPCore",
+        "repositoryURL": "https://github.com/adobe/aepsdk-core-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "3df34740bf0493dfdc32632ac6a98f340740d9db",
+          "version": "5.7.0"
+        }
+      },
+      {
+        "package": "AEPEdge",
+        "repositoryURL": "https://github.com/adobe/aepsdk-edge-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "d0d3e0d74ff8999ab8d6bbd30f921610ee1e6dd1",
+          "version": "5.0.3"
+        }
+      },
+      {
+        "package": "AEPEdgeIdentity",
+        "repositoryURL": "https://github.com/adobe/aepsdk-edgeidentity-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "25fab07d344981afc768b99a550c63ed032ae3ad",
+          "version": "5.0.0"
+        }
+      },
+      {
+        "package": "AEPRulesEngine",
+        "repositoryURL": "https://github.com/adobe/aepsdk-rulesengine-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "514d2b3787c545bfa6749ffce5dd3e6f560c9319",
+          "version": "5.0.0"
+        }
+      },
+      {
+        "package": "BranchSDK",
+        "repositoryURL": "https://github.com/BranchMetrics/ios-branch-sdk-spm",
+        "state": {
+          "branch": null,
+          "revision": "0fc0c3e8df1e175e7d049b4497bed18cae0ffc24",
+          "version": "3.13.3"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

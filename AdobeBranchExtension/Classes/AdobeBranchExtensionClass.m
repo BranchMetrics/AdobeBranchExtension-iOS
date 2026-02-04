@@ -8,10 +8,34 @@
 
 #import "AdobeBranchExtension.h"
 #import "AdobeBranchExtensionConfig.h"
-#import <BranchSDK/Branch.h>
-#import <BranchSDK/BranchLogger.h>
-#import <BranchSDK/BranchPluginSupport.h>
-#import <BranchSDK/BranchEvent.h>
+
+#if __has_include(<BranchSDK/Branch.h>)
+    #import <BranchSDK/Branch.h> // Keep CocoaPods/Old SPM happy
+#else
+    #import "Branch.h" // Fallback for strict SPM environments
+#endif
+
+
+#if __has_include(<BranchSDK/BranchLogger.h>)
+    #import <BranchSDK/BranchLogger.h>
+#else
+    #import "BranchLogger.h"
+#endif
+
+
+#if __has_include(<BranchSDK/BranchPluginSupport.h>)
+    #import <BranchSDK/BranchPluginSupport.h>
+#else
+    #import "BranchPluginSupport.h"
+#endif
+
+
+#if __has_include(<BranchSDK/BranchEvent.h>)
+    #import <BranchSDK/BranchEvent.h>
+#else
+    #import "BranchEvent.h"
+#endif
+
 
 @import AEPCore;
 @import AEPEdge;
