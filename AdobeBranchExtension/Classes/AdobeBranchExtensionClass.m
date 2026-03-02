@@ -6,8 +6,8 @@
 //  Copyright © 2018 Branch. All rights reserved.
 //
 
-#import "AdobeBranchExtension.h"
-#import "AdobeBranchExtensionConfig.h"
+#import <AdobeBranchExtension/AdobeBranchExtension.h>
+#import <AdobeBranchExtension/AdobeBranchExtensionConfig.h>
 #import <BranchSDK/Branch.h>
 #import <BranchSDK/BranchLogger.h>
 #import <BranchSDK/BranchPluginSupport.h>

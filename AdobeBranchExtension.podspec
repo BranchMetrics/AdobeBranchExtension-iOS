@@ -21,6 +21,7 @@ Pod::Spec.new do |s|
   s.static_framework = true
 
   s.source_files     = 'AdobeBranchExtension/Classes/**/*'
+  s.public_header_files = 'AdobeBranchExtension/Classes/include/*.h'
 
   s.dependency 'AEPCore',        '~> 5.1.0'
   s.dependency 'AEPLifecycle',   '~> 5.1.0'
