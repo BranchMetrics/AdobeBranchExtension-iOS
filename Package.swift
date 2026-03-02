@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "AdobeBranchExtension",
     platforms: [
-        .iOS(.v12) // Matches podspec platform [cite: 12]
+        .iOS(.v12) // Matches podspec platform
     ],
     products: [
         .library(name: "AdobeBranchExtension", targets: ["AdobeBranchExtension"])
@@ -24,7 +24,10 @@ let package = Package(
                 .product(name: "BranchSDK", package: "ios-branch-deep-linking-attribution")
             ],
             path: "AdobeBranchExtension/Classes", // Source files location 
-            publicHeadersPath: "include" // Point to .h files 
+            publicHeadersPath: "include", // Point to .h files 
+            cSettings: [
+                .define("ADOBE_BRANCH_VERSION", to: "@\"5.0.0-beta.1\"")
+            ]
         )
     ]
 )

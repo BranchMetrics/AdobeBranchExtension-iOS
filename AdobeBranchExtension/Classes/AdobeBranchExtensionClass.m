@@ -6,12 +6,10 @@
 //  Copyright © 2018 Branch. All rights reserved.
 //
 
-#import <AdobeBranchExtension/AdobeBranchExtension.h>
-#import <AdobeBranchExtension/AdobeBranchExtensionConfig.h>
-#import <BranchSDK/Branch.h>
-#import <BranchSDK/BranchLogger.h>
-#import <BranchSDK/BranchPluginSupport.h>
-#import <BranchSDK/BranchEvent.h>
+#import "AdobeBranchExtension.h"
+#import "AdobeBranchExtensionConfig.h"
+@import BranchSDK;
+@import AEPCore; 
 
 #pragma mark Constants
 

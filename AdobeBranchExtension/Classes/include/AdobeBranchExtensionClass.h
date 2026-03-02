@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <BranchSDK/Branch.h>
-@import AEPCore;
+@import BranchSDK;
+@protocol AEPExtension;
+@protocol AEPExtensionRuntime;
+@class AEPEvent;
 
 NS_ASSUME_NONNULL_BEGIN
 

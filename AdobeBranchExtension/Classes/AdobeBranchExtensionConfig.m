@@ -5,7 +5,7 @@
 //  Created by Ernest Cho on 4/11/19.
 //
 
-#import <AdobeBranchExtension/AdobeBranchExtensionConfig.h>
+#import "AdobeBranchExtensionConfig.h"
 
 @implementation AdobeBranchExtensionConfig
 
