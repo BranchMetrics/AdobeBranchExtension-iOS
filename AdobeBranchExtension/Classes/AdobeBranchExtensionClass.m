@@ -8,10 +8,38 @@
 
 #import "AdobeBranchExtension.h"
 #import "AdobeBranchExtensionConfig.h"
-#import <BranchSDK/Branch.h>
-#import <BranchSDK/BranchLogger.h>
-#import <BranchSDK/BranchPluginSupport.h>
-#import <BranchSDK/BranchEvent.h>
+
+#if __has_include(<BranchSDK/Branch.h>)
+    #import <BranchSDK/Branch.h> // Keep CocoaPods/Old SPM happy
+#else
+    #import "Branch.h" // Fallback for strict SPM environments
+#endif
+
+
+#if __has_include(<BranchSDK/BranchLogger.h>)
+    #import <BranchSDK/BranchLogger.h>
+#else
+    #import "BranchLogger.h"
+#endif
+
+
+#if __has_include(<BranchSDK/BranchPluginSupport.h>)
+    #import <BranchSDK/BranchPluginSupport.h>
+#else
+    #import "BranchPluginSupport.h"
+#endif
+
+
+#if __has_include(<BranchSDK/BranchEvent.h>)
+    #import <BranchSDK/BranchEvent.h>
+#else
+    #import "BranchEvent.h"
+#endif
+
+
+@import AEPCore;
+@import AEPEdge;
+@import AEPEdgeIdentity;
 
 #pragma mark Constants
 
@@ -28,10 +56,11 @@ NSString *const ABEAdobeSharedStateEventSource = @"com.adobe.eventSource.sharedS
 // 2. whose owner (i.e. extension/module) retrieved with this key from event data
 NSString *const ABEAdobeEventDataKey_StateOwner = @"stateowner";
 // 3. is either
-NSString *const ABEAdobeIdentityExtension = @"com.adobe.module.identity";
+NSString *const ABEAdobeIdentityExtension = @"com.adobe.edge.identity";
 NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 // 4. will contain Adobe ID values needed to be passed to Branch prior to session initialization
 
+NSString *const EXPERIENCE_CLOUD_ID_KEY = @"ECID";
 
 @interface AdobeBranchExtension()
 @end
@@ -165,6 +194,10 @@ NSString *const ABEAdobeAnalyticsExtension = @"com.adobe.module.analytics";
 
 - (void)handleEvent:(AEPEvent*)event {
     [[BranchLogger shared] logDebug:[NSString stringWithFormat:@"Handling Event: %@", event] error:nil];
+    [[BranchLogger shared] logDebug:[NSString stringWithFormat:@"Handling Event Type: %@", event.source] error:nil];
+    [[BranchLogger shared] logDebug:[NSString stringWithFormat:@"Handling Event Source: %@", event.type] error:nil];
+    [[BranchLogger shared] logDebug:[NSString stringWithFormat:@"Adobe Branch Extension Event Types: %@", [AdobeBranchExtensionConfig instance].eventTypes] error:nil];
+    [[BranchLogger shared] logDebug:[NSString stringWithFormat:@"Adobe Branch Extension Event Sources: %@", [AdobeBranchExtensionConfig instance].eventSources] error:nil];
     
     if ([[AdobeBranchExtensionConfig instance].eventTypes containsObject:event.type] &&
         [[AdobeBranchExtensionConfig instance].eventSources containsObject:event.source]) {
@@ -262,6 +295,8 @@ NSMutableDictionary *BNCStringDictionaryWithDictionary(NSDictionary*dictionary_)
 }
 
 - (void) trackEvent:(AEPEvent*)event {
+    [[BranchLogger shared] logVerbose: @"trackEvent" error:nil];
+
     NSString *eventName = getEventNameFromEvent(event);
     
     if (!eventName.length) return;
@@ -317,6 +352,8 @@ NSString* getEventNameFromEvent(AEPEvent *event) {
 
 
 - (BOOL)isValidEventForBranch:(NSString*)eventName {
+    [[BranchLogger shared] logVerbose: @"isValidEventForBranch" error:nil];
+
     if ([AdobeBranchExtensionConfig instance].exclusionList.count == 0 && [AdobeBranchExtensionConfig instance].allowList.count == 0) {
         return YES;
     } else if ([AdobeBranchExtensionConfig instance].allowList.count != 0 && [[AdobeBranchExtensionConfig instance].allowList containsObject: eventName]) {
@@ -328,34 +365,28 @@ NSString* getEventNameFromEvent(AEPEvent *event) {
 }
 
 - (void) passAdobeIdsToBranch:(AEPEvent*)eventToProcess {
-    NSError *error = nil;
-    
     AEPSharedStateResult *configSharedState = [self.runtime getSharedStateWithExtensionName:eventToProcess.data[ABEAdobeEventDataKey_StateOwner] event:eventToProcess barrier:NO];
-    
-    if (!configSharedState.value) {
-        [[BranchLogger shared] logWarning: @"BranchSDK_ Could not process event, configuration shared state is pending" error:nil];
-        return;
-    }
-    if (error) {
-        [[BranchLogger shared] logWarning: @"BranchSDK_ Could not process event, an error occured while retrieving configuration shared state" error:nil];
-        return;
-    }
+    [[BranchLogger shared] logVerbose:[NSString stringWithFormat:@"Configuration shared state value: %@", configSharedState.value]  error:nil];
     
     Branch *branch = [Branch getInstance];
-    for (id key in configSharedState.value.allKeys) {
+    
+    [AEPMobileEdgeIdentity getExperienceCloudId:^(NSString * _Nullable ecid, NSError * _Nullable error) {
         
-        NSString *idAsString = [NSString stringWithFormat:@"%@", [configSharedState.value objectForKey:key]];
-        
-        if (!idAsString || [idAsString isEqualToString:@""]) continue;
-        
-        if ([key isEqualToString:@"mid"]) {
-            [branch setRequestMetadataKey:@"$marketing_cloud_visitor_id" value:idAsString];
-        } else if ([key isEqualToString:@"vid"]) {
-            [branch setRequestMetadataKey:@"$analytics_visitor_id" value:idAsString];
-        } else if ([key isEqualToString:@"aid"]) {
-            [branch setRequestMetadataKey:@"$adobe_visitor_id" value:idAsString];
+        // Check for an error
+        if (error) {
+            [[BranchLogger shared] logError:@"Error getting ECID." error:error];
+            return;
         }
-    }
+        
+        // Check if the ECID is nil or empty
+        if (!ecid || [ecid length] == 0) {
+            [[BranchLogger shared] logVerbose:@"ECID was nil or empty." error:nil];
+            return;
+        }
+
+        [[BranchLogger shared] logVerbose:[NSString stringWithFormat:@"ECID retrieved: %@", ecid]  error:nil];
+        [branch setRequestMetadataKey:@"$marketing_cloud_visitor_id" value:ecid];
+    }];
 }
 
 - (void) deviceDataSharedState: (nullable AEPEvent*) event {

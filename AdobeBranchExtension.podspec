@@ -22,9 +22,9 @@ Pod::Spec.new do |s|
 
   s.source_files     = 'AdobeBranchExtension/Classes/**/*'
 
-  s.dependency 'AEPCore',        '~> 5.1.0'
-  s.dependency 'AEPLifecycle',   '~> 5.1.0'
-  s.dependency 'AEPIdentity',    '~> 5.1.0'
-  s.dependency 'AEPSignal',      '~> 5.1.0'
-  s.dependency 'BranchSDK',      '~> 3.13.3'
+  s.dependency 'BranchSDK',     '~> 3.13.3'
+  s.dependency 'AEPCore', '~> 5.7.0'
+  s.dependency 'AEPEdge', '~> 5.0'
+  s.dependency 'AEPEdgeIdentity', '~> 5.0'  
+
 end

@@ -7,7 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <BranchSDK/Branch.h>
+#if __has_include(<BranchSDK/Branch.h>)
+    #import <BranchSDK/Branch.h>
+#else
+    #import "Branch.h" // Fallback for strict SPM environments
+#endif
 @import AEPCore;
 
 NS_ASSUME_NONNULL_BEGIN
